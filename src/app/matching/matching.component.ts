@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { NgFor, NgIf, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import matchingData from './matching-data.json';
+
+declare var Plotly: any;
 
 interface JobCandidate {
     avatar: string;
@@ -22,6 +24,7 @@ interface JobCandidate {
     experienceMatch?: number;
     educationMatch?: number;
     cultureMatch?: number;
+    selected?: boolean;
 }
 
 interface JobMatch {
@@ -47,14 +50,29 @@ interface JobMatch {
 @Component({
     selector: 'app-matching',
     standalone: true,
-    imports: [NgFor, NgIf, FormsModule],
+    imports: [NgFor, NgIf, NgClass, FormsModule],
     templateUrl: './matching.component.html',
     styleUrl: './matching.component.css'
 })
-export class MatchingComponent implements OnInit {
+export class MatchingComponent implements OnInit, AfterViewInit {
     jobs: JobMatch[] = [];
     filteredJobs: JobMatch[] = [];
     selectedJob: JobMatch | null = null;
+
+    // Comparison view state
+    showComparisonView: boolean = false;
+    selectedCandidatesForComparison: JobCandidate[] = [];
+
+    // Loading state for comparison view
+    isLoadingComparison: boolean = false;
+    loadingText: string = '';
+    private loadingTexts: string[] = [
+        'מנתח נתוני מועמדים...',
+        'משווה כישורים ומיומנויות...',
+        'מחשב התאמות AI...',
+        'בונה דוח השוואה מפורט...',
+        'מסיים עיבוד נתונים...'
+    ];
 
     // Filter state
     minMatchPercentage: number = 60;
@@ -87,7 +105,8 @@ export class MatchingComponent implements OnInit {
             skillsMatch: 98,
             experienceMatch: 95,
             educationMatch: 100,
-            cultureMatch: 90
+            cultureMatch: 90,
+            selected: false
         },
         {
             avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg',
@@ -112,7 +131,8 @@ export class MatchingComponent implements OnInit {
             skillsMatch: 85,
             experienceMatch: 92,
             educationMatch: 100,
-            cultureMatch: 75
+            cultureMatch: 75,
+            selected: false
         },
         {
             avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg',
@@ -137,7 +157,8 @@ export class MatchingComponent implements OnInit {
             skillsMatch: 70,
             experienceMatch: 85,
             educationMatch: 90,
-            cultureMatch: 65
+            cultureMatch: 65,
+            selected: false
         },
         {
             avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg',
@@ -162,7 +183,8 @@ export class MatchingComponent implements OnInit {
             skillsMatch: 68,
             experienceMatch: 75,
             educationMatch: 95,
-            cultureMatch: 60
+            cultureMatch: 60,
+            selected: false
         },
         {
             avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg',
@@ -187,7 +209,8 @@ export class MatchingComponent implements OnInit {
             skillsMatch: 80,
             experienceMatch: 90,
             educationMatch: 100,
-            cultureMatch: 70
+            cultureMatch: 70,
+            selected: false
         }
     ];
 
@@ -237,6 +260,9 @@ export class MatchingComponent implements OnInit {
             case 'category':
                 result.sort((a, b) => a.category.localeCompare(b.category));
                 break;
+            case 'title':
+                result.sort((a, b) => a.title.localeCompare(b.title));
+                break;
         }
 
         this.filteredJobs = result;
@@ -279,5 +305,180 @@ export class MatchingComponent implements OnInit {
     getAvailabilityColor(availability: string): string {
         if (availability === 'מיידית') return 'text-green-600';
         return 'text-yellow-600';
+    }
+
+    ngAfterViewInit(): void {
+        // Charts will be rendered when comparison view is opened
+    }
+
+    // Candidate Selection for Comparison
+    toggleCandidateSelection(candidate: JobCandidate): void {
+        candidate.selected = !candidate.selected;
+        console.log('🔄 toggleCandidateSelection:', candidate.name, 'selected:', candidate.selected);
+        this.updateSelectedCandidates();
+    }
+
+    updateSelectedCandidates(): void {
+        this.selectedCandidatesForComparison = this.mockCandidates.filter(c => c.selected);
+        console.log('📋 updateSelectedCandidates - Selected count:', this.selectedCandidatesForComparison.length);
+        console.log('📋 Selected candidates:', this.selectedCandidatesForComparison.map(c => c.name));
+    }
+
+    get selectedCandidateCount(): number {
+        return this.selectedCandidatesForComparison.length;
+    }
+
+    // Comparison View
+    openComparisonView(): void {
+        console.log('🚀 openComparisonView called');
+        console.log('📊 selectedCandidatesForComparison.length:', this.selectedCandidatesForComparison.length);
+        console.log('📊 showComparisonView before:', this.showComparisonView);
+
+        if (this.selectedCandidatesForComparison.length >= 2) {
+            // Start loading animation
+            this.isLoadingComparison = true;
+            this.loadingText = this.loadingTexts[0];
+
+            // Progress through loading texts
+            let textIndex = 0;
+            const textInterval = setInterval(() => {
+                textIndex++;
+                if (textIndex < this.loadingTexts.length) {
+                    this.loadingText = this.loadingTexts[textIndex];
+                }
+            }, 1000);
+
+            // After 5 seconds, show the comparison view
+            setTimeout(() => {
+                clearInterval(textInterval);
+                this.isLoadingComparison = false;
+                this.showComparisonView = true;
+                console.log('✅ showComparisonView set to TRUE');
+                console.log('📊 selectedJob:', this.selectedJob?.title);
+                // Render charts after a short delay to ensure DOM is ready
+                setTimeout(() => this.renderComparisonCharts(), 100);
+            }, 5000);
+        } else {
+            console.log('❌ NOT enough candidates selected (need >= 2)');
+        }
+    }
+
+    closeComparisonView(): void {
+        console.log('❌ closeComparisonView called');
+        this.showComparisonView = false;
+    }
+
+    // DEBUG: Force comparison view to open with first 2 candidates
+    debugForceComparisonView(): void {
+        console.log('🐛 DEBUG: debugForceComparisonView called');
+
+        // Force select first 2 candidates
+        this.mockCandidates.forEach((c, i) => {
+            c.selected = i < 2;
+        });
+
+        // Update selected candidates array
+        this.selectedCandidatesForComparison = this.mockCandidates.filter(c => c.selected);
+
+        console.log('🐛 DEBUG: Forced selection of:', this.selectedCandidatesForComparison.map(c => c.name));
+        console.log('🐛 DEBUG: selectedJob:', this.selectedJob);
+        console.log('🐛 DEBUG: Setting showComparisonView to true');
+
+        // Force show comparison view
+        this.showComparisonView = true;
+
+        console.log('🐛 DEBUG: showComparisonView is now:', this.showComparisonView);
+
+        // Render charts
+        setTimeout(() => {
+            console.log('🐛 DEBUG: Rendering charts...');
+            this.renderComparisonCharts();
+        }, 200);
+    }
+
+    getLeadCandidate(): JobCandidate | null {
+        if (this.selectedCandidatesForComparison.length === 0) return null;
+        return this.selectedCandidatesForComparison.reduce((prev, curr) =>
+            (curr.matchPercentage || 0) > (prev.matchPercentage || 0) ? curr : prev
+        );
+    }
+
+    getSmallStrokeDashoffset(percentage: number): number {
+        // For smaller circular progress (r=20, circumference = 125.66)
+        const circumference = 125.66;
+        return circumference - (percentage / 100) * circumference;
+    }
+
+    getMatchColor(percentage: number): string {
+        if (percentage >= 90) return 'text-green-600';
+        if (percentage >= 75) return 'text-primary';
+        return 'text-amber-600';
+    }
+
+    renderComparisonCharts(): void {
+        if (typeof Plotly === 'undefined') {
+            console.warn('Plotly is not loaded');
+            return;
+        }
+
+        this.selectedCandidatesForComparison.forEach((candidate, index) => {
+            const chartId = `chart-candidate-${index + 1}`;
+            const chartElement = document.getElementById(chartId);
+
+            if (!chartElement) return;
+
+            const data = [{
+                type: 'bar',
+                x: ['מיומנויות', 'ניסיון', 'השכלה', 'תרבות'],
+                y: [
+                    candidate.skillsMatch || 0,
+                    candidate.experienceMatch || 0,
+                    candidate.educationMatch || 0,
+                    candidate.cultureMatch || 0
+                ],
+                marker: {
+                    color: ['#650f54', '#51E2C2', '#FB8F67', '#4F00BC'],
+                    opacity: 0.8
+                },
+                text: [
+                    `${candidate.skillsMatch || 0}%`,
+                    `${candidate.experienceMatch || 0}%`,
+                    `${candidate.educationMatch || 0}%`,
+                    `${candidate.cultureMatch || 0}%`
+                ],
+                textposition: 'outside',
+                textfont: {
+                    size: 12,
+                    color: '#2E2A32',
+                    family: 'Noto Sans Hebrew'
+                }
+            }];
+
+            const layout = {
+                margin: { t: 50, r: 20, b: 60, l: 50 },
+                paper_bgcolor: '#FFFFFF',
+                plot_bgcolor: '#FFFFFF',
+                title: {
+                    text: `${candidate.name} - ${candidate.matchPercentage}%`,
+                    font: { size: 14, family: 'Noto Sans Hebrew', color: '#2E2A32' }
+                },
+                xaxis: {
+                    tickfont: { size: 11, family: 'Noto Sans Hebrew' },
+                    gridcolor: '#E0E0E0'
+                },
+                yaxis: {
+                    range: [0, 100],
+                    tickfont: { size: 10 },
+                    gridcolor: '#E0E0E0',
+                    title: { text: 'אחוז התאמה', font: { size: 11, family: 'Noto Sans Hebrew' } }
+                }
+            };
+
+            Plotly.newPlot(chartId, data, layout, { responsive: true, displayModeBar: false, displaylogo: false });
+        });
+    }
+
+    hasSkill(candidate: JobCandidate, skillName: string): boolean {
+        return candidate.skills?.some(s => s.name === skillName && s.matched) || false;
     }
 }

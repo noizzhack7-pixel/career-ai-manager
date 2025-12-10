@@ -1,5 +1,43 @@
+<!-- AI Loading Overlay -->
+<div *ngIf="isLoadingComparison"
+    class="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div class="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full mx-4 text-center">
+        <!-- Spinner Container -->
+        <div class="relative w-32 h-32 mx-auto mb-8">
+            <!-- Outer pulsing ring -->
+            <div class="absolute inset-0 rounded-full spinner-outer"></div>
+            <!-- Main spinning ring -->
+            <div class="absolute inset-2 rounded-full border-4 spinner-main"></div>
+            <!-- Inner spinning ring (opposite direction) -->
+            <div class="absolute inset-4 rounded-full border-4 spinner-inner"></div>
+            <!-- Center AI icon -->
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div
+                    class="w-16 h-16 bg-gradient-to-br from-primary to-primaryDark rounded-2xl flex items-center justify-center shadow-lg animate-pulse">
+                    <i class="fa-solid fa-brain text-white text-2xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Text -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-3">AI מעבד נתונים</h2>
+        <p class="text-primary font-medium text-lg mb-4 min-h-[28px] transition-all duration-300">{{ loadingText }}</p>
+
+        <!-- Progress dots -->
+        <div class="flex justify-center items-center space-x-2 space-x-reverse">
+            <span class="w-2 h-2 bg-primary rounded-full loading-dot"></span>
+            <span class="w-2 h-2 bg-primary rounded-full loading-dot"></span>
+            <span class="w-2 h-2 bg-primary rounded-full loading-dot"></span>
+        </div>
+
+        <!-- Subtitle -->
+        <p class="text-softGray text-sm mt-6">מערכת הבינה המלאכותית מנתחת ומשווה בין המועמדים הנבחרים</p>
+    </div>
+</div>
+
+
 <!-- Jobs List View -->
-<div *ngIf="!selectedJob" class="flex">
+<div *ngIf="!selectedJob && !showComparisonView" class="flex">
     <!-- Right Sidebar -->
     <div class="w-80 bg-white h-[calc(100vh-80px)] shadow-sm border-l border-gray-200 overflow-y-auto">
         <div class="p-6">
@@ -116,14 +154,23 @@
     <div class="flex-1 p-8 overflow-y-auto h-[calc(100vh-80px)]">
         <!-- Top Section -->
         <div class="mb-8">
-            <div class="flex items-center space-x-4 space-x-reverse mb-2">
-                <div class="bg-primary text-white p-3 rounded-lg">
-                    <i class="fa-solid fa-users-gear text-2xl"></i>
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="bg-primary text-white p-3 rounded-lg">
+                        <i class="fa-solid fa-users-gear text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-semibold text-gray-800">התאמת תפקידים</h2>
+                        <p class="text-softGray mt-1">תובנות AI למציאת התאמות פנימיות בארגון</p>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-2xl font-semibold text-gray-800">התאמת תפקידים</h2>
-                    <p class="text-softGray mt-1">תובנות AI למציאת התאמות פנימיות בארגון</p>
-                </div>
+
+                <!-- DEBUG: Test button to open comparison view directly -->
+                <button (click)="debugForceComparisonView()"
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-lg transition-all flex items-center space-x-2 space-x-reverse font-medium text-sm shadow-lg">
+                    <i class="fa-solid fa-bug"></i>
+                    <span>DEBUG: פתח השוואה (TEST)</span>
+                </button>
             </div>
         </div>
 
@@ -192,12 +239,12 @@
                 </div>
                 <div class="flex items-center space-x-3 space-x-reverse">
                     <span class="text-sm text-gray-800 font-normal">מיון:</span>
-                    <select
+                    <select [(ngModel)]="sortBy" (change)="applyFilters()"
                         class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
-                        <option>לפי איכות התאמה</option>
-                        <option>לפי מספר מועמדים</option>
-                        <option>לפי קטגוריה</option>
-                        <option>לפי דחיפות</option>
+                        <option value="matchPercentage">לפי איכות התאמה</option>
+                        <option value="candidateCount">לפי מספר מועמדים</option>
+                        <option value="category">לפי קטגוריה</option>
+                        <option value="title">לפי שם התפקיד</option>
                     </select>
                 </div>
             </div>
@@ -274,7 +321,7 @@
 </div>
 
 <!-- Job Details View -->
-<div *ngIf="selectedJob" class="flex flex-col h-[calc(100vh-80px)]">
+<div *ngIf="selectedJob && !showComparisonView" class="flex flex-col h-[calc(100vh-80px)]">
     <!-- Top Navigation Bar -->
     <div class="bg-white border-b border-gray-200 px-8 py-4">
         <div class="flex items-center justify-between">
@@ -550,9 +597,20 @@
                         </div>
                     </div>
                     <div class="flex items-center space-x-3 space-x-reverse">
-                        <button
-                            class="bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-lg transition-all flex items-center space-x-2 space-x-reverse font-medium text-sm shadow-lg shadow-primary/20">
-                            <i class="fa-regular fa-clone text-sm"></i><span>השוואה בין מועמדים</span>
+                        <!-- DEBUG: Test button to force open comparison view -->
+                        <button (click)="debugForceComparisonView()"
+                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition-all flex items-center space-x-2 space-x-reverse font-medium text-xs">
+                            <i class="fa-solid fa-bug text-xs"></i>
+                            <span>TEST</span>
+                        </button>
+
+                        <button (click)="openComparisonView()" [disabled]="selectedCandidateCount < 2"
+                            [class]="selectedCandidateCount >= 2 ? 'bg-primary hover:bg-primaryDark text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'"
+                            class="px-4 py-2 rounded-lg transition-all flex items-center space-x-2 space-x-reverse font-medium text-sm shadow-lg">
+                            <i class="fa-regular fa-clone text-sm"></i>
+                            <span>השוואה בין מועמדים</span>
+                            <span class="bg-white/20 text-xs px-2 py-0.5 rounded-full">{{
+                                selectedCandidateCount }}</span>
                         </button>
                     </div>
                 </div>
@@ -594,10 +652,12 @@
                                             <span class="text-gray-300">|</span>
                                             <label
                                                 class="flex items-center space-x-2 space-x-reverse cursor-pointer group">
-                                                <input type="checkbox"
+                                                <input type="checkbox" [checked]="candidate.selected"
+                                                    (change)="toggleCandidateSelection(candidate)"
                                                     class="w-4 h-4 rounded border-2 border-gray-200 text-primary focus:ring-2 focus:ring-primary/50 cursor-pointer transition-all">
                                                 <span
-                                                    class="text-xs text-softGray group-hover:text-primary transition-colors font-medium">להשוואה</span>
+                                                    [class]="candidate.selected ? 'text-primary font-semibold' : 'text-softGray'"
+                                                    class="text-xs group-hover:text-primary transition-colors font-medium">להשוואה</span>
                                             </label>
                                             <div class="flex items-center space-x-2 space-x-reverse mr-2">
                                                 <button
@@ -707,6 +767,454 @@
                                 <p class="text-lg font-bold text-primaryDark">{{ candidate.cultureMatch }}%</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison View -->
+<div *ngIf="showComparisonView" class="p-6 overflow-y-auto h-[calc(100vh-80px)]">
+    <div class="max-w-[1400px] mx-auto">
+        <!-- Comparison Header -->
+        <div class="mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <button (click)="closeComparisonView()" class="text-softGray hover:text-primary transition-colors">
+                        <i class="fa-solid fa-arrow-right text-xl"></i>
+                    </button>
+                    <h1 class="text-2xl font-bold text-gray-800">השוואת מועמדים</h1>
+                    <span
+                        class="bg-lightPurple text-primary text-sm font-semibold px-3 py-1 rounded-lg border border-primary/20">{{
+                        selectedCandidateCount }} מועמדים</span>
+                </div>
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <button
+                        class="border border-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2 space-x-reverse font-medium text-sm">
+                        <i class="fa-solid fa-download text-sm text-softGray"></i><span>ייצא השוואה</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Job Info Card -->
+            <div *ngIf="selectedJob" class="bg-white rounded-2xl shadow-sm p-5 border border-gray-200 mb-4">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-12 h-12 bg-lightPurple rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-code text-primary text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-lg font-semibold text-gray-800">{{ selectedJob.title }}</h2>
+                        <p class="text-sm text-softGray">{{ selectedJob.division }} • {{ selectedJob.department }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Summary -->
+            <div *ngIf="getLeadCandidate()"
+                class="bg-gradient-to-br from-lightPurple/30 to-lightPurple/10 rounded-2xl p-6 border border-primary/20">
+                <div class="flex items-start space-x-4 space-x-reverse mb-4">
+                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-sparkles text-white text-lg"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-800 text-lg mb-2">סיכום AI - מועמד מוביל</h3>
+                        <p class="text-sm text-gray-800 leading-relaxed">
+                            <strong class="text-primary text-base">{{ getLeadCandidate()?.name }}</strong> בולט כמועמד
+                            המתאים ביותר עם התאמה של <strong class="text-primary">{{ getLeadCandidate()?.matchPercentage
+                                }}%</strong>.
+                            עם {{ getLeadCandidate()?.experience }} שנות ניסיון רלוונטי ויכולות הובלת צוותים מוכחות,
+                            המועמד מציג שילוב אידיאלי של מומחיות טכנית והתאמה תרבותית גבוהה.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white/60 rounded-lg p-4">
+                        <h4
+                            class="font-semibold text-gray-800 mb-3 flex items-center space-x-2 space-x-reverse text-sm">
+                            <i class="fa-solid fa-check-circle text-green-600 text-base"></i>
+                            <span>יתרונות מרכזיים</span>
+                        </h4>
+                        <ul class="space-y-2 text-sm text-gray-800">
+                            <li class="flex items-start space-x-2 space-x-reverse">
+                                <span class="text-primary mt-0.5">•</span>
+                                <span>ניסיון בחברות מובילות</span>
+                            </li>
+                            <li class="flex items-start space-x-2 space-x-reverse">
+                                <span class="text-primary mt-0.5">•</span>
+                                <span>ניהול צוותים והובלת פרויקטים</span>
+                            </li>
+                            <li class="flex items-start space-x-2 space-x-reverse">
+                                <span class="text-primary mt-0.5">•</span>
+                                <span>שליטה מלאה בטכנולוגיות</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white/60 rounded-lg p-4">
+                        <h4
+                            class="font-semibold text-gray-800 mb-3 flex items-center space-x-2 space-x-reverse text-sm">
+                            <i class="fa-solid fa-balance-scale text-primary text-base"></i>
+                            <span>השוואה למועמדים</span>
+                        </h4>
+                        <ul class="space-y-2 text-sm text-gray-800">
+                            <li class="flex items-start space-x-2 space-x-reverse">
+                                <span class="text-primary mt-0.5">•</span>
+                                <span>ניסיון רחב יותר ב-Full Stack</span>
+                            </li>
+                            <li class="flex items-start space-x-2 space-x-reverse">
+                                <span class="text-primary mt-0.5">•</span>
+                                <span>התאמה גבוהה בכישורים רכים</span>
+                            </li>
+                            <li class="flex items-start space-x-2 space-x-reverse">
+                                <span class="text-primary mt-0.5">•</span>
+                                <span>מכיר את התרבות הארגונית</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white/60 rounded-lg p-4">
+                        <h4
+                            class="font-semibold text-gray-800 mb-3 flex items-center space-x-2 space-x-reverse text-sm">
+                            <i class="fa-solid fa-lightbulb text-yellow-500 text-base"></i>
+                            <span>המלצה לפעולה</span>
+                        </h4>
+                        <p class="text-sm text-gray-800 leading-relaxed">
+                            מומלץ להתחיל בשיחה עם {{ getLeadCandidate()?.name }} על האפשרות למעבר לתפקיד זה.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="mb-6 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+            <h3 class="font-semibold text-gray-800 text-base mb-4 flex items-center space-x-2 space-x-reverse">
+                <i class="fa-solid fa-chart-bar text-primary"></i>
+                <span>ניתוח התאמה מקיף</span>
+            </h3>
+            <div class="grid gap-6"
+                [ngClass]="{'grid-cols-2': selectedCandidateCount === 2, 'grid-cols-3': selectedCandidateCount >= 3}">
+                <div *ngFor="let candidate of selectedCandidatesForComparison; let i = index">
+                    <div [id]="'chart-candidate-' + (i + 1)" style="height: 280px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-right p-5 bg-gray-50 font-semibold text-gray-800 w-64 sticky right-0 z-10">
+                                קריטריון</th>
+                            <th *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-5 bg-white border-r border-gray-200">
+                                <div class="flex flex-col items-center space-y-3">
+                                    <div class="relative">
+                                        <img [src]="candidate.avatar" alt="מועמד"
+                                            class="w-20 h-20 rounded-full border-4 border-primary shadow-lg">
+                                        <div
+                                            class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                                            {{ candidate.matchPercentage }}%</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="font-semibold text-gray-800 text-base">{{ candidate.name }}</h3>
+                                        <p class="text-xs text-softGray mt-1">{{ candidate.education }} | {{
+                                            candidate.experience }} שנים</p>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Match Percentages Section -->
+                        <tr class="border-b border-gray-200 bg-lightPurple/10">
+                            <td colspan="10"
+                                class="p-3 font-semibold text-gray-800 text-sm sticky right-0 z-10 bg-lightPurple/10">
+                                <i class="fa-solid fa-chart-line ml-2 text-primary"></i>אחוזי התאמה מפורטים
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                התאמת מיומנויות</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                                    <span class="text-base font-semibold text-primary">{{ candidate.skillsMatch
+                                        }}%</span>
+                                    <div class="w-32 h-3 bg-gray-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-l from-primary/60 to-primary rounded-full transition-all duration-500"
+                                            [style.width.%]="candidate.skillsMatch"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                התאמת ניסיון</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                                    <span class="text-base font-semibold text-primary">{{ candidate.experienceMatch
+                                        }}%</span>
+                                    <div class="w-32 h-3 bg-gray-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-l from-primary/60 to-primary rounded-full transition-all duration-500"
+                                            [style.width.%]="candidate.experienceMatch"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                התאמת השכלה</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                                    <span class="text-base font-semibold text-green-600">{{ candidate.educationMatch
+                                        }}%</span>
+                                    <div class="w-32 h-3 bg-green-50 rounded-full overflow-hidden">
+                                        <div class="h-full bg-gradient-to-l from-green-200 to-green-400 rounded-full transition-all duration-500"
+                                            [style.width.%]="candidate.educationMatch"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                התאמה תרבותית</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                                    <span
+                                        [class]="(candidate.cultureMatch || 0) >= 80 ? 'text-primary' : 'text-amber-500'"
+                                        class="text-base font-semibold">{{ candidate.cultureMatch }}%</span>
+                                    <div [class]="(candidate.cultureMatch || 0) >= 80 ? 'bg-purple-50' : 'bg-amber-50'"
+                                        class="w-32 h-3 rounded-full overflow-hidden">
+                                        <div [class]="(candidate.cultureMatch || 0) >= 80 ? 'bg-gradient-to-l from-purple-200 to-purple-400' : 'bg-gradient-to-l from-amber-200 to-amber-400'"
+                                            class="h-full rounded-full transition-all duration-500"
+                                            [style.width.%]="candidate.cultureMatch || 0"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Professional Details Section -->
+                        <tr class="border-b border-gray-200 bg-lightPurple/10">
+                            <td colspan="10"
+                                class="p-3 font-semibold text-gray-800 text-sm sticky right-0 z-10 bg-lightPurple/10">
+                                <i class="fa-solid fa-briefcase ml-2 text-primary"></i>פרטים מקצועיים
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                תפקיד נוכחי</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <p class="font-semibold text-gray-800">{{ candidate.currentRole }}</p>
+                                <p class="text-xs text-softGray mt-1">ותק: {{ candidate.tenure }}</p>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                אגף ומחלקה</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <p class="text-sm text-gray-800">{{ candidate.division }}</p>
+                                <p class="text-xs text-softGray mt-1">{{ candidate.department }}</p>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                שנות ניסיון כולל</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <span class="text-lg font-bold text-primary">{{ candidate.experience }}</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                השכלה</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <p class="text-sm text-gray-800 font-semibold">{{ candidate.education }}</p>
+                                <p class="text-xs text-softGray mt-1">תואר ראשון</p>
+                            </td>
+                        </tr>
+
+                        <!-- Skills Section -->
+                        <tr class="border-b border-gray-200 bg-lightPurple/10">
+                            <td colspan="10"
+                                class="p-3 font-semibold text-gray-800 text-sm sticky right-0 z-10 bg-lightPurple/10">
+                                <i class="fa-solid fa-star ml-2 text-primary"></i>כישורים קריטיים למשרה
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                React</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <div class="flex items-center justify-center">
+                                    <span *ngIf="hasSkill(candidate, 'React')"
+                                        class="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                                        <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+                                    </span>
+                                    <span *ngIf="!hasSkill(candidate, 'React')"
+                                        class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                                        <i class="fa-solid fa-times text-xs"></i><span>אין</span>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                Node.js</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <div class="flex items-center justify-center">
+                                    <span *ngIf="hasSkill(candidate, 'Node.js')"
+                                        class="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                                        <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+                                    </span>
+                                    <span *ngIf="!hasSkill(candidate, 'Node.js')"
+                                        class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                                        <i class="fa-solid fa-times text-xs"></i><span>אין</span>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                AWS</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <div class="flex items-center justify-center">
+                                    <span *ngIf="hasSkill(candidate, 'AWS')"
+                                        class="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                                        <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+                                    </span>
+                                    <span *ngIf="!hasSkill(candidate, 'AWS')"
+                                        class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                                        <i class="fa-solid fa-times text-xs"></i><span>אין</span>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Additional Info Section -->
+                        <tr class="border-b border-gray-200 bg-lightPurple/10">
+                            <td colspan="10"
+                                class="p-3 font-semibold text-gray-800 text-sm sticky right-0 z-10 bg-lightPurple/10">
+                                <i class="fa-solid fa-info-circle ml-2 text-primary"></i>פרטים נוספים
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                מיקום</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200 text-gray-800">{{ candidate.location }}
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                זמינות</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200">
+                                <span
+                                    [class]="candidate.availability === 'מיידית' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'"
+                                    class="text-sm px-3 py-1 rounded-full font-medium">{{ candidate.availability
+                                    }}</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                            <td
+                                class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
+                                שכר נוכחי</td>
+                            <td *ngFor="let candidate of selectedCandidatesForComparison"
+                                class="p-4 text-center border-r border-gray-200 text-gray-800 font-semibold">{{
+                                candidate.salary }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="mt-6 grid gap-4"
+            [ngClass]="{'grid-cols-2': selectedCandidateCount === 2, 'grid-cols-3': selectedCandidateCount >= 3}">
+            <div *ngFor="let candidate of selectedCandidatesForComparison; let i = index"
+                class="bg-white rounded-2xl shadow-sm p-5 border border-gray-200">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-semibold text-gray-800">{{ candidate.name }}</h3>
+                    <div class="relative w-12 h-12 flex-shrink-0">
+                        <svg class="transform -rotate-90" width="48" height="48">
+                            <circle cx="24" cy="24" r="20" stroke="#E0E0E0" stroke-width="3" fill="none"></circle>
+                            <circle cx="24" cy="24" r="20" stroke="#650f54" stroke-width="3" fill="none"
+                                stroke-dasharray="125.66"
+                                [attr.stroke-dashoffset]="getSmallStrokeDashoffset(candidate.matchPercentage || 0)"
+                                stroke-linecap="round"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-sm font-bold text-primary">{{ candidate.matchPercentage }}%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-softGray">יתרונות:</span>
+                        <span class="font-semibold"
+                            [class]="(candidate.matchPercentage || 0) >= 90 ? 'text-green-700' : 'text-primary'">
+                            {{ (candidate.matchPercentage || 0) >= 90 ? 'התאמה גבוהה מאוד' : ((candidate.matchPercentage
+                            || 0) >= 80 ?
+                            'התאמה טובה' : 'ניסיון טוב') }}
+                        </span>
+                    </div>
+                    <button
+                        [class]="i === 0 ? 'bg-primary hover:bg-primaryDark text-white' : 'border border-primary text-primary hover:bg-lightPurple/30'"
+                        class="w-full py-2 rounded-lg transition-all mt-3 font-medium">
+                        בחר מועמד
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendation Box -->
+        <div *ngIf="getLeadCandidate()" class="mt-6 bg-lightPurple/20 rounded-2xl p-6 border-2 border-primary/30">
+            <div class="flex items-start space-x-4 space-x-reverse">
+                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-lightbulb text-white text-xl"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-bold text-gray-800 text-lg mb-2">המלצת המערכת</h3>
+                    <p class="text-gray-800 mb-3">
+                        על פי ניתוח מקיף של כל הקריטריונים, <strong>{{ getLeadCandidate()?.name }}</strong> הוא המועמד
+                        המומלץ ביותר לתפקיד זה עם התאמה של {{ getLeadCandidate()?.matchPercentage }}%.
+                        הוא עומד בכל הדרישות הקריטיות, בעל ניסיון רלוונטי וזמין באופן מיידי.
+                    </p>
+                    <div class="flex space-x-3 space-x-reverse">
+                        <button
+                            class="bg-primary hover:bg-primaryDark text-white px-5 py-2.5 rounded-lg transition-all font-medium shadow-lg shadow-primary/20">
+                            אשר המלצה והמשך לתהליך
+                        </button>
+                        <button (click)="closeComparisonView()"
+                            class="border border-gray-200 text-gray-800 px-5 py-2.5 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                            המשך חיפוש
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,863 @@
+<!DOCTYPE html><html dir="rtl"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>השוואת מועמדים</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <script>
+      window.FontAwesomeConfig = {
+        autoReplaceSvg: 'nest'
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&amp;family=Noto+Sans+Hebrew:wght@400;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Noto Sans', 'Noto Sans Hebrew', sans-serif;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c0c0c0;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a0a0a0;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#4F00BC',
+              'primary-dark': '#400099',
+              'primary-light': '#E9D8FF',
+              'neutral-dark': '#2E2A32',
+              'neutral-medium': '#707070',
+              'neutral-light': '#E0E0E0',
+              'neutral-extralight': '#F9FAFB',
+              'background': '#F9FAFB',
+              'card': '#FFFFFF',
+              success: '#16A34A',
+              warning: '#FBBF24',
+              danger: '#F87171',
+              'mint-light': '#E3F6EB',
+            },
+            fontFamily: {
+              'sans': ['Noto Sans', 'Noto Sans Hebrew', 'sans-serif']
+            },
+            borderRadius: {
+              'lg': '12px',
+              'card': '16px',
+            },
+            boxShadow: {
+              'card': '0 4px 12px rgba(0, 0, 0, 0.05)',
+              'panel': '0 6px 16px rgba(0, 0, 0, 0.07)'
+            },
+            fontSize: {
+              'base': '16px',
+            },
+            fontWeight: {
+              'normal': '400',
+              'semibold': '600',
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-background text-neutral-dark font-sans text-base">
+    <div id="header" class="bg-white px-8 py-3 border-b border-neutral-light sticky top-0 z-10">
+      <div class="flex justify-between items-center w-full">
+        <div class="flex items-center space-x-2 space-x-reverse">
+            <span class="text-xl font-bold text-primary-dark tracking-wide">GO-PRO</span>
+            <button class="bg-primary-dark text-white w-8 h-8 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-rocket"></i>
+            </button>
+        </div>
+
+        <div class="flex-1 flex justify-center items-center space-x-12 space-x-reverse">
+            <nav class="flex items-center space-x-8 space-x-reverse">
+                <a href="#" class="text-neutral-medium hover:text-primary transition-colors font-semibold text-base">הגדרות</a>
+                <a href="#" class="text-neutral-medium hover:text-primary transition-colors font-semibold text-base">לוח בקרה</a>
+                <a href="#" class="text-primary font-semibold border-b-2 border-primary pb-2 text-base">התאמת תפקידים</a>
+                <a href="#" class="text-neutral-medium hover:text-primary transition-colors font-semibold text-base">עובדים</a>
+                <a href="#" class="text-neutral-medium hover:text-primary transition-colors font-semibold text-base">תפקידים בארגון</a>
+            </nav>
+            <div class="relative w-72">
+                <input type="text" placeholder="חיפוש במערכת..." class="w-full bg-neutral-extralight border border-neutral-light rounded-lg py-2 pr-10 pl-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                <i class="fa-solid fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-medium"></i>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6 space-x-reverse">
+          <button class="text-neutral-medium hover:text-primary transition-colors">
+            <i class="fa-regular fa-bell text-xl"></i>
+          </button>
+          <div class="flex items-center space-x-3 space-x-reverse">
+            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="פרופיל" class="w-10 h-10 rounded-full">
+            <div class="text-right">
+              <p class="text-sm font-semibold text-neutral-dark">תמר כהן</p>
+              <p class="text-xs text-neutral-medium">מנהלת בכירה</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="comparison-page" class="p-6 overflow-y-auto h-[calc(100vh-81px)]">
+      <div class="max-w-[1400px] mx-auto">
+        <div id="comparison-header" class="mb-6">
+  <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center space-x-4 space-x-reverse">
+      <button onclick="history.back()" class="text-neutral-medium hover:text-primary transition-colors">
+        <i class="fa-solid fa-arrow-right text-xl"></i>
+      </button>
+      <h1 class="text-2xl font-bold text-neutral-dark">השוואת מועמדים</h1>
+      <span class="bg-primary-light text-primary text-sm font-semibold px-3 py-1 rounded-lg border border-primary/20">3 מועמדים</span>
+    </div>
+    <div class="flex items-center space-x-3 space-x-reverse">
+      <button class="border border-neutral-light text-neutral-dark px-4 py-2 rounded-lg hover:bg-neutral-extralight transition-colors flex items-center space-x-2 space-x-reverse font-medium text-sm">
+        <i class="fa-solid fa-download text-sm text-neutral-medium"></i><span>ייצא השוואה</span>
+      </button>
+      <button class="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg transition-all flex items-center space-x-2 space-x-reverse font-medium text-sm shadow-lg shadow-primary/20">
+        <i class="fa-solid fa-user-plus text-sm"></i><span>הוסף מועמד להשוואה</span>
+      </button>
+    </div>
+  </div>
+  
+  <div class="bg-card rounded-card shadow-card p-5 border border-neutral-light mb-4">
+    <div class="flex items-center space-x-3 space-x-reverse">
+      <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center">
+        <i class="fa-solid fa-code text-primary text-xl"></i>
+      </div>
+      <div class="flex-1">
+        <h2 class="text-lg font-semibold text-neutral-dark">מפתח Full Stack Senior</h2>
+        <p class="text-sm text-neutral-medium">אגף טכנולוגיה • מחלקת פיתוח</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-gradient-to-br from-primary-light/30 to-primary-light/10 rounded-card p-6 border border-primary/20">
+    <div class="flex items-start space-x-4 space-x-reverse mb-4">
+      <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+        <i class="fa-solid fa-sparkles text-white text-lg"></i>
+      </div>
+      <div class="flex-1">
+        <h3 class="font-semibold text-neutral-dark text-lg mb-2">סיכום AI - מועמד מוביל</h3>
+        <p class="text-sm text-neutral-dark leading-relaxed">
+          <strong class="text-primary text-base">אמיר שמואלי</strong> בולט כמועמד המתאים ביותר עם התאמה של <strong class="text-primary">95%</strong>. הוא מחזיק בכל הכישורים הקריטיים הנדרשים לתפקיד, כולל React, Node.js, AWS ו-TypeScript. עם 7 שנות ניסיון רלוונטי ויכולות הובלת צוותים מוכחות, אמיר מציג שילוב אידיאלי של מומחיות טכנית והתאמה תרבותית גבוהה.
+        </p>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-3 gap-4">
+      <div class="bg-white/60 rounded-lg p-4">
+        <h4 class="font-semibold text-neutral-dark mb-3 flex items-center space-x-2 space-x-reverse text-sm">
+          <i class="fa-solid fa-check-circle text-green-600 text-base"></i>
+          <span>יתרונות מרכזיים</span>
+        </h4>
+        <ul class="space-y-2 text-sm text-neutral-dark">
+          <li class="flex items-start space-x-2 space-x-reverse">
+            <span class="text-primary mt-0.5">•</span>
+            <span>ניסיון בחברות מובילות</span>
+          </li>
+          <li class="flex items-start space-x-2 space-x-reverse">
+            <span class="text-primary mt-0.5">•</span>
+            <span>ניהול צוותים והובלת פרויקטים</span>
+          </li>
+          <li class="flex items-start space-x-2 space-x-reverse">
+            <span class="text-primary mt-0.5">•</span>
+            <span>שליטה מלאה בטכנולוגיות</span>
+          </li>
+          <li class="flex items-start space-x-2 space-x-reverse">
+            <span class="text-primary mt-0.5">•</span>
+            <span>זמינות מיידית</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-white/60 rounded-lg p-4">
+        <h4 class="font-semibold text-neutral-dark mb-3 flex items-center space-x-2 space-x-reverse text-sm">
+          <i class="fa-solid fa-balance-scale text-primary text-base"></i>
+          <span>השוואה למועמדים</span>
+        </h4>
+        <ul class="space-y-2 text-sm text-neutral-dark">
+          <li class="flex items-start space-x-2 space-x-reverse">
+            <span class="text-primary mt-0.5">•</span>
+            <span>ניסיון רחב יותר ב-Full Stack</span>
+          </li>
+          <li class="flex items-start space-x-2 space-x-reverse">
+            <span class="text-primary mt-0.5">•</span>
+            <span>ניסיון בניהול צוותים</span>
+          </li>
+          <li class="flex items-start space-x-2 space-x-reverse">
+            <span class="text-primary mt-0.5">•</span>
+            <span>התאמה גבוהה בכישורים רכים</span>
+          </li>
+          <li class="flex items-start space-x-2 space-x-reverse">
+            <span class="text-primary mt-0.5">•</span>
+            <span>מכיר את התרבות הארגונית</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-white/60 rounded-lg p-4">
+        <h4 class="font-semibold text-neutral-dark mb-3 flex items-center space-x-2 space-x-reverse text-sm">
+          <i class="fa-solid fa-lightbulb text-warning text-base"></i>
+          <span>המלצה לפעולה</span>
+        </h4>
+        <p class="text-sm text-neutral-dark leading-relaxed">
+          מומלץ להתחיל בשיחה עם אמיר שמואלי על האפשרות למעבר לתפקיד זה, תוך שמירה על רון ברקוביץ כמועמד גיבוי איכותי. יוסי כהן מתאים פחות לתפקיד Senior בשלב זה.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div id="comparison-charts" class="mb-6 bg-card rounded-card shadow-card border border-neutral-light p-6">
+          <h3 class="font-semibold text-neutral-dark text-base mb-4 flex items-center space-x-2 space-x-reverse">
+            <i class="fa-solid fa-chart-radar text-primary"></i>
+            <span>ניתוח התאמה מקיף</span>
+          </h3>
+          <div class="grid grid-cols-3 gap-6">
+            <div>
+              <div id="chart-candidate-1" style="height: 300px;"></div>
+            </div>
+            <div>
+              <div id="chart-candidate-2" style="height: 300px;"></div>
+            </div>
+            <div>
+              <div id="chart-candidate-3" style="height: 300px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="comparison-table" class="bg-card rounded-card shadow-card border border-neutral-light overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead>
+        <tr class="border-b border-neutral-light">
+          <th class="text-right p-5 bg-neutral-extralight/50 font-semibold text-neutral-dark w-64 sticky right-0 z-10">קריטריון</th>
+          <th class="p-5 bg-white border-r border-neutral-light">
+            <div class="flex flex-col items-center space-y-3">
+              <div class="relative">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="מועמד" class="w-20 h-20 rounded-full border-4 border-primary shadow-lg">
+                <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">95%</div>
+              </div>
+              <div class="text-center">
+                <h3 class="font-semibold text-neutral-dark text-base">אמיר שמואלי</h3>
+                <p class="text-xs text-neutral-medium mt-1">מדעי המחשב | 7 שנים</p>
+              </div>
+            </div>
+          </th>
+          <th class="p-5 bg-white border-r border-neutral-light">
+            <div class="flex flex-col items-center space-y-3">
+              <div class="relative">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="מועמד" class="w-20 h-20 rounded-full border-4 border-primary shadow-lg">
+                <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">88%</div>
+              </div>
+              <div class="text-center">
+                <h3 class="font-semibold text-neutral-dark text-base">רון ברקוביץ</h3>
+                <p class="text-xs text-neutral-medium mt-1">הנדסת תוכנה | 6 שנים</p>
+              </div>
+            </div>
+          </th>
+          <th class="p-5 bg-white border-r border-neutral-light">
+            <div class="flex flex-col items-center space-y-3">
+              <div class="relative">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="מועמד" class="w-20 h-20 rounded-full border-4 border-primary shadow-lg">
+                <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">85%</div>
+              </div>
+              <div class="text-center">
+                <h3 class="font-semibold text-neutral-dark text-base">יוסי כהן</h3>
+                <p class="text-xs text-neutral-medium mt-1">הנדסת תוכנה | 8 שנים</p>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b border-neutral-light bg-primary-light/10">
+          <td colspan="4" class="p-3 font-semibold text-neutral-dark text-sm sticky right-0 z-10 bg-primary-light/10">
+            <i class="fa-solid fa-chart-line ml-2 text-primary"></i>אחוזי התאמה מפורטים
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">התאמת מיומנויות</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-primary">98%</span>
+              <div class="w-32 h-3 bg-purple-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-purple-200 to-purple-300 rounded-full transition-all duration-500" style="width: 98%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-primary">85%</span>
+              <div class="w-32 h-3 bg-purple-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-purple-200 to-purple-300 rounded-full transition-all duration-500" style="width: 85%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-primary">80%</span>
+              <div class="w-32 h-3 bg-purple-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-purple-200 to-purple-300 rounded-full transition-all duration-500" style="width: 80%"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">התאמת ניסיון</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-primary">95%</span>
+              <div class="w-32 h-3 bg-purple-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-purple-200 to-purple-300 rounded-full transition-all duration-500" style="width: 95%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-primary">92%</span>
+              <div class="w-32 h-3 bg-purple-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-purple-200 to-purple-300 rounded-full transition-all duration-500" style="width: 92%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-primary">90%</span>
+              <div class="w-32 h-3 bg-purple-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-purple-200 to-purple-300 rounded-full transition-all duration-500" style="width: 90%"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">התאמת השכלה</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-success">100%</span>
+              <div class="w-32 h-3 bg-teal-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-teal-200 to-teal-300 rounded-full transition-all duration-500" style="width: 100%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-success">100%</span>
+              <div class="w-32 h-3 bg-teal-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-teal-200 to-teal-300 rounded-full transition-all duration-500" style="width: 100%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-success">100%</span>
+              <div class="w-32 h-3 bg-teal-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-teal-200 to-teal-300 rounded-full transition-all duration-500" style="width: 100%"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">התאמה תרבותית</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-primary">90%</span>
+              <div class="w-32 h-3 bg-purple-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-purple-200 to-purple-300 rounded-full transition-all duration-500" style="width: 90%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-warning">75%</span>
+              <div class="w-32 h-3 bg-amber-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-amber-200 to-amber-300 rounded-full transition-all duration-500" style="width: 75%"></div>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center space-x-2 space-x-reverse">
+              <span class="text-base font-semibold text-warning">70%</span>
+              <div class="w-32 h-3 bg-amber-50 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-l from-amber-200 to-amber-300 rounded-full transition-all duration-500" style="width: 70%"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="border-b border-neutral-light bg-primary-light/10">
+          <td colspan="4" class="p-3 font-semibold text-neutral-dark text-sm sticky right-0 z-10 bg-primary-light/10">
+            <i class="fa-solid fa-briefcase ml-2 text-primary"></i>פרטים מקצועיים
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">תפקיד נוכחי</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="font-semibold text-neutral-dark">מפתח Full Stack</p>
+            <p class="text-xs text-neutral-medium mt-1">ותק: 3 שנים</p>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="font-semibold text-neutral-dark">מפתח Backend</p>
+            <p class="text-xs text-neutral-medium mt-1">ותק: 2.5 שנים</p>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="font-semibold text-neutral-dark">ארכיטקט מערכות</p>
+            <p class="text-xs text-neutral-medium mt-1">ותק: 4 שנים</p>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">אגף ומחלקה</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="text-sm text-neutral-dark">אגף טכנולוגיה</p>
+            <p class="text-xs text-neutral-medium mt-1">מחלקת פיתוח</p>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="text-sm text-neutral-dark">אגף טכנולוגיה</p>
+            <p class="text-xs text-neutral-medium mt-1">מחלקת Backend</p>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="text-sm text-neutral-dark">אגף טכנולוגיה</p>
+            <p class="text-xs text-neutral-medium mt-1">מחלקת תשתיות</p>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">שנות ניסיון כולל</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <span class="text-lg font-bold text-primary">7</span>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <span class="text-lg font-bold text-primary">6</span>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <span class="text-lg font-bold text-primary">8</span>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">השכלה</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="text-sm text-neutral-dark font-semibold">מדעי המחשב</p>
+            <p class="text-xs text-neutral-medium mt-1">תואר ראשון</p>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="text-sm text-neutral-dark font-semibold">הנדסת תוכנה</p>
+            <p class="text-xs text-neutral-medium mt-1">תואר ראשון</p>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <p class="text-sm text-neutral-dark font-semibold">הנדסת תוכנה</p>
+            <p class="text-xs text-neutral-medium mt-1">תואר ראשון</p>
+          </td>
+        </tr>
+
+        <tr class="border-b border-neutral-light bg-primary-light/10">
+          <td colspan="4" class="p-3 font-semibold text-neutral-dark text-sm sticky right-0 z-10 bg-primary-light/10">
+            <i class="fa-solid fa-star ml-2 text-primary"></i>כישורים קריטיים למשרה
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">React</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-times text-xs"></i><span>אין</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-times text-xs"></i><span>אין</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">Node.js</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">AWS</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">TypeScript</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-times text-xs"></i><span>אין</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-times text-xs"></i><span>אין</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">הובלת צוותים</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-times text-xs"></i><span>אין</span>
+              </span>
+            </div>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <div class="flex items-center justify-center">
+              <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full flex items-center space-x-1 space-x-reverse font-medium">
+                <i class="fa-solid fa-check text-xs"></i><span>יש</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+
+        <tr class="border-b border-neutral-light bg-primary-light/10">
+          <td colspan="4" class="p-3 font-semibold text-neutral-dark text-sm sticky right-0 z-10 bg-primary-light/10">
+            <i class="fa-solid fa-info-circle ml-2 text-primary"></i>פרטים נוספים
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">מיקום</td>
+          <td class="p-4 text-center border-r border-neutral-light text-neutral-dark">תל אביב</td>
+          <td class="p-4 text-center border-r border-neutral-light text-neutral-dark">חיפה</td>
+          <td class="p-4 text-center border-r border-neutral-light text-neutral-dark">רמת גן</td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">זמינות</td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full font-medium">מיידית</span>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <span class="bg-yellow-100 text-yellow-700 text-sm px-3 py-1 rounded-full font-medium">חודש</span>
+          </td>
+          <td class="p-4 text-center border-r border-neutral-light">
+            <span class="bg-mint-light text-green-700 text-sm px-3 py-1 rounded-full font-medium">מיידית</span>
+          </td>
+        </tr>
+        <tr class="border-b border-neutral-light hover:bg-neutral-extralight/30 transition-colors">
+          <td class="p-4 text-right font-medium text-neutral-dark sticky right-0 z-10 bg-white border-l border-neutral-light">שכר נוכחי</td>
+          <td class="p-4 text-center border-r border-neutral-light text-neutral-dark font-semibold">₪28,000</td>
+          <td class="p-4 text-center border-r border-neutral-light text-neutral-dark font-semibold">₪25,000</td>
+          <td class="p-4 text-center border-r border-neutral-light text-neutral-dark font-semibold">₪32,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+        <div id="comparison-summary" class="mt-6 grid grid-cols-3 gap-4">
+          <div class="bg-card rounded-card shadow-card p-5 border border-neutral-light">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-neutral-dark">אמיר שמואלי</h3>
+              <div class="relative w-12 h-12 flex-shrink-0">
+                <svg class="transform -rotate-90" width="48" height="48">
+                  <circle cx="24" cy="24" r="20" stroke="#E0E0E0" stroke-width="3" fill="none"></circle>
+                  <circle cx="24" cy="24" r="20" stroke="#4F00BC" stroke-width="3" fill="none" stroke-dasharray="125.66" stroke-dashoffset="6.3" stroke-linecap="round"></circle>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-sm font-bold text-primary">95%</span>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-neutral-medium">יתרונות:</span>
+                <span class="font-semibold text-green-700">התאמה גבוהה מאוד</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-neutral-medium">חסרונות:</span>
+                <span class="font-semibold text-neutral-medium">אין</span>
+              </div>
+              <button class="w-full bg-primary hover:bg-primary-dark text-white py-2 rounded-lg transition-all mt-3 font-medium">
+                בחר מועמד
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-card rounded-card shadow-card p-5 border border-neutral-light">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-neutral-dark">רון ברקוביץ</h3>
+              <div class="relative w-12 h-12 flex-shrink-0">
+                <svg class="transform -rotate-90" width="48" height="48">
+                  <circle cx="24" cy="24" r="20" stroke="#E0E0E0" stroke-width="3" fill="none"></circle>
+                  <circle cx="24" cy="24" r="20" stroke="#4F00BC" stroke-width="3" fill="none" stroke-dasharray="125.66" stroke-dashoffset="15.1" stroke-linecap="round"></circle>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-sm font-bold text-primary">88%</span>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-neutral-medium">יתרונות:</span>
+                <span class="font-semibold text-green-700">ניסיון חזק</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-neutral-medium">חסרונות:</span>
+                <span class="font-semibold text-red-700">חסר React</span>
+              </div>
+              <button class="w-full border border-primary text-primary hover:bg-primary-light/30 py-2 rounded-lg transition-all mt-3 font-medium">
+                בחר מועמד
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-card rounded-card shadow-card p-5 border border-neutral-light">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-neutral-dark">יוסי כהן</h3>
+              <div class="relative w-12 h-12 flex-shrink-0">
+                <svg class="transform -rotate-90" width="48" height="48">
+                  <circle cx="24" cy="24" r="20" stroke="#E0E0E0" stroke-width="3" fill="none"></circle>
+                  <circle cx="24" cy="24" r="20" stroke="#4F00BC" stroke-width="3" fill="none" stroke-dasharray="125.66" stroke-dashoffset="18.8" stroke-linecap="round"></circle>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-sm font-bold text-primary">85%</span>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between">
+                <span class="text-neutral-medium">יתרונות:</span>
+                <span class="font-semibold text-green-700">ותק רב</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-neutral-medium">חסרונות:</span>
+                <span class="font-semibold text-red-700">חסר React</span>
+              </div>
+              <button class="w-full border border-primary text-primary hover:bg-primary-light/30 py-2 rounded-lg transition-all mt-3 font-medium">
+                בחר מועמד
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="recommendation-box" class="mt-6 bg-primary-light/20 rounded-card p-6 border-2 border-primary/30">
+          <div class="flex items-start space-x-4 space-x-reverse">
+            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+              <i class="fa-solid fa-lightbulb text-white text-xl"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-bold text-neutral-dark text-lg mb-2">המלצת המערכת</h3>
+              <p class="text-neutral-dark mb-3">
+                על פי ניתוח מקיף של כל הקריטריונים, <strong>אמיר שמואלי</strong> הוא המועמד המומלץ ביותר לתפקיד זה עם התאמה של 95%. 
+                הוא עומד בכל הדרישות הקריטיות, בעל ניסיון רלוונטי וזמין באופן מיידי.
+              </p>
+              <div class="flex space-x-3 space-x-reverse">
+                <button class="bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-lg transition-all font-medium shadow-lg shadow-primary/20">
+                  אשר המלצה והמשך לתהליך
+                </button>
+                <button class="border border-neutral-light text-neutral-dark px-5 py-2.5 rounded-lg hover:bg-neutral-extralight transition-colors font-medium">
+                  המשך חיפוש
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener('load', function() {
+        try {
+          // Candidate 1 - אמיר שמואלי
+          var data1 = [{
+            type: 'bar',
+            x: ['חווד', 'סוציו', 'פסיכו'],
+            y: [92, 88, 95],
+            marker: {
+              color: ['#4F00BC', '#51E2C2', '#FB8F67'],
+              opacity: 0.8
+            },
+            text: ['92%', '88%', '95%'],
+            textposition: 'outside',
+            textfont: {
+              size: 13,
+              color: '#2E2A32',
+              family: 'Noto Sans Hebrew'
+            }
+          }];
+
+          var layout1 = {
+            margin: { t: 50, r: 20, b: 60, l: 60 },
+            paper_bgcolor: '#FFFFFF',
+            plot_bgcolor: '#FFFFFF',
+            title: {
+              text: 'אמיר שמואלי - 95%',
+              font: { size: 15, family: 'Noto Sans Hebrew', color: '#2E2A32' }
+            },
+            xaxis: {
+              tickfont: { size: 13, family: 'Noto Sans Hebrew' },
+              gridcolor: '#E0E0E0'
+            },
+            yaxis: {
+              range: [0, 100],
+              tickfont: { size: 11 },
+              gridcolor: '#E0E0E0',
+              title: { text: 'אחוז התאמה', font: { size: 12, family: 'Noto Sans Hebrew' } }
+            }
+          };
+
+          Plotly.newPlot('chart-candidate-1', data1, layout1, {responsive: true, displayModeBar: false, displaylogo: false});
+
+          // Candidate 2 - רון ברקוביץ
+          var data2 = [{
+            type: 'bar',
+            x: ['חווד', 'סוציו', 'פסיכו'],
+            y: [85, 82, 78],
+            marker: {
+              color: ['#4F00BC', '#51E2C2', '#FB8F67'],
+              opacity: 0.8
+            },
+            text: ['85%', '82%', '78%'],
+            textposition: 'outside',
+            textfont: {
+              size: 13,
+              color: '#2E2A32',
+              family: 'Noto Sans Hebrew'
+            }
+          }];
+
+          var layout2 = {
+            margin: { t: 50, r: 20, b: 60, l: 60 },
+            paper_bgcolor: '#FFFFFF',
+            plot_bgcolor: '#FFFFFF',
+            title: {
+              text: 'רון ברקוביץ - 88%',
+              font: { size: 15, family: 'Noto Sans Hebrew', color: '#2E2A32' }
+            },
+            xaxis: {
+              tickfont: { size: 13, family: 'Noto Sans Hebrew' },
+              gridcolor: '#E0E0E0'
+            },
+            yaxis: {
+              range: [0, 100],
+              tickfont: { size: 11 },
+              gridcolor: '#E0E0E0',
+              title: { text: 'אחוז התאמה', font: { size: 12, family: 'Noto Sans Hebrew' } }
+            }
+          };
+
+          Plotly.newPlot('chart-candidate-2', data2, layout2, {responsive: true, displayModeBar: false, displaylogo: false});
+
+          // Candidate 3 - יוסי כהן
+          var data3 = [{
+            type: 'bar',
+            x: ['חווד', 'סוציו', 'פסיכו'],
+            y: [80, 75, 88],
+            marker: {
+              color: ['#4F00BC', '#51E2C2', '#FB8F67'],
+              opacity: 0.8
+            },
+            text: ['80%', '75%', '88%'],
+            textposition: 'outside',
+            textfont: {
+              size: 13,
+              color: '#2E2A32',
+              family: 'Noto Sans Hebrew'
+            }
+          }];
+
+          var layout3 = {
+            margin: { t: 50, r: 20, b: 60, l: 60 },
+            paper_bgcolor: '#FFFFFF',
+            plot_bgcolor: '#FFFFFF',
+            title: {
+              text: 'יוסי כהן - 85%',
+              font: { size: 15, family: 'Noto Sans Hebrew', color: '#2E2A32' }
+            },
+            xaxis: {
+              tickfont: { size: 13, family: 'Noto Sans Hebrew' },
+              gridcolor: '#E0E0E0'
+            },
+            yaxis: {
+              range: [0, 100],
+              tickfont: { size: 11 },
+              gridcolor: '#E0E0E0',
+              title: { text: 'אחוז התאמה', font: { size: 12, family: 'Noto Sans Hebrew' } }
+            }
+          };
+
+          Plotly.newPlot('chart-candidate-3', data3, layout3, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        } catch(e) {
+          console.error('Chart error:', e);
+        }
+      });
+    </script>
+  
+</body></html>
