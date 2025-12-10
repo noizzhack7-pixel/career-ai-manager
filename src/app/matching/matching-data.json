@@ -1,0 +1,266 @@
+[
+    {
+        "id": 1,
+        "title": "Full Stack Senior",
+        "matchPercentage": 94,
+        "matchDescription": "מועמדים מעל 90% התאמה",
+        "category": "טכנולוגיה",
+        "level": "בכיר",
+        "department": "Backend",
+        "division": "פיתוח",
+        "candidateCount": 14,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "מנהל כספים",
+        "matchPercentage": 87,
+        "matchDescription": "פער כישורים נמוך",
+        "category": "כספים ורכש",
+        "level": "ניהולי",
+        "department": "חשבונאות",
+        "division": "כספים",
+        "candidateCount": 8,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "title": "שותף עסקי HR",
+        "matchPercentage": 85,
+        "matchDescription": "הזדמנות פנימית גבוהה",
+        "category": "משאבי אנוש",
+        "level": "בכיר",
+        "department": "גיוס ופיתוח",
+        "division": "משאבי אנוש",
+        "candidateCount": 11,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "title": "ארכיטקט תוכנה",
+        "matchPercentage": 75,
+        "matchDescription": "מועמדים מעל 70% התאמה",
+        "category": "טכנולוגיה ופיתוח",
+        "level": "בכיר",
+        "department": "ארכיטקטורה",
+        "division": "טכנולוגיה",
+        "candidateCount": 7,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "title": "מנהל שיווק דיגיטלי",
+        "matchPercentage": 90,
+        "matchDescription": "מועמדים מעל 85% התאמה",
+        "category": "שיווק ודיגיטל",
+        "level": "ניהולי",
+        "department": "דיגיטל",
+        "division": "שיווק",
+        "candidateCount": 14,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "title": "מפתח DevOps",
+        "matchPercentage": 72,
+        "matchDescription": "פער כישורים בינוני",
+        "category": "טכנולוגיה ופיתוח",
+        "level": "בינוני",
+        "department": "DevOps",
+        "division": "תשתיות",
+        "candidateCount": 6,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "title": "רואה חשבון",
+        "matchPercentage": 68,
+        "matchDescription": "התאמה בינונית",
+        "category": "כספים ורכש",
+        "level": "בינוני",
+        "department": "ביקורת",
+        "division": "כספים",
+        "candidateCount": 9,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "title": "מהנדס QA",
+        "matchPercentage": 83,
+        "matchDescription": "מועמדים מעל 80% התאמה",
+        "category": "טכנולוגיה ופיתוח",
+        "level": "בינוני",
+        "department": "QA",
+        "division": "פיתוח",
+        "candidateCount": 16,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "title": "מנהל גיוס",
+        "matchPercentage": 87,
+        "matchDescription": "הזדמנות פנימית גבוהה",
+        "category": "משאבי אנוש",
+        "level": "ניהולי",
+        "department": "גיוס",
+        "division": "משאבי אנוש",
+        "candidateCount": 9,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "title": "מפתח Frontend",
+        "matchPercentage": 45,
+        "matchDescription": "התאמה חלקית",
+        "category": "טכנולוגיה ופיתוח",
+        "level": "זוטר",
+        "department": "Frontend",
+        "division": "פיתוח",
+        "candidateCount": 3,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "title": "מנתח מודיעין עסקי",
+        "matchPercentage": 70,
+        "matchDescription": "פער כישורים בינוני",
+        "category": "תפעול ולוגיסטיקה",
+        "level": "בכיר",
+        "department": "BI",
+        "division": "תפעול",
+        "candidateCount": 5,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "title": "מנהל שרשרת אספקה",
+        "matchPercentage": 81,
+        "matchDescription": "מועמדים מעל 75% התאמה",
+        "category": "תפעול ולוגיסטיקה",
+        "level": "ניהולי",
+        "department": "אספקה",
+        "division": "לוגיסטיקה",
+        "candidateCount": 6,
+        "candidates": [
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
+            },
+            {
+                "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg"
+            }
+        ]
+    }
+]

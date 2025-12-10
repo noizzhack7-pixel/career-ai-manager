@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ElementRef } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIf, NgFor } from '@angular/common';
 
@@ -22,6 +22,16 @@ export class HeaderComponent {
     ];
 
     unreadCount = 3;
+
+    constructor(private elementRef: ElementRef) { }
+
+    @HostListener('document:click', ['$event'])
+    onDocumentClick(event: MouseEvent) {
+        // Check if the click is outside the header component
+        if (!this.elementRef.nativeElement.contains(event.target)) {
+            this.closePopovers();
+        }
+    }
 
     toggleUserPopover() {
         this.showUserPopover = !this.showUserPopover;

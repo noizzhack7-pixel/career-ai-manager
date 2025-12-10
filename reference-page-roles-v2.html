@@ -1,0 +1,974 @@
+<!DOCTYPE html><html dir="rtl"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול תפקידים</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none; }</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#541388',
+                            light: '#EAD8FD',
+                            dark: '#650F54'
+                        },
+                        secondary: '#FB8F67',
+                        accent: '#9DD9D2',
+                        'soft-gray': '#F7F7F7',
+                        'medium-gray': '#E0E0E0',
+                        'dark-gray': '#707070',
+                    },
+                    fontFamily: {
+                        'noto': ['Noto Sans Hebrew', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'subtle': '0 4px 12px rgba(0, 0, 0, 0.05)',
+                        'card': '0 2px 8px rgba(0, 0, 0, 0.07)',
+                    },
+                    borderRadius: {
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-soft-gray font-noto text-dark-gray">
+    <div id="header" class="bg-white border-b border-medium-gray px-8 py-3">
+    <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-8 space-x-reverse">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-gradient-to-br from-primary-dark to-primary text-white p-2 rounded-lg">
+                    <i class="fa-solid fa-rocket text-lg"></i>
+                </div>
+                <h1 class="text-xl font-bold text-primary-dark">GO-PRO</h1>
+            </div>
+            <nav class="flex items-center space-x-6 space-x-reverse">
+                <a href="#" class="text-primary font-bold border-b-2 border-primary text-base py-2">
+                    <span>תפקידים בארגון</span>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-primary transition-colors font-semibold text-base py-2">
+                    <span>עובדים</span>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-primary transition-colors font-semibold text-base py-2">
+                    <span>התאמת תפקידים</span>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-primary transition-colors font-semibold text-base py-2">
+                    <span>לוח בקרה</span>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-primary transition-colors font-semibold text-base py-2">
+                    <span>הגדרות</span>
+                </a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-6 space-x-reverse">
+            <div class="relative w-72">
+                <input type="text" placeholder="חיפוש בשפה חופשית..." class="w-full bg-soft-gray border border-medium-gray rounded-full py-2 pr-10 pl-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                <i class="fa-solid fa-search absolute right-4 top-1/2 -translate-y-1/2 text-dark-gray"></i>
+            </div>
+            <button class="text-dark-gray hover:text-primary transition-colors">
+                <i class="fa-regular fa-bell text-xl"></i>
+            </button>
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="פרופיל" class="w-10 h-10 rounded-full border-2 border-primary-light">
+                <div class="text-right">
+                    <p class="text-sm font-semibold text-gray-800">תמר כהן</p>
+                    <p class="text-xs text-dark-gray">מפתחת בכירה</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div id="main-content" class="p-8">
+        <div id="top-section" class="mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-1">ניהול תפקידים</h2>
+                    <p class="text-dark-gray">סקירה כללית של כלל התפקידים בארגון, סטטוסים וסינונים.</p>
+                </div>
+                <button class="bg-primary text-white px-6 py-3 rounded-full hover:bg-primary-dark transition-all flex items-center space-x-2 space-x-reverse font-semibold shadow-md hover:shadow-lg">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>הוסף תפקיד חדש</span>
+                </button>
+            </div>
+
+            <div id="stats-cards" class="grid grid-cols-4 gap-6 mb-8">
+    <div class="bg-white rounded-xl shadow-card p-6 border-l-4 border-primary">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-dark-gray mb-1">סך הכל תפקידים</p>
+                <h3 class="text-3xl font-bold text-gray-800">689</h3>
+            </div>
+            <div class="bg-gradient-to-br from-primary/20 to-primary-light text-primary p-4 rounded-full">
+                <i class="fa-solid fa-briefcase text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-card p-6 border-l-4 border-amber-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-dark-gray mb-1">תפקידים פתוחים</p>
+                <h3 class="text-3xl font-bold text-gray-800">54</h3>
+            </div>
+            <div class="bg-gradient-to-br from-amber-100 to-amber-200 text-amber-700 p-4 rounded-full">
+                <i class="fa-solid fa-door-open text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-card p-6 border-l-4 border-orange-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-dark-gray mb-1">תפקידים מאוישים</p>
+                <h3 class="text-3xl font-bold text-gray-800">635</h3>
+            </div>
+            <div class="bg-gradient-to-br from-orange-100 to-orange-200 text-orange-600 p-4 rounded-full">
+                <i class="fa-solid fa-user-check text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-card p-6 border-l-4 border-teal-500">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-dark-gray mb-1">בתהליך גיוס</p>
+                <h3 class="text-3xl font-bold text-gray-800">26</h3>
+            </div>
+            <div class="bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600 p-4 rounded-full">
+                <i class="fa-solid fa-clock text-2xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+
+        <div id="filter-section" class="bg-white rounded-xl shadow-card p-5 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <i class="fa-solid fa-filter text-primary text-lg"></i>
+                    <h3 class="text-lg font-semibold text-gray-800">סינון חכם</h3>
+                </div>
+                <button onclick="resetAllFilters()" class="text-sm text-primary hover:text-primary-dark font-semibold flex items-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-rotate-right text-xs"></i>
+                    <span>נקה הכל</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-4 gap-4 mb-4">
+                <div>
+                    <label class="text-xs text-dark-gray font-semibold mb-2 block">קטגוריה</label>
+                    <select id="filter-category" onchange="applyFilters()" class="w-full bg-soft-gray border border-medium-gray rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        <option value="">כל הקטגוריות</option>
+                        <option value="tech">טכנולוגיה ופיתוח</option>
+                        <option value="marketing">שיווק ודיגיטל</option>
+                        <option value="operations">תפעול ולוגיסטיקה</option>
+                        <option value="finance">כספים ורכש</option>
+                        <option value="hr">משאבי אנוש</option>
+                        <option value="management">ניהול ומטה</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="text-xs text-dark-gray font-semibold mb-2 block">סטטוס</label>
+                    <select id="filter-status" onchange="applyFilters()" class="w-full bg-soft-gray border border-medium-gray rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        <option value="">כל הסטטוסים</option>
+                        <option value="open">פתוח</option>
+                        <option value="in-process">בתהליך גיוס</option>
+                        <option value="staffed">מאויש</option>
+                        <option value="frozen">מוקפא</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="text-xs text-dark-gray font-semibold mb-2 block">רמת בכירות</label>
+                    <select id="filter-seniority" onchange="applyFilters()" class="w-full bg-soft-gray border border-medium-gray rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                        <option value="">כל הרמות</option>
+                        <option value="junior">זוטר</option>
+                        <option value="mid">בינוני</option>
+                        <option value="senior">בכיר</option>
+                        <option value="manager">ניהולי</option>
+                    </select>
+                </div>
+
+                <div class="flex items-end">
+                    <button onclick="toggleAdvancedFilters()" class="w-full bg-primary/10 text-primary py-2.5 px-4 rounded-lg hover:bg-primary/20 transition-colors font-semibold text-sm flex items-center justify-center space-x-2 space-x-reverse">
+                        <span>סינונים מתקדמים</span>
+                        <i id="advanced-arrow" class="fa-solid fa-chevron-down text-xs transition-transform"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="advanced-filters-panel" class="hidden border-t border-medium-gray pt-4 mt-4">
+                <div class="grid grid-cols-4 gap-4">
+                    <div>
+                        <label class="text-xs text-dark-gray font-semibold mb-2 block">מחלקה</label>
+                        <select id="filter-department" onchange="applyFilters()" class="w-full bg-soft-gray border border-medium-gray rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            <option value="">כל המחלקות</option>
+                            <option value="dev">פיתוח</option>
+                            <option value="qa">בדיקות</option>
+                            <option value="infra">תשתיות</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-dark-gray font-semibold mb-2 block">מנהל מגייס</label>
+                        <select id="filter-hiring-manager" onchange="applyFilters()" class="w-full bg-soft-gray border border-medium-gray rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            <option value="">כל המנהלים</option>
+                            <option value="manager1">יוסי כהן</option>
+                            <option value="manager2">שירה גולן</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-dark-gray font-semibold mb-2 block">תאריך פרסום</label>
+                        <input type="date" id="filter-posting-date" onchange="applyFilters()" class="w-full bg-soft-gray border border-medium-gray rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-dark-gray font-semibold mb-2 block">% משרה</label>
+                        <select id="filter-employment" onchange="applyFilters()" class="w-full bg-soft-gray border border-medium-gray rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            <option value="">הכל</option>
+                            <option value="100">100%</option>
+                            <option value="75">75%</option>
+                            <option value="50">50%</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-dark-gray font-semibold mb-2 block">מיקום</label>
+                        <select id="filter-location" onchange="applyFilters()" class="w-full bg-soft-gray border border-medium-gray rounded-lg py-2.5 px-4 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none">
+                            <option value="">כל המיקומים</option>
+                            <option value="tlv">תל אביב</option>
+                            <option value="jerusalem">ירושלים</option>
+                            <option value="haifa">חיפה</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="jobs-content" class="mt-6">
+            <div class="flex items-center justify-between mb-5">
+                <div class="text-sm text-dark-gray/70 flex items-center space-x-2 space-x-reverse">
+                    <span><span class="font-semibold text-gray-800" id="results-count">127</span> תפקידים נמצאו</span>
+                </div>
+            </div>
+
+            <div id="jobs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="staffed" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מפתח Full Stack Senior</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">אמיר שמואלי | רמה: בכיר</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 15/08/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="finance" data-status="open" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנהל כספים</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">כספים ורכש</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>8 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="hr" data-status="in-process" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">שותף עסקי HR</h4>
+                        <span class="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">בתהליך</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">משאבי אנוש</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>11 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="open" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">ארכיטקט תוכנה</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>12 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="marketing" data-status="staffed" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנהל שיווק דיגיטלי</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">שיווק ודיגיטל</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">רונית כהן | רמה: בכיר</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 10/09/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="open" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מפתח DevOps</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בינוני</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>8 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="finance" data-status="in-process" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">רואה חשבון</h4>
+                        <span class="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">בתהליך</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">כספים ורכש</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בינוני</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>14 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="staffed" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מהנדס QA</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">דנה לוי | רמה: בינוני</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 22/11/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="hr" data-status="open" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנהל גיוס</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">משאבי אנוש</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>9 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="in-process" data-seniority="junior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מפתח Frontend</h4>
+                        <span class="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">בתהליך</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: זוטר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>22 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="operations" data-status="staffed" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנתח מודיעין</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">תפעול ולוגיסטיקה</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">עמית לוי | רמה: בכיר</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 01/03/2026</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="operations" data-status="open" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנהל שרשרת אספקה</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">תפעול ולוגיסטיקה</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>6 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="staffed" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מפתח Backend</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">רועי דהן | רמה: בינוני</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 18/07/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="management" data-status="in-process" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנהל פרויקטים</h4>
+                        <span class="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">בתהליך</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">ניהול ומטה</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>13 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="operations" data-status="open" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מפעיל מערכות</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">תפעול ולוגיסטיקה</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בינוני</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>17 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="management" data-status="staffed" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מזכירה בכירה</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">ניהול ומטה</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">ליאת שמש | רמה: בינוני</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 15/12/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="open" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מהנדס אבטחת מידע</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>7 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="finance" data-status="in-process" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">אנליסט פיננסי</h4>
+                        <span class="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">בתהליך</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">כספים ורכש</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בינוני</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>10 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">
+                            פרטי משרה
+                        </button>
+                    </div>
+                </div>
+
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="staffed" data-seniority="manager">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנהל פיתוח</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">יוסי כהן | רמה: ניהולי</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 01/03/2026</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="in-process" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מומחה Data Science</h4>
+                        <span class="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">בתהליך</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>9 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="staffed" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מהנדס Machine Learning</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">מיכל אברהם | רמה: בכיר</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 30/09/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="open" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מפתח Mobile</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בינוני</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>19 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="staffed" data-seniority="manager">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנהל תשתיות</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">גיא שפירא | רמה: ניהולי</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 12/12/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="in-process" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מפתח Cloud</h4>
+                        <span class="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">בתהליך</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>10 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="staffed" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מנתח מערכות</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">נועה ברק | רמה: בינוני</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 05/06/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="open" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מהנדס Automation</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בינוני</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>15 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="staffed" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">Product Manager</h4>
+                        <span class="bg-gradient-to-r from-orange-100 to-orange-200 text-orange-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">מאויש</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">שירה גולן | רמה: בכיר</p>
+                    <div class="flex items-center text-sm text-amber-600 font-semibold mb-4 bg-amber-50 p-2 rounded-lg">
+                        <i class="fa-solid fa-calendar-days ml-2"></i>
+                        <span>פינוי משרה: 20/10/2025</span>
+                    </div>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="open" data-seniority="mid">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מעצב UX/UI</h4>
+                        <span class="bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">פתוח</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בינוני</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>20 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+                <div class="job-card bg-white rounded-xl p-5 border-2 border-medium-gray/30 hover:border-primary/60 hover:shadow-lg transition-all relative group" data-category="tech" data-status="in-process" data-seniority="senior">
+                    <button class="absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity bg-primary-light/50 text-primary p-2.5 rounded-lg hover:bg-primary hover:text-white shadow-md">
+                        <i class="fa-solid fa-pen text-sm"></i>
+                    </button>
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-lg">מהנדס Embedded</h4>
+                        <span class="bg-gradient-to-r from-teal-100 to-teal-200 text-teal-700 text-xs px-3 py-1.5 rounded-full font-bold shadow-sm">בתהליך</span>
+                    </div>
+                    <p class="text-xs text-primary font-bold mb-3 uppercase tracking-wide">טכנולוגיה ופיתוח</p>
+                    <p class="text-sm text-dark-gray mb-4 font-medium">לא מאויש | רמה: בכיר</p>
+                    <button class="flex items-center text-sm text-primary font-semibold mb-4 bg-primary-light/20 p-2 rounded-lg w-full hover:bg-primary-light/30 transition-colors cursor-pointer">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        <span>6 מועמדים מתאימים</span>
+                    </button>
+                    <div class="flex space-x-2 space-x-reverse">
+                        <button class="text-primary text-xs px-4 py-2 rounded-full hover:bg-primary-light/30 transition-colors font-semibold border border-primary/30 w-full">פרטי משרה</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="jobs-list" class="space-y-4 hidden">
+            </div>
+            
+            <div id="no-results" class="text-center py-16 text-dark-gray hidden">
+                 <i class="fa-solid fa-folder-open text-5xl mb-4 text-gray-400"></i>
+                 <p class="text-lg font-semibold text-gray-700">לא נמצאו תפקידים בקטגוריה זו</p>
+                 <p class="text-sm">נסה לבחור קטגוריה אחרת או לאפס את הסינונים.</p>
+            </div>
+        </div>
+
+        <div id="pagination" class="flex justify-center mt-10">
+            <div class="flex space-x-2 space-x-reverse items-center">
+                <button class="w-10 h-10 flex items-center justify-center bg-white border border-medium-gray rounded-full hover:bg-soft-gray transition-colors text-dark-gray">
+                    <i class="fa-solid fa-chevron-right text-xs"></i>
+                </button>
+                <button class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-semibold">1</button>
+                <button class="w-10 h-10 flex items-center justify-center bg-white border border-medium-gray rounded-full hover:bg-soft-gray transition-colors text-dark-gray">2</button>
+                <button class="w-10 h-10 flex items-center justify-center bg-white border border-medium-gray rounded-full hover:bg-soft-gray transition-colors text-dark-gray">3</button>
+                <button class="w-10 h-10 flex items-center justify-center bg-white border border-medium-gray rounded-full hover:bg-soft-gray transition-colors text-dark-gray">
+                    <i class="fa-solid fa-chevron-left text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function applyFilters() {
+            const category = document.getElementById('filter-category').value;
+            const status = document.getElementById('filter-status').value;
+            const seniority = document.getElementById('filter-seniority').value;
+            
+            const allCards = document.querySelectorAll('#jobs-grid .job-card');
+            const noResultsMessage = document.getElementById('no-results');
+            let visibleCount = 0;
+
+            allCards.forEach(card => {
+                let shouldShow = true;
+                
+                if (category && card.dataset.category !== category) {
+                    shouldShow = false;
+                }
+                
+                if (status && card.dataset.status !== status) {
+                    shouldShow = false;
+                }
+                
+                if (seniority && card.dataset.seniority !== seniority) {
+                    shouldShow = false;
+                }
+                
+                if (shouldShow) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            document.getElementById('results-count').textContent = visibleCount;
+            
+            if (visibleCount === 0) {
+                noResultsMessage.classList.remove('hidden');
+            } else {
+                noResultsMessage.classList.add('hidden');
+            }
+        }
+
+        function resetAllFilters() {
+            document.getElementById('filter-category').value = '';
+            document.getElementById('filter-status').value = '';
+            document.getElementById('filter-seniority').value = '';
+            document.getElementById('filter-department').value = '';
+            document.getElementById('filter-hiring-manager').value = '';
+            document.getElementById('filter-posting-date').value = '';
+            document.getElementById('filter-employment').value = '';
+            document.getElementById('filter-location').value = '';
+            
+            const allCards = document.querySelectorAll('#jobs-grid .job-card');
+            allCards.forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            document.getElementById('results-count').textContent = allCards.length;
+            document.getElementById('no-results').classList.add('hidden');
+        }
+
+        function toggleAdvancedFilters() {
+            const panel = document.getElementById('advanced-filters-panel');
+            const arrow = document.getElementById('advanced-arrow');
+            
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                panel.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function switchView(viewType) {
+            const gridView = document.getElementById('jobs-grid');
+            const listView = document.getElementById('jobs-list');
+            const gridBtn = document.getElementById('grid-view-btn');
+            const listBtn = document.getElementById('list-view-btn');
+            
+            if (viewType === 'grid') {
+                gridView.classList.remove('hidden');
+                listView.classList.add('hidden');
+                gridBtn.classList.add('bg-primary/10', 'text-primary');
+                gridBtn.classList.remove('text-dark-gray/50');
+                listBtn.classList.remove('bg-primary/10', 'text-primary');
+                listBtn.classList.add('text-dark-gray/50');
+            } else {
+                gridView.classList.add('hidden');
+                listView.classList.remove('hidden');
+                listBtn.classList.add('bg-primary/10', 'text-primary');
+                listBtn.classList.remove('text-dark-gray/50');
+                gridBtn.classList.remove('bg-primary/10', 'text-primary');
+                gridBtn.classList.add('text-dark-gray/50');
+            }
+        }
+
+        function saveFilterPreset() {
+            alert('שמירת סינון תתבצע בקרוב');
+        }
+    </script>
+
+
+</body></html>

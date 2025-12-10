@@ -33,6 +33,9 @@ export class RolesComponent {
     // Advanced filter properties
     advancedFilters = {
         department: '',
+        hiringManager: '',
+        location: '',
+        employment: '',
         minSalary: '',
         maxSalary: '',
         dateFrom: '',
@@ -165,6 +168,19 @@ export class RolesComponent {
         return { total, filled, open };
     }
 
+    get openRolesCount(): number {
+        return this.roles.filter(r => r.status === 'open').length;
+    }
+
+    get filledRolesCount(): number {
+        return this.roles.filter(r => r.status === 'filled').length;
+    }
+
+    get recruitingRolesCount(): number {
+        return this.roles.filter(r => r.status === 'recruiting').length;
+    }
+
+
     get visibleCategories() {
         return this.categories.filter(cat => this.getRolesByCategory(cat.name).length > 0);
     }
@@ -189,6 +205,9 @@ export class RolesComponent {
         this.selectedLevel = '';
         this.advancedFilters = {
             department: '',
+            hiringManager: '',
+            location: '',
+            employment: '',
             minSalary: '',
             maxSalary: '',
             dateFrom: '',
@@ -210,6 +229,9 @@ export class RolesComponent {
         if (this.selectedStatus) count++;
         if (this.selectedLevel) count++;
         if (this.advancedFilters.department) count++;
+        if (this.advancedFilters.hiringManager) count++;
+        if (this.advancedFilters.location) count++;
+        if (this.advancedFilters.employment) count++;
         if (this.advancedFilters.minSalary) count++;
         if (this.advancedFilters.maxSalary) count++;
         if (this.advancedFilters.minCandidates) count++;
