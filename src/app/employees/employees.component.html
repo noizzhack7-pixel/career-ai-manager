@@ -1,0 +1,1227 @@
+﻿<div class="flex items-center space-x-3 space-x-reverse">
+  <h3 class="text-xl font-semibold text-gray-800">×¢×•×‘×“×™× ×‘××¨×’×•×Ÿ</h3>
+  <span class="bg-primary text-white text-sm font-normal px-3 py-1 rounded-full">145 ×¢×•×‘×“×™×</span>
+</div>
+<div class="flex items-center space-x-3 space-x-reverse">
+  <button
+    class="bg-primaryDark text-white px-6 py-2.5 rounded-xl hover:opacity-90 transition-all flex items-center space-x-2 space-x-reverse font-medium shadow-md shadow-primaryDark/30">
+    <i class="fa-solid fa-user-plus"></i>
+    <span>×”×•×¡×£ ×¢×•×‘×“</span>
+  </button>
+</div>
+</div>
+
+<div class="flex space-x-4 space-x-reverse">
+  <div class="relative flex-1">
+    <input type="text" placeholder="×—×™×¤×•×© ×¢×•×‘×“ ×œ×¤×™ ×©×, ×ª×¤×§×™×“, ×ž×—×œ×§×”..." [value]="searchQuery()"
+      (input)="onSearchChange($event)"
+      class="w-full pr-10 pl-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all">
+    <i class="fa-solid fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+    <button *ngIf="searchQuery()" (click)="clearSearch()"
+      class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+      <i class="fa-solid fa-times"></i>
+    </button>
+  </div>
+
+  <select (change)="onSortChange($event)"
+    class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all">
+    <option value="name-asc">×ž×™×•×Ÿ: ×©× (×-×ª)</option>
+    <option value="name-desc">×ž×™×•×Ÿ: ×©× (×ª-×)</option>
+    <option value="role">×ž×™×•×Ÿ: ×ª×¤×§×™×“</option>
+    <option value="tenure">×ž×™×•×Ÿ: ×•×ª×§</option>
+    <option value="risk">×ž×™×•×Ÿ: ×¡×™×›×•×Ÿ ×¢×–×™×‘×”</option>
+  </select>
+
+  <button
+    class="bg-white border border-gray-300 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2 space-x-reverse">
+    <i class="fa-solid fa-filter"></i>
+    <span>×¡×™× ×•×Ÿ ×ž×ª×§×“×</span>
+  </button>
+</div>
+</div>
+
+<!-- Search Results Counter -->
+<div *ngIf="searchQuery()" class="mb-4 text-sm text-gray-600">
+  <span class="font-medium">× ×ž×¦××• {{ filteredEmployees().length }} ×ª×•×¦××•×ª</span>
+  <span class="mr-2">×¢×‘×•×¨ "{{ searchQuery() }}"</span>
+</div>
+
+<!-- No Results Message -->
+<div *ngIf="searchQuery() && filteredEmployees().length === 0"
+  class="bg-white rounded-lg shadow-sm border border-gray-100 p-12 text-center">
+  <i class="fa-solid fa-search text-gray-300 text-5xl mb-4"></i>
+  <h3 class="text-xl font-semibold text-gray-700 mb-2">×œ× × ×ž×¦××• ×ª×•×¦××•×ª</h3>
+  <p class="text-gray-500 mb-4">×œ× × ×ž×¦××• ×¢×•×‘×“×™× ×”×ª×•××ž×™× ×œ×—×™×¤×•×© "{{ searchQuery() }}"</p>
+  <button (click)="clearSearch()"
+    class="bg-gradient-to-r from-primary to-primaryLight text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all">
+    × ×§×” ×—×™×¤×•×©
+  </button>
+</div>
+
+<div id="employees-list" class="space-y-6" *ngIf="filteredEmployees().length > 0">
+  <div *ngFor="let employee of paginatedEmployees(); let i = index" [id]="'employee-' + employee.id"
+    class="bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-200 overflow-hidden">
+    <div class="p-6">
+      <div class="flex items-start gap-6">
+        <!-- Left side: Avatar only -->
+        <div class="flex-shrink-0">
+          <img [src]="employee.avatar" [alt]="employee.name"
+            class="w-16 h-16 rounded-full border-2 border-gray-100 shadow-sm">
+        </div>
+
+        <!-- Center: Main Content -->
+        <div class="flex-1">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <div class="flex items-center gap-3 mb-1">
+                <h3 class="text-xl font-semibold text-gray-900">{{ employee.name }}</h3>
+                <button class="text-softGray hover:text-primary transition-colors">
+                  <i class="fa-solid fa-pen text-sm"></i>
+                </button>
+              </div>
+              <p class="text-base text-gray-600 mb-1">{{ employee.role }}</p>
+              <p class="text-sm text-softGray">{{ employee.department }}</p>
+            </div>
+
+            <!-- Right side: Metrics and Button -->
+            <div class="flex items-center gap-3">
+              <!-- Attrition Risk -->
+              <div
+                class="flex items-center gap-2 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors px-3 py-2"
+                (click)="openAttritionPopup(employee)">
+                <span class="text-sm text-softGray whitespace-nowrap">סיכון עזיבה</span>
+                <div class="flex items-center gap-1.5">
+                  <div
+                    [class]="employee.turnoverRisk > 40 ? 'w-2 h-2 bg-red-500 rounded-full' : 'w-2 h-2 bg-green-500 rounded-full'">
+                  </div>
+                  <span class="text-base font-semibold text-gray-900">{{ employee.turnoverRisk }}%</span>
+                </div>
+              </div>
+
+              <!-- Role Match -->
+              <div
+                class="flex items-center gap-2 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors px-3 py-2"
+                (click)="openRoleMatchPopup(employee)">
+                <span class="text-sm text-softGray whitespace-nowrap">התאמה לתפקיד</span>
+                <div class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-check-circle text-green-500 text-sm"></i>
+                  <span class="text-base font-semibold text-gray-900">94%</span>
+                </div>
+              </div>
+
+              <!-- View Profile Button -->
+              <button
+                class="bg-primaryDark text-white px-5 py-2 rounded-xl hover:opacity-90 transition-all text-sm font-medium shadow-md shadow-primaryDark/20 whitespace-nowrap">
+                צפה בפרופיל
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-4 mb-4">
+            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+              <div class="text-xs text-softGray mb-1">×•×ª×§ ×‘×ª×¤×§×™×“</div>
+              <div class="text-base font-semibold text-gray-900">{{ employee.tenure }} ×©× ×™×</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+              <div class="text-xs text-softGray mb-1">×”×¢×¨×›×ª ×ª×¤×§×•×“</div>
+              <div class="flex items-center gap-1">
+                <i class="fa-solid fa-star text-green-500 text-sm"></i>
+                <span class="text-base font-semibold text-gray-900">6/6</span>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+              <div class="text-xs text-softGray mb-1">×©×‘×™×¢×•×ª ×¨×¦×•×Ÿ</div>
+              <div class="flex items-center gap-1">
+                <i class="fa-solid fa-face-smile text-primary text-sm"></i>
+                <span class="text-base font-semibold text-gray-900">5/6</span>
+              </div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+              <div class="text-xs text-softGray mb-1">× ×•×›×—×•×ª</div>
+              <div class="text-base font-semibold text-gray-900">96%</div>
+            </div>
+          </div>
+
+          <!-- Keep the matching percentage section from original -->
+          <div
+            class="mb-4 bg-purple-50 rounded-lg p-3 border border-purple-100 cursor-pointer hover:bg-purple-100 transition-colors"
+            (click)="openRoleMatchPopup(employee)">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="bg-purple-100 rounded-lg p-2">
+                  <i class="fa-solid fa-chart-line text-primary text-sm"></i>
+                </div>
+                <div>
+                  <div class="text-xs text-softGray mb-1">×”×ª××ž×” ×œ×ª×¤×§×™×“ × ×•×›×—×™</div>
+                  <div class="flex items-center gap-2">
+                    <div class="w-32 bg-gray-200 rounded-full h-2.5">
+                      <div class="bg-gradient-to-l from-green-500 to-green-600 h-2.5 rounded-full" style="width: 95%">
+                      </div>
+                    </div>
+                    <span class="text-lg font-bold text-green-600">95%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="text-xs text-primary flex items-center gap-1">
+                <i class="fa-solid fa-info-circle"></i>
+                <span>×œ×—×¥ ×œ×¤×¨×˜×™×</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h4 class="text-sm font-semibold text-gray-700 mb-2">×›×™×©×•×¨×™× ×ž×§×¦×•×¢×™×™×:</h4>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-purple-50 text-primary text-sm px-3 py-1.5 rounded-lg border border-purple-100">React
+                95%</span>
+              <span class="bg-purple-50 text-primary text-sm px-3 py-1.5 rounded-lg border border-purple-100">Node.js
+                92%</span>
+              <span class="bg-purple-50 text-primary text-sm px-3 py-1.5 rounded-lg border border-purple-100">AWS
+                88%</span>
+            </div>
+          </div>
+
+          <details class="cursor-pointer group">
+            <summary
+              class="text-sm font-medium text-primary hover:text-primaryDark transition-colors flex items-center gap-2 py-2">
+              <i class="fa-solid fa-chevron-down transform group-open:rotate-180 transition-transform text-xs"></i>
+              <span>×”×¦×’ ×¤×¨×˜×™× × ×•×¡×¤×™×</span>
+            </summary>
+
+            <div class="mt-4 pt-4 border-t border-gray-200">
+              <div class="grid grid-cols-3 gap-4 mb-4">
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div class="text-xs text-softGray mb-1">×™×ž×™× ×‘×ª×¤×§×™×“</div>
+                  <div class="text-base font-semibold text-gray-900">{{ employee.tenure * 365 }} ×™×ž×™×</div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div class="text-xs text-softGray mb-1">×”×¢×œ××” ××—×¨×•× ×”</div>
+                  <div class="text-base font-semibold text-gray-900">8 ×—×•×“×©×™× | +12%</div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div class="text-xs text-softGray mb-1">×¤×•×˜× ×¦×™××œ ×¦×ž×™×—×”</div>
+                  <div class="text-base font-semibold text-primary">×’×‘×•×”</div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-3 gap-4">
+                <div class="bg-white rounded-lg p-4 border border-gray-200">
+                  <div class="flex items-center gap-2 mb-3">
+                    <div class="w-6 h-6 rounded-lg bg-purple-50 flex items-center justify-center">
+                      <i class="fa-solid fa-users text-primary text-xs"></i>
+                    </div>
+                    <h4 class="text-sm font-semibold text-gray-800">×›×™×©×•×¨×™× ×‘×™×Ÿ ××™×©×™×™×</h4>
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      class="bg-gray-50 text-gray-700 text-xs px-2.5 py-1 rounded-lg border border-gray-200">×ª×§×©×•×¨×ª
+                      92%</span>
+                    <span
+                      class="bg-gray-50 text-gray-700 text-xs px-2.5 py-1 rounded-lg border border-gray-200">×¤×ª×¨×•×Ÿ
+                      ×‘×¢×™×•×ª 94%</span>
+                    <span
+                      class="bg-gray-50 text-gray-700 text-xs px-2.5 py-1 rounded-lg border border-gray-200">×¢×‘×•×“×ª
+                      ×¦×•×•×ª 88%</span>
+                    <span
+                      class="bg-gray-50 text-gray-700 text-xs px-2.5 py-1 rounded-lg border border-gray-200">×ž× ×”×™×’×•×ª
+                      85%</span>
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-4 border border-gray-200">
+                  <div class="flex items-center gap-2 mb-3">
+                    <div class="w-6 h-6 rounded-lg bg-purple-50 flex items-center justify-center">
+                      <i class="fa-solid fa-briefcase text-primary text-xs"></i>
+                    </div>
+                    <h4 class="text-sm font-semibold text-gray-800">×‘×§×©×•×ª ×œ×ª×¤×§×™×“×™×</h4>
+                  </div>
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded-lg border border-gray-200">
+                      <span class="text-xs text-gray-700">××¨×›×™×˜×§×˜ ×ª×•×›× ×”</span>
+                      <span class="text-xs font-semibold bg-primary text-white px-2 py-0.5 rounded-full">92%</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded-lg border border-gray-200">
+                      <span class="text-xs text-gray-700">Team Leader Backend</span>
+                      <span class="text-xs font-semibold bg-primary text-white px-2 py-0.5 rounded-full">88%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-4 border border-gray-200">
+                  <div class="flex items-center gap-2 mb-3">
+                    <div class="w-6 h-6 rounded-lg bg-amber-50 flex items-center justify-center">
+                      <i class="fa-solid fa-trophy text-amber-600 text-xs"></i>
+                    </div>
+                    <h4 class="text-sm font-semibold text-gray-800">×”×›×¨×” ××—×¨×•× ×”</h4>
+                  </div>
+                  <div class="space-y-1.5">
+                    <div class="flex items-start gap-2 text-xs text-gray-700">
+                      <span class="text-amber-500 text-sm">â­</span>
+                      <p>×”×•×‘×œ×ª ×¤×¨×•×™×§×˜ ×‘×”×¦×œ×—×”</p>
+                    </div>
+                    <div class="flex items-start gap-2 text-xs text-gray-700">
+                      <span class="text-amber-500 text-sm">â­</span>
+                      <p>×¢×–×¨×” ×œ×¦×•×•×ª ×‘×¤×ª×¨×•×Ÿ ×‘×¢×™×•×ª</p>
+                    </div>
+                    <div class="flex items-start gap-2 text-xs text-gray-700">
+                      <span class="text-amber-500 text-sm">â­</span>
+                      <p>×§×•×“ ××™×›×•×ª×™ ×•× ×™×§×™</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="pagination" class="flex justify-center mt-8" *ngIf="filteredEmployees().length > 0 && totalPages() > 1">
+  <div class="flex space-x-2 space-x-reverse items-center">
+    <button (click)="previousPage()" [disabled]="currentPage() === 1"
+      [class]="currentPage() === 1 ? 'px-4 py-2 border border-gray-300 rounded-lg text-gray-400 cursor-not-allowed' : 'px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700'">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <button *ngFor="let page of [].constructor(totalPages()); let i = index" (click)="goToPage(i + 1)"
+      [class]="currentPage() === i + 1 ? 'px-4 py-2 bg-gradient-to-r from-primary to-primaryLight text-white rounded-lg font-medium shadow-md' : 'px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700'">
+      {{ i + 1 }}
+    </button>
+
+    <button (click)="nextPage()" [disabled]="currentPage() === totalPages()"
+      [class]="currentPage() === totalPages() ? 'px-4 py-2 border border-gray-300 rounded-lg text-gray-400 cursor-not-allowed' : 'px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700'">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- Role Match Explanation Popup -->
+<div *ngIf="showRoleMatchPopup()" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+  (click)="closeRoleMatchPopup()">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+    (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="sticky top-0 bg-gradient-to-r from-primary to-primaryLight text-white p-6 rounded-t-2xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3 space-x-reverse">
+          <div class="bg-white bg-opacity-20 rounded-full p-3">
+            <i class="fa-solid fa-chart-line text-2xl"></i>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold">×”×ª××ž×” ×œ×ª×¤×§×™×“ × ×•×›×—×™</h2>
+            <p class="text-white text-opacity-90 text-sm mt-1">× ×™×ª×•×— ×ž×¤×•×¨×˜ ×©×œ ×¨×ž×ª ×”×”×ª××ž×”</p>
+          </div>
+        </div>
+        <button (click)="closeRoleMatchPopup()"
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2 transition-all">
+          <i class="fa-solid fa-times text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6 space-y-6">
+
+      <!-- Overall Score -->
+      <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border-2 border-green-200">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800">×¦×™×•×Ÿ ×”×ª××ž×” ×›×œ×œ×™</h3>
+            <p class="text-sm text-gray-600 mt-1">{{ selectedEmployee()?.name }} - {{ selectedEmployee()?.role }}</p>
+          </div>
+          <div class="text-center">
+            <div class="text-5xl font-bold text-green-600">95%</div>
+            <div class="text-sm text-green-700 mt-1 font-medium">×”×ª××ž×” ×ž×¦×•×™× ×ª</div>
+          </div>
+        </div>
+
+        <div class="w-full bg-gray-200 rounded-full h-4">
+          <div class="bg-gradient-to-l from-green-500 to-green-600 h-4 rounded-full transition-all duration-1000"
+            style="width: 95%">
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Insight -->
+      <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-200">
+        <div class="flex items-start space-x-3 space-x-reverse">
+          <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full p-2 mt-1">
+            <i class="fa-solid fa-brain text-white text-lg"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800 mb-2 flex items-center space-x-2 space-x-reverse">
+              <span>×ª×•×‘× ×ª AI</span>
+              <span
+                class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full">×ž×‘×•×¡×¡
+                ×‘×™× ×” ×ž×œ××›×•×ª×™×ª</span>
+            </h4>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              ×”×¢×•×‘×“ ×ž×¦×™×’ ×”×ª××ž×” ×™×•×¦××ª ×“×•×¤×Ÿ ×œ×ª×¤×§×™×“ ×”× ×•×›×—×™. ×”×ž×™×•×ž× ×•×™×•×ª
+              ×”×˜×›× ×™×•×ª ×©×œ×• ×ž×ª××™×ž×•×ª ×‘-98% ×œ×“×¨×™×©×•×ª ×”×ª×¤×§×™×“,
+              ×•×”×•× ×ž×¤×’×™×Ÿ ×‘×™×¦×•×¢×™× ×ž×¦×•×™× ×™× ×‘×›×œ ×”×ž×“×“×™×. ×¨×ž×ª ×”× ×•×›×—×•×ª
+              ×•×”×ž×—×•×™×‘×•×ª ×’×‘×•×”×” ×‘×ž×™×•×—×“.
+              ×ž×•×ž×œ×¥ ×œ×©×§×•×œ ×§×™×“×•× ××• ×”×¨×—×‘×ª ××—×¨×™×•×ª ×‘×ª×•×š ×”×ª×¤×§×™×“ ×”× ×•×›×—×™.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breakdown Metrics -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2 space-x-reverse">
+          <i class="fa-solid fa-sliders text-primary"></i>
+          <span>×¤×™×¨×•×˜ ×ž×¨×›×™×‘×™ ×”×”×ª××ž×”</span>
+        </h3>
+
+        <div class="space-y-4">
+          <!-- Skills Match -->
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-blue-100 rounded-lg p-2">
+                  <i class="fa-solid fa-code text-blue-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×”×ª××ž×ª ×ž×™×•×ž× ×•×™×•×ª ×˜×›× ×™×•×ª</h4>
+                  <p class="text-xs text-gray-500">×›×™×©×•×¨×™× × ×“×¨×©×™× ×ž×•×œ ×›×™×©×•×¨×™× ×§×™×™×ž×™×</p>
+                </div>
+              </div>
+              <div class="text-2xl font-bold text-blue-600">98%</div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div class="bg-gradient-to-l from-blue-500 to-blue-600 h-2.5 rounded-full" style="width: 98%"></div>
+            </div>
+            <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+              <div class="flex items-center space-x-2 space-x-reverse text-gray-600">
+                <i class="fa-solid fa-check-circle text-green-500"></i>
+                <span>8/8 ×›×™×©×•×¨×™ ×œ×™×‘×”</span>
+              </div>
+              <div class="flex items-center space-x-2 space-x-reverse text-gray-600">
+                <i class="fa-solid fa-star text-yellow-500"></i>
+                <span>×¨×ž×” ×ž×ª×§×“×ž×ª</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance -->
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-green-100 rounded-lg p-2">
+                  <i class="fa-solid fa-trophy text-green-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×‘×™×¦×•×¢×™× ×‘×ª×¤×§×™×“</h4>
+                  <p class="text-xs text-gray-500">×”×¢×¨×›×•×ª ×•×ª×•×¦××•×ª</p>
+                </div>
+              </div>
+              <div class="text-2xl font-bold text-green-600">100%</div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div class="bg-gradient-to-l from-green-500 to-green-600 h-2.5 rounded-full" style="width: 100%"></div>
+            </div>
+            <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+              <div class="flex items-center space-x-2 space-x-reverse text-gray-600">
+                <i class="fa-solid fa-chart-line text-green-500"></i>
+                <span>×“×™×¨×•×’: 6/6</span>
+              </div>
+              <div class="flex items-center space-x-2 space-x-reverse text-gray-600">
+                <i class="fa-solid fa-medal text-yellow-500"></i>
+                <span>×‘×™×¦×•×¢×™× ×ž×¦×•×™× ×™×</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-purple-100 rounded-lg p-2">
+                  <i class="fa-solid fa-clock text-purple-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">× ×™×¡×™×•×Ÿ ×•×¨×§×¢</h4>
+                  <p class="text-xs text-gray-500">×•×ª×§ ×•×”×©×›×œ×” ×¨×œ×•×•× ×˜×™×ª</p>
+                </div>
+              </div>
+              <div class="text-2xl font-bold text-purple-600">92%</div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div class="bg-gradient-to-l from-purple-500 to-purple-600 h-2.5 rounded-full" style="width: 92%"></div>
+            </div>
+            <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+              <div class="flex items-center space-x-2 space-x-reverse text-gray-600">
+                <i class="fa-solid fa-briefcase text-purple-500"></i>
+                <span>{{ selectedEmployee()?.tenure }} ×©× ×•×ª × ×™×¡×™×•×Ÿ</span>
+              </div>
+              <div class="flex items-center space-x-2 space-x-reverse text-gray-600">
+                <i class="fa-solid fa-graduation-cap text-blue-500"></i>
+                <span>×”×©×›×œ×” ×¨×œ×•×•× ×˜×™×ª</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Engagement -->
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-orange-100 rounded-lg p-2">
+                  <i class="fa-solid fa-heart text-orange-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×ž×¢×•×¨×‘×•×ª ×•×ž×—×•×™×‘×•×ª</h4>
+                  <p class="text-xs text-gray-500">× ×•×›×—×•×ª ×•×©×‘×™×¢×•×ª ×¨×¦×•×Ÿ</p>
+                </div>
+              </div>
+              <div class="text-2xl font-bold text-orange-600">90%</div>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+              <div class="bg-gradient-to-l from-orange-500 to-orange-600 h-2.5 rounded-full" style="width: 90%"></div>
+            </div>
+            <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+              <div class="flex items-center space-x-2 space-x-reverse text-gray-600">
+                <i class="fa-solid fa-calendar-check text-green-500"></i>
+                <span>× ×•×›×—×•×ª: 96%</span>
+              </div>
+              <div class="flex items-center space-x-2 space-x-reverse text-gray-600">
+                <i class="fa-solid fa-smile text-yellow-500"></i>
+                <span>×©×‘×™×¢×•×ª ×¨×¦×•×Ÿ: 5/6</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparison Chart -->
+      <div class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2 space-x-reverse">
+          <i class="fa-solid fa-chart-bar text-primary"></i>
+          <span>×”×©×•×•××” ×œ×ž×“×“×™ ×”×ª×¤×§×™×“</span>
+        </h3>
+
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="text-gray-700">×ž×™×•×ž× ×•×™×•×ª ×˜×›× ×™×•×ª</span>
+              <span class="font-semibold text-blue-600">98%</span>
+            </div>
+            <div class="flex space-x-2 space-x-reverse">
+              <div class="flex-1 bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-500 h-2 rounded-full" style="width: 98%"></div>
+              </div>
+              <div class="w-16 bg-gray-300 rounded-full h-2">
+                <div class="bg-gray-400 h-2 rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>×¦×™×•×Ÿ ×”×¢×•×‘×“</span>
+              <span>×ž×ž×•×¦×¢ ×‘×ª×¤×§×™×“ (85%)</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="text-gray-700">×‘×™×¦×•×¢×™×</span>
+              <span class="font-semibold text-green-600">100%</span>
+            </div>
+            <div class="flex space-x-2 space-x-reverse">
+              <div class="flex-1 bg-gray-200 rounded-full h-2">
+                <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+              </div>
+              <div class="w-16 bg-gray-300 rounded-full h-2">
+                <div class="bg-gray-400 h-2 rounded-full" style="width: 78%"></div>
+              </div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>×¦×™×•×Ÿ ×”×¢×•×‘×“</span>
+              <span>×ž×ž×•×¦×¢ ×‘×ª×¤×§×™×“ (78%)</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="text-gray-700">×ž×¢×•×¨×‘×•×ª</span>
+              <span class="font-semibold text-orange-600">90%</span>
+            </div>
+            <div class="flex space-x-2 space-x-reverse">
+              <div class="flex-1 bg-gray-200 rounded-full h-2">
+                <div class="bg-orange-500 h-2 rounded-full" style="width: 90%"></div>
+              </div>
+              <div class="w-16 bg-gray-300 rounded-full h-2">
+                <div class="bg-gray-400 h-2 rounded-full" style="width: 72%"></div>
+              </div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>×¦×™×•×Ÿ ×”×¢×•×‘×“</span>
+              <span>×ž×ž×•×¦×¢ ×‘×ª×¤×§×™×“ (72%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Strengths -->
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border border-green-200">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2 space-x-reverse">
+          <i class="fa-solid fa-thumbs-up text-green-600"></i>
+          <span>× ×§×•×“×•×ª ×—×•×–×§ ×ž×¨×›×–×™×•×ª</span>
+        </h3>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white rounded-lg p-3 border border-green-200">
+            <div class="flex items-center space-x-2 space-x-reverse mb-2">
+              <i class="fa-solid fa-star text-yellow-500"></i>
+              <span class="font-semibold text-sm text-gray-800">×ž×™×•×ž× ×•×™×•×ª ×ž×ª×§×“×ž×•×ª</span>
+            </div>
+            <p class="text-xs text-gray-600">×©×œ×™×˜×” ×ž×œ××” ×‘×›×œ ×”×˜×›× ×•×œ×•×’×™×•×ª ×”× ×“×¨×©×•×ª</p>
+          </div>
+
+          <div class="bg-white rounded-lg p-3 border border-green-200">
+            <div class="flex items-center space-x-2 space-x-reverse mb-2">
+              <i class="fa-solid fa-rocket text-blue-500"></i>
+              <span class="font-semibold text-sm text-gray-800">×‘×™×¦×•×¢×™× ×™×•×¦××™ ×“×•×¤×Ÿ</span>
+            </div>
+            <p class="text-xs text-gray-600">×¢×•×ž×“ ×‘×›×œ ×”×™×¢×“×™× ×•×ž×¢×‘×¨</p>
+          </div>
+
+          <div class="bg-white rounded-lg p-3 border border-green-200">
+            <div class="flex items-center space-x-2 space-x-reverse mb-2">
+              <i class="fa-solid fa-users text-purple-500"></i>
+              <span class="font-semibold text-sm text-gray-800">×¢×‘×•×“×ª ×¦×•×•×ª</span>
+            </div>
+            <p class="text-xs text-gray-600">×©×™×ª×•×£ ×¤×¢×•×œ×” ×ž×¦×•×™×Ÿ ×¢× ×”×¦×•×•×ª</p>
+          </div>
+
+          <div class="bg-white rounded-lg p-3 border border-green-200">
+            <div class="flex items-center space-x-2 space-x-reverse mb-2">
+              <i class="fa-solid fa-lightbulb text-orange-500"></i>
+              <span class="font-semibold text-sm text-gray-800">×™×•×–×ž×” ×•×™×¦×™×¨×ª×™×•×ª</span>
+            </div>
+            <p class="text-xs text-gray-600">×ž×¦×™×¢ ×¤×ª×¨×•× ×•×ª ×—×“×©× ×™×™×</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex space-x-3 space-x-reverse pt-4 border-t border-gray-200">
+        <button (click)="closeRoleMatchPopup()"
+          class="flex-1 bg-gradient-to-r from-primary to-primaryLight text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all font-medium">
+          ×¡×’×•×¨
+        </button>
+        <button
+          class="flex-1 bg-white border-2 border-primary text-primary px-6 py-3 rounded-lg hover:bg-gray-50 transition-all font-medium">
+          ×”×•×¨×“ ×“×•×— ×ž×¤×•×¨×˜
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Attrition Rate Explanation Popup -->
+<div *ngIf="showAttritionPopup()" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+  (click)="closeAttritionPopup()">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto"
+    (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div
+      [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'sticky top-0 bg-gradient-to-r from-orange-500 to-orange-600 text-white p-6 rounded-t-2xl' : 'sticky top-0 bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-t-2xl'">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3 space-x-reverse">
+          <div class="bg-white bg-opacity-20 rounded-full p-3">
+            <i class="fa-solid fa-chart-pie text-2xl"></i>
+          </div>
+          <div>
+            <h2 class="text-2xl font-bold">× ×™×ª×•×— ×¡×™×›×•×Ÿ ×¢×–×™×‘×”</h2>
+            <p class="text-white text-opacity-90 text-sm mt-1">{{ selectedEmployee()?.name }} - {{
+              selectedEmployee()?.role }}</p>
+          </div>
+        </div>
+        <button (click)="closeAttritionPopup()"
+          class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-2 transition-all">
+          <i class="fa-solid fa-times text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6 space-y-6">
+
+      <!-- Overall Risk Score -->
+      <div
+        [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-br from-orange-50 to-red-100 rounded-xl p-6 border-2 border-orange-300' : 'bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border-2 border-green-200'">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800">×¡×™×›×•×Ÿ ×¢×–×™×‘×” ×›×œ×œ×™</h3>
+            <p class="text-sm text-gray-600 mt-1">{{ selectedEmployee()?.name }} - {{ selectedEmployee()?.role }}</p>
+          </div>
+          <div class="text-center">
+            <div
+              [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-5xl font-bold text-orange-600' : 'text-5xl font-bold text-green-600'">
+              {{ selectedEmployee()?.turnoverRisk }}%
+            </div>
+            <div
+              [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-sm text-orange-700 mt-1 font-medium' : 'text-sm text-green-700 mt-1 font-medium'">
+              {{ selectedEmployee()?.turnoverRisk! > 40 ? '×¡×™×›×•×Ÿ ×‘×™× ×•× ×™' : '×¡×™×›×•×Ÿ × ×ž×•×š' }}
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full bg-gray-200 rounded-full h-4">
+          <div
+            [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-l from-orange-500 to-red-500 h-4 rounded-full transition-all duration-1000' : 'bg-gradient-to-l from-green-500 to-green-600 h-4 rounded-full transition-all duration-1000'"
+            [style.width.%]="selectedEmployee()?.turnoverRisk">
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Insight -->
+      <div
+        [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-5 border border-orange-200' : 'bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-5 border border-blue-200'">
+        <div class="flex items-start space-x-3 space-x-reverse">
+          <div
+            [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-br from-orange-500 to-red-500 rounded-full p-2 mt-1' : 'bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full p-2 mt-1'">
+            <i class="fa-solid fa-brain text-white text-lg"></i>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-800 mb-2 flex items-center space-x-2 space-x-reverse">
+              <span>×ª×•×‘× ×ª AI</span>
+              <span
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs px-2 py-1 rounded-full' : 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs px-2 py-1 rounded-full'">
+                ×ž×‘×•×¡×¡ ×‘×™× ×” ×ž×œ××›×•×ª×™×ª
+              </span>
+            </h4>
+            <p class="text-sm text-gray-700 leading-relaxed" *ngIf="selectedEmployee()?.turnoverRisk! > 40">
+              ×”×¢×•×‘×“ ×ž×¦×™×’ ×¡×™×›×•×Ÿ ×‘×™× ×•× ×™ ×œ×¢×–×™×‘×”. × ×¦×¤×ª×” ×™×¨×™×“×” ×§×œ×” ×‘×©×‘×™×¢×•×ª
+              ×”×¨×¦×•×Ÿ ×•×”×¢×œ×™×™×” ×‘×©×¢×•×ª × ×•×¡×¤×•×ª.
+              ×ž×•×ž×œ×¥ ×œ×§×™×™× ×©×™×—×ª ×ž×©×•×‘ ×•×œ×‘×—×•×Ÿ ××¤×©×¨×•×™×•×ª ×œ×©×™×¤×•×¨ ××™×–×•×Ÿ
+              ×”×¢×‘×•×“×”-×—×™×™×.
+              ×©×§×•×œ ×”×ª××ž×ª ×¢×•×ž×¡ ×”×¢×‘×•×“×” ××• ×”×¦×¢×ª ×’×ž×™×©×•×ª × ×•×¡×¤×ª.
+            </p>
+            <p class="text-sm text-gray-700 leading-relaxed" *ngIf="selectedEmployee()?.turnoverRisk! <= 40">
+              ×”×¢×•×‘×“ ×ž×¦×™×’ ×¡×™×›×•×Ÿ × ×ž×•×š ×œ×¢×–×™×‘×”. ×¨×ž×ª ×©×‘×™×¢×•×ª ×”×¨×¦×•×Ÿ ×’×‘×•×”×”,
+              ×”×‘×™×¦×•×¢×™× ×ž×¦×•×™× ×™×,
+              ×•×”××™×–×•×Ÿ ×‘×™×Ÿ ×”×¢×‘×•×“×” ×œ×—×™×™× ×˜×•×‘. ×”×ž×©×š ×œ×ª×ž×•×š ×‘×¢×•×‘×“ ×•×œ×¡×¤×§
+              ×”×–×“×ž× ×•×™×•×ª ×¤×™×ª×•×—
+              ×›×“×™ ×œ×©×ž×•×¨ ×¢×œ ×”×ž×¢×•×¨×‘×•×ª ×”×’×‘×•×”×”.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Risk Factors Grid -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2 space-x-reverse">
+          <i class="fa-solid fa-chart-pie text-primary"></i>
+          <span>×’×•×¨×ž×™ ×¡×™×›×•×Ÿ ×ž×¤×•×¨×˜×™×</span>
+        </h3>
+
+        <div class="grid grid-cols-2 gap-4">
+
+          <!-- 1. Employee Satisfaction - MOST CRITICAL -->
+          <div class="bg-white border-2 border-red-200 rounded-lg p-4 hover:shadow-md transition-shadow relative">
+            <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
+              ×§×¨×™×˜×™
+            </div>
+            <div class="flex items-center justify-between mb-3 mt-6">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-yellow-100 rounded-lg p-2' : 'bg-green-100 rounded-lg p-2'">
+                  <i
+                    [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-smile text-yellow-600' : 'fa-solid fa-smile text-green-600'"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×©×‘×™×¢×•×ª ×¨×¦×•×Ÿ</h4>
+                  <p class="text-xs text-gray-500">×¡×§×¨ ×©×‘×™×¢×•×ª ×¨×¦×•×Ÿ ××—×¨×•×Ÿ</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-2xl font-bold text-yellow-600' : 'text-2xl font-bold text-green-600'">
+                  {{ selectedEmployee()?.turnoverRisk! > 40 ? '4/6' : '5/6' }}
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2 text-xs text-gray-600">
+              <div class="flex justify-between">
+                <span>×ž×’×ž×”:</span>
+                <span
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'font-medium text-orange-600 flex items-center space-x-1 space-x-reverse' : 'font-medium text-green-600 flex items-center space-x-1 space-x-reverse'">
+                  <i
+                    [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-arrow-down' : 'fa-solid fa-arrow-up'"></i>
+                  <span>{{ selectedEmployee()?.turnoverRisk! > 40 ? '×™×¨×™×“×” ×§×œ×”' : '×™×¦×™×‘' }}</span>
+                </span>
+              </div>
+              <div class="flex justify-between">
+                <span>×¡×§×¨ ××—×¨×•×Ÿ:</span>
+                <span class="font-medium">×œ×¤× ×™ ×—×•×“×©</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-yellow-500 h-2 rounded-full' : 'bg-green-500 h-2 rounded-full'"
+                  [style.width]="selectedEmployee()?.turnoverRisk! > 40 ? '67%' : '83%'">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Overtime & Absenteeism - HIGH PRIORITY -->
+          <div class="bg-white border-2 border-orange-200 rounded-lg p-4 hover:shadow-md transition-shadow relative">
+            <div class="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
+              ×’×‘×•×”
+            </div>
+            <div class="flex items-center justify-between mb-3 mt-6">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-red-100 rounded-lg p-2' : 'bg-green-100 rounded-lg p-2'">
+                  <i
+                    [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-clock text-red-600' : 'fa-solid fa-clock text-green-600'"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×©×¢×•×ª × ×•×¡×¤×•×ª ×•×”×™×¢×“×¨×•×™×•×ª</h4>
+                  <p class="text-xs text-gray-500">×¢×•×ž×¡ ×¢×‘×•×“×” ×•× ×•×›×—×•×ª</p>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-gray-50 rounded p-2">
+                <div class="text-xs text-gray-600 mb-1">×©×¢×•×ª × ×•×¡×¤×•×ª</div>
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-lg font-bold text-red-600' : 'text-lg font-bold text-green-600'">
+                  {{ selectedEmployee()?.turnoverRisk! > 40 ? '18%' : '5%' }}
+                </div>
+                <div class="text-xs text-gray-500">×ž×¡×š ×”×©×¢×•×ª</div>
+              </div>
+              <div class="bg-gray-50 rounded p-2">
+                <div class="text-xs text-gray-600 mb-1">×”×™×¢×“×¨×•×™×•×ª</div>
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-lg font-bold text-orange-600' : 'text-lg font-bold text-green-600'">
+                  {{ selectedEmployee()?.turnoverRisk! > 40 ? '12%' : '4%' }}
+                </div>
+                <div class="text-xs text-gray-500">×™×ž×™ ×¢×‘×•×“×”</div>
+              </div>
+            </div>
+            <div class="mt-2 flex items-center space-x-1 space-x-reverse text-xs"
+              [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-red-600' : 'text-green-600'">
+              <i
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-exclamation-triangle' : 'fa-solid fa-check-circle'"></i>
+              <span>{{ selectedEmployee()?.turnoverRisk! > 40 ? '×¢×•×ž×¡ ×¢×‘×•×“×” ×’×‘×•×”' : '××™×–×•×Ÿ ×˜×•×‘'
+                }}</span>
+            </div>
+          </div>
+
+          <!-- 3. Last Salary Change - HIGH PRIORITY -->
+          <div class="bg-white border-2 border-orange-200 rounded-lg p-4 hover:shadow-md transition-shadow relative">
+            <div class="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
+              ×’×‘×•×”
+            </div>
+            <div class="flex items-center justify-between mb-3 mt-6">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-orange-100 rounded-lg p-2' : 'bg-green-100 rounded-lg p-2'">
+                  <i
+                    [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-shekel-sign text-orange-600' : 'fa-solid fa-shekel-sign text-green-600'"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×©×™× ×•×™ ×©×›×¨ ××—×¨×•×Ÿ</h4>
+                  <p class="text-xs text-gray-500">×”×¢×œ××•×ª ×•×”×ª××ž×•×ª</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-green-600">+8%</div>
+              </div>
+            </div>
+            <div class="space-y-2 text-xs text-gray-600">
+              <div class="flex justify-between">
+                <span>×ª××¨×™×š:</span>
+                <span class="font-medium">{{ selectedEmployee()?.turnoverRisk! > 40 ? '×œ×¤× ×™ 14 ×—×•×“×©×™×' :
+                  '×œ×¤× ×™ ×©× ×”'
+                  }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>×™×—×¡ ×œ×©×•×§:</span>
+                <span class="font-medium text-green-600">×ž×¢×œ ×”×ž×ž×•×¦×¢</span>
+              </div>
+              <div class="flex items-center space-x-1 space-x-reverse"
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-orange-600' : 'text-green-600'">
+                <i
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-exclamation-circle' : 'fa-solid fa-check-circle'"></i>
+                <span>{{ selectedEmployee()?.turnoverRisk! > 40 ? '×©×§×•×œ ×”×¢×œ××”' : '×ª×’×ž×•×œ ×”×•×’×Ÿ'
+                  }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Work-Home Distance - MEDIUM PRIORITY -->
+          <div class="bg-white border border-yellow-200 rounded-lg p-4 hover:shadow-md transition-shadow relative">
+            <div class="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
+              ×‘×™× ×•× ×™
+            </div>
+            <div class="flex items-center justify-between mb-3 mt-6">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-orange-100 rounded-lg p-2' : 'bg-blue-100 rounded-lg p-2'">
+                  <i
+                    [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-route text-orange-600' : 'fa-solid fa-route text-blue-600'"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×ž×¨×—×§ ×‘×™×ª-×¢×‘×•×“×”</h4>
+                  <p class="text-xs text-gray-500">×–×ž×Ÿ × ×¡×™×¢×” ×™×•×ž×™</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-sm font-bold text-orange-600' : 'text-sm font-bold text-blue-600'">
+                  {{ selectedEmployee()?.turnoverRisk! > 40 ? '45 ×“×§' : '25 ×“×§' }}
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2 text-xs text-gray-600">
+              <div class="flex justify-between">
+                <span>×ž×¨×—×§:</span>
+                <span class="font-medium">{{ selectedEmployee()?.turnoverRisk! > 40 ? '35 ×§"×ž' : '18 ×§"×ž' }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>×©×™× ×•×™ ××—×¨×•×Ÿ:</span>
+                <span class="font-medium">{{ selectedEmployee()?.turnoverRisk! > 40 ? '×œ×¤× ×™ 6 ×—×•×“×©×™×' :
+                  '×œ×œ× ×©×™× ×•×™'
+                  }}</span>
+              </div>
+              <div class="flex items-center space-x-1 space-x-reverse"
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'text-orange-600' : 'text-green-600'">
+                <i
+                  [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-exclamation-circle' : 'fa-solid fa-check-circle'"></i>
+                <span>{{ selectedEmployee()?.turnoverRisk! > 40 ? '×”×©×¤×¢×” ×‘×™× ×•× ×™×ª' : '×”×©×¤×¢×” × ×ž×•×›×”'
+                  }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Performance Score - MEDIUM PRIORITY -->
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-blue-100 rounded-lg p-2">
+                  <i class="fa-solid fa-star text-blue-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×¦×™×•×Ÿ ×‘×™×¦×•×¢×™×</h4>
+                  <p class="text-xs text-gray-500">×”×¢×¨×›×” ×©× ×ª×™×ª</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="text-2xl font-bold text-blue-600">6/6</div>
+              </div>
+            </div>
+            <div class="space-y-2 text-xs text-gray-600">
+              <div class="flex justify-between">
+                <span>×”×¢×¨×›×” ××—×¨×•× ×”:</span>
+                <span class="font-medium">×œ×¤× ×™ 3 ×—×•×“×©×™×</span>
+              </div>
+              <div class="flex justify-between">
+                <span>×ž×’×ž×”:</span>
+                <span class="font-medium text-green-600 flex items-center space-x-1 space-x-reverse">
+                  <i class="fa-solid fa-arrow-up"></i>
+                  <span>×©×™×¤×•×¨ ×ž×ª×ž×™×“</span>
+                </span>
+              </div>
+              <div class="flex items-center space-x-1 space-x-reverse text-green-600">
+                <i class="fa-solid fa-trophy"></i>
+                <span>×‘×™×¦×•×¢×™× ×ž×¦×•×™× ×™×</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Last Position Change - LOW PRIORITY -->
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-indigo-100 rounded-lg p-2">
+                  <i class="fa-solid fa-briefcase text-indigo-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×©×™× ×•×™ ×ª×¤×§×™×“ ××—×¨×•×Ÿ</h4>
+                  <p class="text-xs text-gray-500">×§×™×“×•× ×•×”×ª×¤×ª×—×•×ª</p>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2 text-xs text-gray-600">
+              <div class="flex justify-between">
+                <span>×ª×¤×§×™×“ ×§×•×“×:</span>
+                <span class="font-medium">×ž×¤×ª×— Full Stack</span>
+              </div>
+              <div class="flex justify-between">
+                <span>×©×™× ×•×™ ××—×¨×•×Ÿ:</span>
+                <span class="font-medium">×œ×¤× ×™ ×©× ×ª×™×™×</span>
+              </div>
+              <div class="flex items-center space-x-1 space-x-reverse text-blue-600">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span>×§×™×“×•× ×œ-Senior</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Number of Children - LOW PRIORITY -->
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-purple-100 rounded-lg p-2">
+                  <i class="fa-solid fa-child text-purple-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×ž×¡×¤×¨ ×™×œ×“×™×</h4>
+                  <p class="text-xs text-gray-500">×ž×—×•×™×‘×•×™×•×ª ×ž×©×¤×—×ª×™×•×ª</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="text-sm font-bold text-purple-600">2</div>
+              </div>
+            </div>
+            <div class="space-y-2 text-xs text-gray-600">
+              <div class="flex justify-between">
+                <span>×’×™×œ××™×:</span>
+                <span class="font-medium">5, 8 ×©× ×™×</span>
+              </div>
+              <div class="flex justify-between">
+                <span>×©×™× ×•×™ ××—×¨×•×Ÿ:</span>
+                <span class="font-medium">×œ×¤× ×™ ×©× ×ª×™×™×</span>
+              </div>
+              <div class="flex items-center space-x-1 space-x-reverse text-blue-600">
+                <i class="fa-solid fa-info-circle"></i>
+                <span>×“×•×¨×© ×’×ž×™×©×•×ª ×‘×©×¢×•×ª</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Marital Status - LEAST CRITICAL -->
+          <div class="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-pink-100 rounded-lg p-2">
+                  <i class="fa-solid fa-heart text-pink-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-800">×ž×¦×‘ ×ž×©×¤×—×ª×™</h4>
+                  <p class="text-xs text-gray-500">×©×™× ×•×™×™× ×‘×ž×¦×‘ ××™×©×™</p>
+                </div>
+              </div>
+              <div class="text-center">
+                <div class="text-sm font-bold text-green-600">×™×¦×™×‘</div>
+              </div>
+            </div>
+            <div class="space-y-2 text-xs text-gray-600">
+              <div class="flex justify-between">
+                <span>×¡×˜×˜×•×¡ × ×•×›×—×™:</span>
+                <span class="font-medium">× ×©×•×™/××”</span>
+              </div>
+              <div class="flex justify-between">
+                <span>×©×™× ×•×™ ××—×¨×•×Ÿ:</span>
+                <span class="font-medium">×œ×¤× ×™ 3 ×©× ×™×</span>
+              </div>
+              <div class="flex items-center space-x-1 space-x-reverse text-green-600">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>×”×©×¤×¢×” × ×ž×•×›×” ×¢×œ ×¡×™×›×•×Ÿ</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Risk Timeline -->
+      <div class="bg-gray-50 rounded-xl p-5 border border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2 space-x-reverse">
+          <i class="fa-solid fa-timeline text-primary"></i>
+          <span>×ž×’×ž×ª ×¡×™×›×•×Ÿ - 12 ×—×•×“×©×™× ××—×¨×•× ×™×</span>
+        </h3>
+
+        <div class="relative">
+          <!-- Timeline visualization -->
+          <div class="flex items-end justify-between h-32 space-x-2 space-x-reverse">
+            <div class="flex-1 flex flex-col items-center">
+              <div class="w-full bg-green-200 rounded-t" style="height: 75%"></div>
+              <div class="text-xs text-gray-600 mt-2">×™× ×•'</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div class="w-full bg-green-200 rounded-t" style="height: 70%"></div>
+              <div class="text-xs text-gray-600 mt-2">×¤×‘×¨'</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div class="w-full bg-green-300 rounded-t" style="height: 65%"></div>
+              <div class="text-xs text-gray-600 mt-2">×ž×¨×¥</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div class="w-full bg-green-300 rounded-t" style="height: 60%"></div>
+              <div class="text-xs text-gray-600 mt-2">××¤×¨'</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div class="w-full bg-yellow-200 rounded-t" style="height: 55%"></div>
+              <div class="text-xs text-gray-600 mt-2">×ž××™</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div class="w-full bg-yellow-300 rounded-t" style="height: 50%"></div>
+              <div class="text-xs text-gray-600 mt-2">×™×•× ×™</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'w-full bg-orange-300 rounded-t' : 'w-full bg-yellow-200 rounded-t'"
+                [style.height]="selectedEmployee()?.turnoverRisk! > 40 ? '45%' : '48%'"></div>
+              <div class="text-xs text-gray-600 mt-2">×™×•×œ×™</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'w-full bg-orange-300 rounded-t' : 'w-full bg-yellow-200 rounded-t'"
+                [style.height]="selectedEmployee()?.turnoverRisk! > 40 ? '42%' : '50%'"></div>
+              <div class="text-xs text-gray-600 mt-2">××•×’'</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'w-full bg-orange-400 rounded-t' : 'w-full bg-green-200 rounded-t'"
+                [style.height]="selectedEmployee()?.turnoverRisk! > 40 ? '38%' : '52%'"></div>
+              <div class="text-xs text-gray-600 mt-2">×¡×¤×˜'</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'w-full bg-orange-400 rounded-t' : 'w-full bg-green-200 rounded-t'"
+                [style.height]="selectedEmployee()?.turnoverRisk! > 40 ? '35%' : '55%'"></div>
+              <div class="text-xs text-gray-600 mt-2">××•×§'</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'w-full bg-orange-400 rounded-t' : 'w-full bg-green-300 rounded-t'"
+                [style.height]="selectedEmployee()?.turnoverRisk! > 40 ? '32%' : '58%'"></div>
+              <div class="text-xs text-gray-600 mt-2">× ×•×‘'</div>
+            </div>
+            <div class="flex-1 flex flex-col items-center">
+              <div
+                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'w-full bg-orange-500 rounded-t' : 'w-full bg-green-300 rounded-t'"
+                [style.height]="selectedEmployee()?.turnoverRisk! > 40 ? '30%' : '60%'"></div>
+              <div class="text-xs text-gray-600 mt-2">×“×¦×ž'</div>
+            </div>
+          </div>
+
+          <div class="mt-4 flex items-center justify-center space-x-4 space-x-reverse text-xs">
+            <div class="flex items-center space-x-2 space-x-reverse">
+              <div class="w-3 h-3 bg-green-300 rounded"></div>
+              <span>×¡×™×›×•×Ÿ × ×ž×•×š (0-30%)</span>
+            </div>
+            <div class="flex items-center space-x-2 space-x-reverse">
+              <div class="w-3 h-3 bg-yellow-300 rounded"></div>
+              <span>×¡×™×›×•×Ÿ ×‘×™× ×•× ×™ (31-50%)</span>
+            </div>
+            <div class="flex items-center space-x-2 space-x-reverse">
+              <div class="w-3 h-3 bg-orange-400 rounded"></div>
+              <span>×¡×™×›×•×Ÿ ×’×‘×•×” (51%+)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div
+        [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-5 border border-orange-200' : 'bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-5 border border-blue-200'">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center space-x-2 space-x-reverse">
+          <i
+            [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'fa-solid fa-lightbulb text-orange-600' : 'fa-solid fa-lightbulb text-blue-600'"></i>
+          <span>×”×ž×œ×¦×•×ª ×œ×¤×¢×•×œ×”</span>
+        </h3>
+
+        <div class="space-y-3" *ngIf="selectedEmployee()?.turnoverRisk! > 40">
+          <div class="bg-white rounded-lg p-3 border border-orange-200 flex items-start space-x-3 space-x-reverse">
+            <div class="bg-orange-100 rounded-full p-2 mt-0.5">
+              <i class="fa-solid fa-1 text-orange-600 text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm text-gray-800 mb-1">×§×™×™× ×©×™×—×ª ×ž×©×•×‘ ×“×—×•×¤×”</h4>
+              <p class="text-xs text-gray-600">×‘×“×•×§ ××ª ×©×‘×™×¢×•×ª ×”×¨×¦×•×Ÿ ×•××ª×’×¨×™ ×”×¢×‘×•×“×”. ×”×§×©×‘
+                ×œ×¦×¨×›×™× ×•×“××’×•×ª.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-3 border border-orange-200 flex items-start space-x-3 space-x-reverse">
+            <div class="bg-orange-100 rounded-full p-2 mt-0.5">
+              <i class="fa-solid fa-2 text-orange-600 text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm text-gray-800 mb-1">×‘×—×Ÿ ×”×¤×—×ª×ª ×©×¢×•×ª × ×•×¡×¤×•×ª</h4>
+              <p class="text-xs text-gray-600">×©×§×•×œ ×”×•×¡×¤×ª ×ž×©××‘×™× ×œ×¦×•×•×ª ××• ×—×œ×•×§×” ×ž×—×“×© ×©×œ
+                ×ž×©×™×ž×•×ª.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-3 border border-orange-200 flex items-start space-x-3 space-x-reverse">
+            <div class="bg-orange-100 rounded-full p-2 mt-0.5">
+              <i class="fa-solid fa-3 text-orange-600 text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm text-gray-800 mb-1">×©×§×•×œ ×”×¢×œ××ª ×©×›×¨ ××• ×‘×•× ×•×¡</h4>
+              <p class="text-xs text-gray-600">×¢×‘×¨ ×™×•×ª×¨ ×ž×©× ×” ×ž×”×”×¢×œ××” ×”××—×¨×•× ×”. ×‘×“×•×§
+                ×”×ª××ž×” ×œ×©×•×§.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-3 border border-orange-200 flex items-start space-x-3 space-x-reverse">
+            <div class="bg-orange-100 rounded-full p-2 mt-0.5">
+              <i class="fa-solid fa-4 text-orange-600 text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm text-gray-800 mb-1">×”×¦×¢ ××¤×©×¨×•×™×•×ª ×¢×‘×•×“×” ×’×ž×™×©×•×ª</h4>
+              <p class="text-xs text-gray-600">×‘×©×œ ×”×ž×¨×—×§ ×”××¨×•×š, ×©×§×•×œ ×¢×‘×•×“×” ×ž×”×‘×™×ª × ×•×¡×¤×ª
+                ××• ×©×¢×•×ª ×’×ž×™×©×•×ª.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-3" *ngIf="selectedEmployee()?.turnoverRisk! <= 40">
+          <div class="bg-white rounded-lg p-3 border border-blue-200 flex items-start space-x-3 space-x-reverse">
+            <div class="bg-blue-100 rounded-full p-2 mt-0.5">
+              <i class="fa-solid fa-check text-blue-600 text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm text-gray-800 mb-1">×”×ž×©×š ×œ×ª×ž×•×š ×•×œ×¤×ª×—</h4>
+              <p class="text-xs text-gray-600">×¡×¤×§ ×”×–×“×ž× ×•×™×•×ª ×œ×ž×™×“×” ×•×”×ª×¤×ª×—×•×ª ×ž×§×¦×•×¢×™×ª.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-3 border border-blue-200 flex items-start space-x-3 space-x-reverse">
+            <div class="bg-blue-100 rounded-full p-2 mt-0.5">
+              <i class="fa-solid fa-check text-blue-600 text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm text-gray-800 mb-1">×©×ž×•×¨ ×¢×œ ×ª×§×©×•×¨×ª ×¤×ª×•×—×”</h4>
+              <p class="text-xs text-gray-600">×§×™×™× ×©×™×—×•×ª ×ž×©×•×‘ ×ª×§×•×¤×ª×™×•×ª ×œ×©×ž×™×¨×” ×¢×œ
+                ×”×ž×¢×•×¨×‘×•×ª.</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg p-3 border border-blue-200 flex items-start space-x-3 space-x-reverse">
+            <div class="bg-blue-100 rounded-full p-2 mt-0.5">
+              <i class="fa-solid fa-check text-blue-600 text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm text-gray-800 mb-1">×©×§×•×œ ×”×¨×—×‘×ª ××—×¨×™×•×ª</h4>
+              <p class="text-xs text-gray-600">×”×¢×•×‘×“ ×ž×•×›×Ÿ ×œ××ª×’×¨×™× ×—×“×©×™× ×•×¤×¨×•×™×§×˜×™×
+                ×ž×•×¨×›×‘×™× ×™×•×ª×¨.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex space-x-3 space-x-reverse pt-4 border-t border-gray-200">
+        <button (click)="closeAttritionPopup()"
+          class="flex-1 bg-gradient-to-r from-primary to-primaryLight text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all font-medium">
+          ×¡×’×•×¨
+        </button>
+        <button
+          class="flex-1 bg-white border-2 border-primary text-primary px-6 py-3 rounded-lg hover:bg-gray-50 transition-all font-medium">
+          ×”×•×¨×“ ×“×•×— ×ž×¤×•×¨×˜
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>לוח בקרה</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans', sans-serif; }
+        ::-webkit-scrollbar { display: none; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007BFF',
+                        primaryDark: '#0056b3',
+                        softGray: '#707070',
+                        lightGray: '#F5F5F5'
+                    },
+                    fontFamily: {
+                        'noto': ['Noto Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-noto">
+    <div id="header" class="bg-white shadow-sm border-b border-softGray/30">
+        <div class="px-8 py-4">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="bg-primary text-white p-2 rounded">
+                        <i class="fa-solid fa-chart-line text-lg"></i>
+                    </div>
+                    <h1 class="text-2xl font-semibold text-gray-800">לוח בקרה - ניהול תפקידים וכישורים</h1>
+                </div>
+                <div class="flex items-center space-x-6 space-x-reverse">
+                    <button class="text-softGray hover:text-primary transition-colors">
+                        <i class="fa-solid fa-bell text-xl"></i>
+                    </button>
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="text-left">
+                            <p class="text-sm font-semibold text-gray-800">רחל כהן</p>
+                            <p class="text-xs text-softGray">מנהלת משאבי אנוש</p>
+                        </div>
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="פרופיל" class="w-10 h-10 rounded-full">
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="flex space-x-8 space-x-reverse border-t border-softGray/20 pt-4">
+                <a href="#" class="flex items-center space-x-2 space-x-reverse px-4 py-2 text-softGray hover:text-primary transition-colors">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="font-medium">פרופיל עובד</span>
+                </a>
+                <a href="#" class="flex items-center space-x-2 space-x-reverse px-4 py-2 text-softGray hover:text-primary transition-colors">
+                    <i class="fa-solid fa-user-check"></i>
+                    <span class="font-medium">התאמות תפקידים</span>
+                </a>
+                <a href="#" class="flex items-center space-x-2 space-x-reverse px-4 py-2 text-white bg-primary rounded transition-colors">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span class="font-medium">לוח בקרה מנהלים</span>
+                </a>
+                <a href="#" class="flex items-center space-x-2 space-x-reverse px-4 py-2 text-softGray hover:text-primary transition-colors">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span class="font-medium">פיתוח מיומנויות</span>
+                </a>
+                <a href="#" class="flex items-center space-x-2 space-x-reverse px-4 py-2 text-softGray hover:text-primary transition-colors">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span class="font-medium">תכנון משאבי אנוש</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="flex">
+        <div id="main-content" class="flex-1 p-8 overflow-y-auto">
+            <div id="summary-cards" class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-primary rounded flex items-center justify-center">
+                            <i class="fa-solid fa-briefcase text-white text-xl"></i>
+                        </div>
+                        <span class="text-3xl font-semibold text-gray-800">127</span>
+                    </div>
+                    <h3 class="text-softGray font-medium text-base">סך תפקידים בארגון</h3>
+                    <p class="text-sm text-green-600 mt-2">
+                        <i class="fa-solid fa-arrow-up ml-1"></i>
+                        5% מהחודש הקודם
+                    </p>
+                </div>
+
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-red-500 rounded flex items-center justify-center">
+                            <i class="fa-solid fa-user-slash text-white text-xl"></i>
+                        </div>
+                        <span class="text-3xl font-semibold text-gray-800">18</span>
+                    </div>
+                    <h3 class="text-softGray font-medium text-base">תפקידים פנויים</h3>
+                    <p class="text-sm text-red-600 mt-2">
+                        <i class="fa-solid fa-exclamation-triangle ml-1"></i>
+                        דורש טיפול מיידי
+                    </p>
+                </div>
+
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-primaryDark rounded flex items-center justify-center">
+                            <i class="fa-solid fa-users text-white text-xl"></i>
+                        </div>
+                        <span class="text-3xl font-semibold text-gray-800">284</span>
+                    </div>
+                    <h3 class="text-softGray font-medium text-base">מועמדים פעילים</h3>
+                    <p class="text-sm text-green-600 mt-2">
+                        <i class="fa-solid fa-arrow-up ml-1"></i>
+                        12% מהחודש הקודם
+                    </p>
+                </div>
+
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-orange-500 rounded flex items-center justify-center">
+                            <i class="fa-solid fa-chart-simple text-white text-xl"></i>
+                        </div>
+                        <span class="text-3xl font-semibold text-gray-800">68%</span>
+                    </div>
+                    <h3 class="text-softGray font-medium text-base">שיעור איוש ממוצע</h3>
+                    <p class="text-sm text-blue-600 mt-2">
+                        <i class="fa-solid fa-info-circle ml-1"></i>
+                        יעד: 85%
+                    </p>
+                </div>
+            </div>
+
+            <div id="skill-gaps-section" class="mb-8">
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-800 mb-1">פערי מיומנויות קריטיים</h2>
+                            <p class="text-base text-softGray">מיומנויות נדרשות לעומת מיומנויות קיימות בארגון</p>
+                        </div>
+                        <button class="bg-primary text-white px-6 py-2 rounded hover:bg-primaryDark transition-all flex items-center space-x-2 space-x-reverse">
+                            <i class="fa-solid fa-download"></i>
+                            <span>ייצוא דוח</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <div class="mb-4 p-4 border border-softGray/20 rounded">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-base font-medium text-gray-700">React & Frontend Development</span>
+                                    <span class="text-sm font-semibold text-red-600">פער: 35%</span>
+                                </div>
+                                <div class="flex items-center space-x-3 space-x-reverse">
+                                    <div class="flex-1 bg-lightGray rounded-full h-3">
+                                        <div class="bg-primary h-3 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                    <span class="text-sm text-softGray w-16">45% / 80%</span>
+                                </div>
+                                <p class="text-sm text-softGray mt-1">דרושים 7 מפתחים נוספים</p>
+                            </div>
+
+                            <div class="mb-4 p-4 border border-softGray/20 rounded">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-base font-medium text-gray-700">Cloud Infrastructure (AWS/Azure)</span>
+                                    <span class="text-sm font-semibold text-orange-600">פער: 28%</span>
+                                </div>
+                                <div class="flex items-center space-x-3 space-x-reverse">
+                                    <div class="flex-1 bg-lightGray rounded-full h-3">
+                                        <div class="bg-orange-500 h-3 rounded-full" style="width: 52%"></div>
+                                    </div>
+                                    <span class="text-sm text-softGray w-16">52% / 80%</span>
+                                </div>
+                                <p class="text-sm text-softGray mt-1">דרושים 5 מומחי ענן</p>
+                            </div>
+
+                            <div class="mb-4 p-4 border border-softGray/20 rounded">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-base font-medium text-gray-700">Data Analysis & BI</span>
+                                    <span class="text-sm font-semibold text-yellow-600">פער: 22%</span>
+                                </div>
+                                <div class="flex items-center space-x-3 space-x-reverse">
+                                    <div class="flex-1 bg-lightGray rounded-full h-3">
+                                        <div class="bg-primaryDark h-3 rounded-full" style="width: 58%"></div>
+                                    </div>
+                                    <span class="text-sm text-softGray w-16">58% / 80%</span>
+                                </div>
+                                <p class="text-sm text-softGray mt-1">דרושים 4 אנליסטים</p>
+                            </div>
+
+                            <div class="mb-4 p-4 border border-softGray/20 rounded">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-base font-medium text-gray-700">Cybersecurity</span>
+                                    <span class="text-sm font-semibold text-red-600">פער: 40%</span>
+                                </div>
+                                <div class="flex items-center space-x-3 space-x-reverse">
+                                    <div class="flex-1 bg-lightGray rounded-full h-3">
+                                        <div class="bg-red-500 h-3 rounded-full" style="width: 40%"></div>
+                                    </div>
+                                    <span class="text-sm text-softGray w-16">40% / 80%</span>
+                                </div>
+                                <p class="text-sm text-softGray mt-1">דרושים 6 מומחי אבטחה</p>
+                            </div>
+
+                            <div class="mb-4 p-4 border border-softGray/20 rounded">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-base font-medium text-gray-700">Project Management (Agile)</span>
+                                    <span class="text-sm font-semibold text-green-600">פער: 12%</span>
+                                </div>
+                                <div class="flex items-center space-x-3 space-x-reverse">
+                                    <div class="flex-1 bg-lightGray rounded-full h-3">
+                                        <div class="bg-green-500 h-3 rounded-full" style="width: 68%"></div>
+                                    </div>
+                                    <span class="text-sm text-softGray w-16">68% / 80%</span>
+                                </div>
+                                <p class="text-sm text-softGray mt-1">דרושים 2 מנהלי פרויקטים</p>
+                            </div>
+
+                            <div class="mb-4 p-4 border border-softGray/20 rounded">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-base font-medium text-gray-700">UX/UI Design</span>
+                                    <span class="text-sm font-semibold text-yellow-600">פער: 25%</span>
+                                </div>
+                                <div class="flex items-center space-x-3 space-x-reverse">
+                                    <div class="flex-1 bg-lightGray rounded-full h-3">
+                                        <div class="bg-purple-500 h-3 rounded-full" style="width: 55%"></div>
+                                    </div>
+                                    <span class="text-sm text-softGray w-16">55% / 80%</span>
+                                </div>
+                                <p class="text-sm text-softGray mt-1">דרושים 3 מעצבים</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div id="skill-gap-chart" style="height: 400px"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="charts-section" class="grid grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">התפלגות תפקידים לפי קטגוריה</h3>
+                    <div id="positions-by-category-chart" style="height: 350px"></div>
+                </div>
+
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">מגמת גיוס - 6 חודשים אחרונים</h3>
+                    <div id="hiring-trend-chart" style="height: 350px"></div>
+                </div>
+
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">שיעור איוש לפי קטגוריה</h3>
+                    <div id="staffing-rate-chart" style="height: 350px"></div>
+                </div>
+
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">זמן ממוצע למילוי משרה</h3>
+                    <div id="time-to-fill-chart" style="height: 350px"></div>
+                </div>
+            </div>
+
+            <div id="department-performance" class="mb-8">
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800">ביצועים לפי מחלקה</h2>
+                        <select class="border border-softGray/30 rounded px-4 py-2 focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option>רבעון נוכחי</option>
+                            <option>חודש אחרון</option>
+                            <option>3 חודשים אחרונים</option>
+                            <option>שנה אחרונה</option>
+                        </select>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-softGray/20">
+                                    <th class="text-right py-3 px-4 font-semibold text-gray-700">מחלקה</th>
+                                    <th class="text-right py-3 px-4 font-semibold text-gray-700">תפקידים פעילים</th>
+                                    <th class="text-right py-3 px-4 font-semibold text-gray-700">תפקידים פנויים</th>
+                                    <th class="text-right py-3 px-4 font-semibold text-gray-700">שיעור איוש</th>
+                                    <th class="text-right py-3 px-4 font-semibold text-gray-700">פערי כישורים</th>
+                                    <th class="text-right py-3 px-4 font-semibold text-gray-700">מועמדים פעילים</th>
+                                    <th class="text-right py-3 px-4 font-semibold text-gray-700">סטטוס</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-softGray/10 hover:bg-lightGray">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-8 h-8 bg-primary rounded flex items-center justify-center">
+                                                <i class="fa-solid fa-building text-white text-xs"></i>
+                                            </div>
+                                            <span class="font-medium text-gray-800">מטה</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">8</td>
+                                    <td class="py-4 px-4 text-gray-700">1</td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-20 bg-lightGray rounded-full h-2">
+                                                <div class="bg-green-500 h-2 rounded-full" style="width: 87%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-green-600">87%</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-green-100 text-green-700 text-sm px-2 py-1 rounded">נמוך</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">12</td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-green-100 text-green-700 text-sm px-3 py-1 rounded font-medium">מצוין</span>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b border-softGray/10 hover:bg-lightGray">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-8 h-8 bg-orange-500 rounded flex items-center justify-center">
+                                                <i class="fa-solid fa-users text-white text-xs"></i>
+                                            </div>
+                                            <span class="font-medium text-gray-800">כפסים</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">12</td>
+                                    <td class="py-4 px-4 text-gray-700">2</td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-20 bg-lightGray rounded-full h-2">
+                                                <div class="bg-yellow-500 h-2 rounded-full" style="width: 83%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-yellow-600">83%</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-yellow-100 text-yellow-700 text-sm px-2 py-1 rounded">בינוני</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">28</td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-yellow-100 text-yellow-700 text-sm px-3 py-1 rounded font-medium">טוב</span>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b border-softGray/10 hover:bg-lightGray">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-8 h-8 bg-primaryDark rounded flex items-center justify-center">
+                                                <i class="fa-solid fa-brain text-white text-xs"></i>
+                                            </div>
+                                            <span class="font-medium text-gray-800">מודיעין</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">9</td>
+                                    <td class="py-4 px-4 text-gray-700">1</td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-20 bg-lightGray rounded-full h-2">
+                                                <div class="bg-green-500 h-2 rounded-full" style="width: 89%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-green-600">89%</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-green-100 text-green-700 text-sm px-2 py-1 rounded">נמוך</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">18</td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-green-100 text-green-700 text-sm px-3 py-1 rounded font-medium">מצוין</span>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b border-softGray/10 hover:bg-lightGray">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-8 h-8 bg-purple-500 rounded flex items-center justify-center">
+                                                <i class="fa-solid fa-truck text-white text-xs"></i>
+                                            </div>
+                                            <span class="font-medium text-gray-800">לוגיסטיקה</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">14</td>
+                                    <td class="py-4 px-4 text-gray-700">2</td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-20 bg-lightGray rounded-full h-2">
+                                                <div class="bg-yellow-500 h-2 rounded-full" style="width: 86%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-yellow-600">86%</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-yellow-100 text-yellow-700 text-sm px-2 py-1 rounded">בינוני</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">34</td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-green-100 text-green-700 text-sm px-3 py-1 rounded font-medium">טוב מאוד</span>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b border-softGray/10 hover:bg-lightGray">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
+                                                <i class="fa-solid fa-laptop-code text-white text-xs"></i>
+                                            </div>
+                                            <span class="font-medium text-gray-800">טכנולוגיה</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">16</td>
+                                    <td class="py-4 px-4 text-gray-700">5</td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-20 bg-lightGray rounded-full h-2">
+                                                <div class="bg-red-500 h-2 rounded-full" style="width: 69%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-red-600">69%</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-red-100 text-red-700 text-sm px-2 py-1 rounded">גבוה</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">56</td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-red-100 text-red-700 text-sm px-3 py-1 rounded font-medium">דורש שיפור</span>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b border-softGray/10 hover:bg-lightGray">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-8 h-8 bg-pink-500 rounded flex items-center justify-center">
+                                                <i class="fa-solid fa-bullhorn text-white text-xs"></i>
+                                            </div>
+                                            <span class="font-medium text-gray-800">שיווק</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">10</td>
+                                    <td class="py-4 px-4 text-gray-700">2</td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-20 bg-lightGray rounded-full h-2">
+                                                <div class="bg-yellow-500 h-2 rounded-full" style="width: 80%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-yellow-600">80%</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-yellow-100 text-yellow-700 text-sm px-2 py-1 rounded">בינוני</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">42</td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-yellow-100 text-yellow-700 text-sm px-3 py-1 rounded font-medium">טוב</span>
+                                    </td>
+                                </tr>
+
+                                <tr class="border-b border-softGray/10 hover:bg-lightGray">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-8 h-8 bg-gray-500 rounded flex items-center justify-center">
+                                                <i class="fa-solid fa-file-lines text-white text-xs"></i>
+                                            </div>
+                                            <span class="font-medium text-gray-800">אדמיניסטרציה</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">7</td>
+                                    <td class="py-4 px-4 text-gray-700">1</td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-20 bg-lightGray rounded-full h-2">
+                                                <div class="bg-green-500 h-2 rounded-full" style="width: 86%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-green-600">86%</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-green-100 text-green-700 text-sm px-2 py-1 rounded">נמוך</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">16</td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-green-100 text-green-700 text-sm px-3 py-1 rounded font-medium">טוב מאוד</span>
+                                    </td>
+                                </tr>
+
+                                <tr class="hover:bg-lightGray">
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-8 h-8 bg-red-500 rounded flex items-center justify-center">
+                                                <i class="fa-solid fa-gears text-white text-xs"></i>
+                                            </div>
+                                            <span class="font-medium text-gray-800">מבצעי</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">11</td>
+                                    <td class="py-4 px-4 text-gray-700">2</td>
+                                    <td class="py-4 px-4">
+                                        <div class="flex items-center space-x-2 space-x-reverse">
+                                            <div class="w-20 bg-lightGray rounded-full h-2">
+                                                <div class="bg-yellow-500 h-2 rounded-full" style="width: 82%"></div>
+                                            </div>
+                                            <span class="text-sm font-semibold text-yellow-600">82%</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-yellow-100 text-yellow-700 text-sm px-2 py-1 rounded">בינוני</span>
+                                    </td>
+                                    <td class="py-4 px-4 text-gray-700">38</td>
+                                    <td class="py-4 px-4">
+                                        <span class="bg-yellow-100 text-yellow-700 text-sm px-3 py-1 rounded font-medium">טוב</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="alerts-section" class="mb-8">
+                <div class="bg-white rounded border border-softGray/20 shadow-sm p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">התראות ומשימות דחופות</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-red-50 border border-red-200 rounded p-4">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-3 space-x-reverse">
+                                    <div class="w-10 h-10 bg-red-500 rounded flex items-center justify-center">
+                                        <i class="fa-solid fa-exclamation-triangle text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800 mb-1">פער קריטי במיומנויות Cybersecurity</h4>
+                                        <p class="text-base text-softGray mb-2">דרושים 6 מומחי אבטחת מידע באופן מיידי - פער של 40%</p>
+                                        <span class="text-sm text-softGray">עדכון אחרון: לפני 2 שעות</span>
+                                    </div>
+                                </div>
+                                <button class="text-base text-primary hover:text-primaryDark font-medium">פעולה מיידית</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-orange-50 border border-orange-200 rounded p-4">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-3 space-x-reverse">
+                                    <div class="w-10 h-10 bg-orange-500 rounded flex items-center justify-center">
+                                        <i class="fa-solid fa-clock text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800 mb-1">5 תפקידים פנויים במחלקת טכנולוגיה</h4>
+                                        <p class="text-base text-softGray mb-2">זמן ממוצע למילוי: 45 יום - מעל הממוצע הארגוני</p>
+                                        <span class="text-sm text-softGray">עדכון אחרון: לפני 5 שעות</span>
+                                    </div>
+                                </div>
+                                <button class="text-base text-primary hover:text-primaryDark font-medium">צפה בתפקידים</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 rounded p-4">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-3 space-x-reverse">
+                                    <div class="w-10 h-10 bg-yellow-500 rounded flex items-center justify-center">
+                                        <i class="fa-solid fa-user-plus text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800 mb-1">56 מועמדים חדשים למחלקת טכנולוגיה</h4>
+                                        <p class="text-base text-softGray mb-2">דורש סקירה ומיון - 23 מועמדים בעלי התאמה גבוהה</p>
+                                        <span class="text-sm text-softGray">עדכון אחרון: היום</span>
+                                    </div>
+                                </div>
+                                <button class="text-base text-primary hover:text-primaryDark font-medium">בחן מועמדים</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-200 rounded p-4">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-3 space-x-reverse">
+                                    <div class="w-10 h-10 bg-blue-500 rounded flex items-center justify-center">
+                                        <i class="fa-solid fa-chart-line text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800 mb-1">שיפור של 12% בקצב הגיוס</h4>
+                                        <p class="text-base text-softGray mb-2">מגמה חיובית בחודש האחרון - המשך במגמה זו</p>
+                                        <span class="text-sm text-softGray">עדכון אחרון: היום</span>
+                                    </div>
+                                </div>
+                                <button class="text-base text-primary hover:text-primaryDark font-medium">צפה בדוח</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-green-50 border border-green-200 rounded p-4">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-3 space-x-reverse">
+                                    <div class="w-10 h-10 bg-green-500 rounded flex items-center justify-center">
+                                        <i class="fa-solid fa-check-circle text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800 mb-1">3 תפקידים מולאו בהצלחה השבוע</h4>
+                                        <p class="text-base text-softGray mb-2">מנהל פיתוח, אנליסט מודיעין, ומנהל לוגיסטיקה</p>
+                                        <span class="text-sm text-softGray">עדכון אחרון: אתמול</span>
+                                    </div>
+                                </div>
+                                <button class="text-base text-primary hover:text-primaryDark font-medium">פרטים</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recommendations-section" class="mb-8">
+                <div class="bg-blue-50 rounded border border-primary/20 shadow-sm p-6">
+                    <h2 class="text-xl font-semibold text-primary mb-4">המלצות מערכת AI</h2>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white rounded border border-softGray/20 p-5">
+                            <div class="flex items-start space-x-3 space-x-reverse mb-3">
+                                <div class="w-8 h-8 bg-primary rounded flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-lightbulb text-white text-sm"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">סדר עדיפויות לגיוס</h4>
+                            </div>
+                            <ol class="text-base text-softGray space-y-2 mr-11">
+                                <li>1. מומחי Cybersecurity (פער קריטי)</li>
+                                <li>2. מפתחי React/Frontend (פער גבוה)</li>
+                                <li>3. מומחי Cloud Infrastructure</li>
+                                <li>4. מעצבי UX/UI</li>
+                            </ol>
+                        </div>
+
+                        <div class="bg-white rounded border border-softGray/20 p-5">
+                            <div class="flex items-start space-x-3 space-x-reverse mb-3">
+                                <div class="w-8 h-8 bg-orange-500 rounded flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-users text-white text-sm"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">מועמדים מומלצים לבחינה</h4>
+                            </div>
+                            <p class="text-base text-softGray mr-11 mb-2">23 מועמדים בעלי התאמה של 85%+ זמינים לראיון</p>
+                            <button class="text-base text-primary hover:text-primaryDark font-medium mr-11">צפה ברשימה המלאה</button>
+                        </div>
+
+                        <div class="bg-white rounded border border-softGray/20 p-5">
+                            <div class="flex items-start space-x-3 space-x-reverse mb-3">
+                                <div class="w-8 h-8 bg-primaryDark rounded flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-graduation-cap text-white text-sm"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">הכשרות מומלצות</h4>
+                            </div>
+                            <p class="text-base text-softGray mr-11 mb-2">12 עובדים קיימים מתאימים להכשרה ב-Cybersecurity</p>
+                            <button class="text-base text-primary hover:text-primaryDark font-medium mr-11">תכנית הכשרה מפורטת</button>
+                        </div>
+
+                        <div class="bg-white rounded border border-softGray/20 p-5">
+                            <div class="flex items-start space-x-3 space-x-reverse mb-3">
+                                <div class="w-8 h-8 bg-purple-500 rounded flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-chart-pie text-white text-sm"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-800">אופטימיזציה תקציבית</h4>
+                            </div>
+                            <p class="text-base text-softGray mr-11 mb-2">חיסכון פוטנציאלי של 18% בעלויות גיוס דרך קידום פנימי</p>
+                            <button class="text-base text-primary hover:text-primaryDark font-medium mr-11">צפה בניתוח</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            try {
+                const data1 = [{
+                    type: 'bar',
+                    x: ['React/Frontend', 'Cloud Infrastructure', 'Data Analysis', 'Cybersecurity', 'Project Management', 'UX/UI Design'],
+                    y: [35, 28, 22, 40, 12, 25],
+                    marker: { color: ['#007BFF', '#FB8F67', '#0056b3', '#EF4444', '#10B981', '#8B5CF6'] }
+                }];
+                
+                const layout1 = {
+                    title: { text: '', font: { size: 0 } },
+                    xaxis: { title: '' },
+                    yaxis: { title: 'פער באחוזים' },
+                    margin: { t: 20, r: 20, b: 80, l: 60 },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff'
+                };
+                
+                Plotly.newPlot('skill-gap-chart', data1, layout1, {responsive: true, displayModeBar: false, displaylogo: false});
+
+                const data2 = [{
+                    type: 'pie',
+                    labels: ['מטה', 'כפסים', 'מודיעין', 'לוגיסטיקה', 'טכנולוגיה', 'שיווק', 'אדמיניסטרציה', 'מבצעי'],
+                    values: [8, 12, 9, 14, 16, 10, 7, 11],
+                    marker: { colors: ['#007BFF', '#FB8F67', '#0056b3', '#8B5CF6', '#3B82F6', '#EC4899', '#6B7280', '#EF4444'] }
+                }];
+                
+                const layout2 = {
+                    margin: { t: 20, r: 20, b: 20, l: 20 },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff',
+                    showlegend: true
+                };
+                
+                Plotly.newPlot('positions-by-category-chart', data2, layout2, {responsive: true, displayModeBar: false, displaylogo: false});
+
+                const data3 = [{
+                    type: 'scatter',
+                    mode: 'lines',
+                    x: ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני'],
+                    y: [12, 15, 18, 22, 28, 34],
+                    line: { color: '#007BFF', width: 3 },
+                    fill: 'tozeroy',
+                    fillcolor: 'rgba(0, 123, 255, 0.1)'
+                }];
+                
+                const layout3 = {
+                    xaxis: { title: '' },
+                    yaxis: { title: 'מספר גיוסים' },
+                    margin: { t: 20, r: 20, b: 60, l: 60 },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff'
+                };
+                
+                Plotly.newPlot('hiring-trend-chart', data3, layout3, {responsive: true, displayModeBar: false, displaylogo: false});
+
+                const data4 = [{
+                    type: 'bar',
+                    x: ['מטה', 'כפסים', 'מודיעין', 'לוגיסטיקה', 'טכנולוגיה', 'שיווק', 'אדמיניסטרציה', 'מבצעי'],
+                    y: [87, 83, 89, 86, 69, 80, 86, 82],
+                    marker: { 
+                        color: [87, 83, 89, 86, 69, 80, 86, 82],
+                        colorscale: [[0, '#EF4444'], [0.5, '#F59E0B'], [1, '#10B981']],
+                        showscale: false
+                    }
+                }];
+                
+                const layout4 = {
+                    xaxis: { title: '' },
+                    yaxis: { title: 'אחוז איוש', range: [0, 100] },
+                    margin: { t: 20, r: 20, b: 80, l: 60 },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff'
+                };
+                
+                Plotly.newPlot('staffing-rate-chart', data4, layout4, {responsive: true, displayModeBar: false, displaylogo: false});
+
+                const data5 = [{
+                    type: 'bar',
+                    x: ['מטה', 'כפסים', 'מודיעין', 'לוגיסטיקה', 'טכנולוגיה', 'שיווק', 'אדמיניסטרציה', 'מבצעי'],
+                    y: [28, 32, 25, 30, 45, 38, 27, 33],
+                    marker: { color: '#007BFF' }
+                }];
+                
+                const layout5 = {
+                    xaxis: { title: '' },
+                    yaxis: { title: 'ימים' },
+                    margin: { t: 20, r: 20, b: 80, l: 60 },
+                    plot_bgcolor: '#ffffff',
+                    paper_bgcolor: '#ffffff'
+                };
+                
+                Plotly.newPlot('time-to-fill-chart', data5, layout5, {responsive: true, displayModeBar: false, displaylogo: false});
+
+            } catch(e) {
+                console.error('Error generating charts:', e);
+            }
+        });
+    </script>
+</body>
+</html>

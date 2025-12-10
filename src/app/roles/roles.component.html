@@ -1,0 +1,304 @@
+<div id="main-content" class="p-8">
+    <div id="top-section" class="mb-6">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">ניהול תפקידים בארגון</h2>
+                <p class="text-gray-600">נהל את כל התפקידים בארגון, צור תפקידים חדשים ועדכן קיימים</p>
+            </div>
+            <button
+                class="bg-gradient-to-l from-primary to-primaryLight text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all flex items-center space-x-2 space-x-reverse">
+                <i class="fa-solid fa-plus"></i>
+                <span>הוסף תפקיד חדש</span>
+            </button>
+        </div>
+
+        <div id="stats-cards" class="grid grid-cols-4 gap-6 mb-6">
+            <div class="bg-white rounded-lg shadow-sm p-6 border-r-4 border-primary">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">סך הכל תפקידים</p>
+                        <h3 class="text-3xl font-bold text-gray-800">127</h3>
+                        <p class="text-xs text-green-600 mt-2">
+                            <i class="fa-solid fa-arrow-up ml-1"></i>8% מהחודש שעבר
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-primary to-primaryLight text-white p-4 rounded-lg">
+                        <i class="fa-solid fa-briefcase text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-6 border-r-4 border-green-500">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">תפקידים פתוחים</p>
+                        <h3 class="text-3xl font-bold text-gray-800">23</h3>
+                        <p class="text-xs text-red-600 mt-2">
+                            <i class="fa-solid fa-arrow-up ml-1"></i>3 חדשים השבוע
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg">
+                        <i class="fa-solid fa-door-open text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-6 border-r-4 border-secondary">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">תפקידים מאוישים</p>
+                        <h3 class="text-3xl font-bold text-gray-800">104</h3>
+                        <p class="text-xs text-green-600 mt-2">
+                            <i class="fa-solid fa-check ml-1"></i>82% מהכלל
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-secondary to-orange-400 text-white p-4 rounded-lg">
+                        <i class="fa-solid fa-user-check text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-6 border-r-4 border-accent">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-1">בתהליך גיוס</p>
+                        <h3 class="text-3xl font-bold text-gray-800">15</h3>
+                        <p class="text-xs text-blue-600 mt-2">
+                            <i class="fa-solid fa-hourglass-half ml-1"></i>ממוצע 45 יום
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-accent to-teal-400 text-white p-4 rounded-lg">
+                        <i class="fa-solid fa-clock text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="filters-section" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <h3 class="text-lg font-semibold text-gray-800">סינון וחיפוש</h3>
+                <span *ngIf="activeFiltersCount > 0"
+                    class="bg-primary text-white text-xs px-2 py-1 rounded-full font-semibold">
+                    {{ activeFiltersCount }} פעילים
+                </span>
+            </div>
+            <button (click)="resetFilters()"
+                class="text-primary hover:text-primaryLight text-sm font-medium transition-colors">
+                <i class="fa-solid fa-rotate-right ml-1"></i>אפס סינונים
+            </button>
+        </div>
+        <div class="grid grid-cols-5 gap-4">
+            <div class="relative">
+                <input type="text" placeholder="חיפוש תפקיד..." [(ngModel)]="searchTerm"
+                    class="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                <i class="fa-solid fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <select [(ngModel)]="selectedCategory"
+                class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary">
+                <option value="">כל הקטגוריות</option>
+                <option value="טכנולוגיה">טכנולוגיה</option>
+                <option value="מודיעין">מודיעין</option>
+                <option value="שיווק">שיווק</option>
+                <option value="לוגיסטיקה">לוגיסטיקה</option>
+                <option value="אדמיניסטרציה">אדמיניסטרציה</option>
+                <option value="מבצעי">מבצעי</option>
+            </select>
+            <select [(ngModel)]="selectedStatus"
+                class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary">
+                <option value="">כל הסטטוסים</option>
+                <option value="open">פתוח</option>
+                <option value="filled">מאויש</option>
+                <option value="recruiting">בתהליך גיוס</option>
+                <option value="frozen">מוקפא</option>
+            </select>
+            <select [(ngModel)]="selectedLevel"
+                class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary">
+                <option value="">כל רמות התפקיד</option>
+                <option value="זוטר">זוטר</option>
+                <option value="בינוני">בינוני</option>
+                <option value="בכיר">בכיר</option>
+                <option value="ניהולי">ניהולי</option>
+            </select>
+            <button (click)="toggleAdvancedFilter()"
+                [class]="showAdvancedFilter ? 'bg-primary text-white border border-primary px-5 py-3 rounded-lg transition-all flex items-center justify-center space-x-2 space-x-reverse shadow-md' : 'bg-white border border-gray-300 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2 space-x-reverse'">
+                <i class="fa-solid fa-filter"></i>
+                <span>סינון מתקדם</span>
+            </button>
+        </div>
+
+        <!-- Advanced Filter Panel -->
+        <div *ngIf="showAdvancedFilter"
+            class="mt-6 p-6 bg-gradient-to-br from-bgSoft to-lightPurple rounded-lg border-2 border-primary/20 animate-fadeIn">
+            <div class="flex justify-between items-center mb-4">
+                <h4 class="text-lg font-bold text-gray-800 flex items-center">
+                    <i class="fa-solid fa-sliders text-primary ml-2"></i>
+                    סינון מתקדם
+                </h4>
+                <button (click)="toggleAdvancedFilter()" class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fa-solid fa-building ml-1 text-primary"></i>
+                        מחלקה
+                    </label>
+                    <input type="text" placeholder="הזן שם מחלקה..." [(ngModel)]="advancedFilters.department"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fa-solid fa-users ml-1 text-primary"></i>
+                        מינימום מועמדים
+                    </label>
+                    <input type="number" placeholder="0" [(ngModel)]="advancedFilters.minCandidates"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fa-solid fa-users ml-1 text-primary"></i>
+                        מקסימום מועמדים
+                    </label>
+                    <input type="number" placeholder="100" [(ngModel)]="advancedFilters.maxCandidates"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fa-solid fa-shekel-sign ml-1 text-primary"></i>
+                        טווח שכר מינימלי
+                    </label>
+                    <input type="text" placeholder="לדוגמה: 15000" [(ngModel)]="advancedFilters.minSalary"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fa-solid fa-shekel-sign ml-1 text-primary"></i>
+                        טווח שכר מקסימלי
+                    </label>
+                    <input type="text" placeholder="לדוגמה: 30000" [(ngModel)]="advancedFilters.maxSalary"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label
+                    class="flex items-center space-x-3 space-x-reverse cursor-pointer hover:bg-white/50 p-3 rounded-lg transition-colors">
+                    <input type="checkbox" [(ngModel)]="advancedFilters.onlyUnassigned"
+                        class="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary">
+                    <span class="text-sm font-medium text-gray-700">
+                        <i class="fa-solid fa-user-slash ml-1 text-primary"></i>
+                        הצג רק תפקידים לא מאוישים
+                    </span>
+                </label>
+            </div>
+
+            <div class="flex justify-end space-x-3 space-x-reverse pt-4 border-t border-gray-200">
+                <button (click)="resetFilters(); toggleAdvancedFilter()"
+                    class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-rotate-right ml-1"></i>
+                    אפס הכל
+                </button>
+                <button (click)="applyAdvancedFilters()"
+                    class="px-6 py-2 bg-gradient-to-r from-primary to-primaryLight text-white rounded-lg hover:shadow-lg transition-all">
+                    <i class="fa-solid fa-check ml-1"></i>
+                    החל סינון
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="jobs-by-category" class="space-y-6">
+        <div *ngFor="let category of visibleCategories" class="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div [class]="getCategoryGradient(category.name) + ' text-white p-6'">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="bg-white/20 p-3 rounded-lg">
+                            <i [class]="'fa-solid ' + category.icon + ' text-2xl'"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">{{ category.name }}</h3>
+                            <p class="text-sm opacity-90">
+                                {{ getCategoryStats(category.name).total }} תפקידים |
+                                {{ getCategoryStats(category.name).filled }} מאוישים |
+                                {{ getCategoryStats(category.name).open }} פתוחים
+                            </p>
+                        </div>
+                    </div>
+                    <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4">
+                    <div *ngFor="let role of getRolesByCategory(category.name)"
+                        class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-semibold text-gray-800">{{ role.title }}</h4>
+                            <span [class]="'text-xs px-2 py-1 rounded-full ' + getStatusClass(role.status)">
+                                {{ getStatusLabel(role.status) }}
+                            </span>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600 mb-3">
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <i
+                                    [class]="role.assignedTo ? 'fa-solid fa-user-tie text-primary' : 'fa-solid fa-user-slash text-gray-400'"></i>
+                                <span>{{ role.assignedTo || 'לא מאויש' }}</span>
+                            </div>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-layer-group text-primary"></i>
+                                <span>רמה: {{ role.level }}</span>
+                            </div>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-users text-primary"></i>
+                                <span>{{ role.candidateCount }} מועמדים מתאימים</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 space-x-reverse">
+                            <button *ngIf="role.status === 'filled'"
+                                class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                <i class="fa-solid fa-eye ml-1"></i>פרטים
+                            </button>
+                            <button *ngIf="role.status !== 'filled'"
+                                class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                <i class="fa-solid fa-search ml-1"></i>חפש מועמדים
+                            </button>
+                            <button
+                                class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                <i class="fa-solid fa-edit ml-1"></i>עריכה
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pagination" class="flex justify-center mt-8">
+        <div class="flex space-x-2 space-x-reverse items-center">
+            <button
+                class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <button
+                class="px-4 py-2 bg-gradient-to-l from-primary to-primaryLight text-white rounded-lg font-medium">1</button>
+            <button
+                class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">2</button>
+            <button
+                class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+        </div>
+    </div>
+</div>

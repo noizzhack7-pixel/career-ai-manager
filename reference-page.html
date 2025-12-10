@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ניהול תפקידים בארגון</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none; }</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#650F54',
+                        primaryLight: '#541388',
+                        secondary: '#FB8F67',
+                        accent: '#9DD9D2',
+                        bgSoft: '#EAD8FD',
+                        accentDark: '#541388'
+                    },
+                    fontFamily: {
+                        'heebo': ['Heebo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-heebo">
+    <div id="header" class="bg-white shadow-sm border-b border-gray-200 px-8 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-8 space-x-reverse">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="bg-gradient-to-br from-primary to-primaryLight text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-briefcase text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">ניהול תפקידים בארגון</h1>
+                </div>
+                <nav class="flex items-center space-x-6 space-x-reverse">
+                    <a href="#" class="text-primary font-semibold border-b-2 border-primary pb-1">
+                        <i class="fa-solid fa-briefcase ml-2"></i>תפקידים בארגון
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors font-medium">
+                        <i class="fa-solid fa-users ml-2"></i>עובדים
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors font-medium">
+                        <i class="fa-solid fa-user-check ml-2"></i>התאמת תפקידים
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors font-medium">
+                        <i class="fa-solid fa-chart-line ml-2"></i>לוח בקרה
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors font-medium">
+                        <i class="fa-solid fa-cog ml-2"></i>הגדרות
+                    </a>
+                </nav>
+            </div>
+            <div class="flex items-center space-x-6 space-x-reverse">
+                <button class="text-gray-600 hover:text-primary transition-colors">
+                    <i class="fa-solid fa-bell text-xl"></i>
+                </button>
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="text-left">
+                        <p class="text-sm font-semibold text-gray-800">רחל כהן</p>
+                        <p class="text-xs text-gray-500">מנהלת משאבי אנוש</p>
+                    </div>
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="פרופיל" class="w-10 h-10 rounded-full">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-content" class="p-8">
+        <div id="top-section" class="mb-6">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">ניהול תפקידים בארגון</h2>
+                    <p class="text-gray-600">נהל את כל התפקידים בארגון, צור תפקידים חדשים ועדכן קיימים</p>
+                </div>
+                <button class="bg-gradient-to-l from-primary to-primaryLight text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all flex items-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>הוסף תפקיד חדש</span>
+                </button>
+            </div>
+
+            <div id="stats-cards" class="grid grid-cols-4 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-sm p-6 border-r-4 border-primary">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">סך הכל תפקידים</p>
+                            <h3 class="text-3xl font-bold text-gray-800">127</h3>
+                            <p class="text-xs text-green-600 mt-2">
+                                <i class="fa-solid fa-arrow-up ml-1"></i>8% מהחודש שעבר
+                            </p>
+                        </div>
+                        <div class="bg-gradient-to-br from-primary to-primaryLight text-white p-4 rounded-lg">
+                            <i class="fa-solid fa-briefcase text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6 border-r-4 border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">תפקידים פתוחים</p>
+                            <h3 class="text-3xl font-bold text-gray-800">23</h3>
+                            <p class="text-xs text-red-600 mt-2">
+                                <i class="fa-solid fa-arrow-up ml-1"></i>3 חדשים השבוע
+                            </p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 rounded-lg">
+                            <i class="fa-solid fa-door-open text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6 border-r-4 border-secondary">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">תפקידים מאוישים</p>
+                            <h3 class="text-3xl font-bold text-gray-800">104</h3>
+                            <p class="text-xs text-green-600 mt-2">
+                                <i class="fa-solid fa-check ml-1"></i>82% מהכלל
+                            </p>
+                        </div>
+                        <div class="bg-gradient-to-br from-secondary to-orange-400 text-white p-4 rounded-lg">
+                            <i class="fa-solid fa-user-check text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6 border-r-4 border-accent">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">בתהליך גיוס</p>
+                            <h3 class="text-3xl font-bold text-gray-800">15</h3>
+                            <p class="text-xs text-blue-600 mt-2">
+                                <i class="fa-solid fa-hourglass-half ml-1"></i>ממוצע 45 יום
+                            </p>
+                        </div>
+                        <div class="bg-gradient-to-br from-accent to-teal-400 text-white p-4 rounded-lg">
+                            <i class="fa-solid fa-clock text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="filters-section" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-800">סינון וחיפוש</h3>
+                <button class="text-primary hover:text-primaryLight text-sm font-medium">
+                    <i class="fa-solid fa-rotate-right ml-1"></i>אפס סינונים
+                </button>
+            </div>
+            <div class="grid grid-cols-5 gap-4">
+                <div class="relative">
+                    <input type="text" placeholder="חיפוש תפקיד..." class="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    <i class="fa-solid fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <select class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary">
+                    <option>כל הקטגוריות</option>
+                    <option>מטה</option>
+                    <option>כפסים</option>
+                    <option>מש"א</option>
+                    <option>מודיעין</option>
+                    <option>לוגיסטיקה</option>
+                    <option>טכנולוגיה</option>
+                    <option>שיווק</option>
+                    <option>אדמיניסטרציה</option>
+                    <option>מבצעי</option>
+                </select>
+                <select class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary">
+                    <option>כל הסטטוסים</option>
+                    <option>פתוח</option>
+                    <option>מאויש</option>
+                    <option>בתהליך גיוס</option>
+                    <option>מוקפא</option>
+                </select>
+                <select class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary">
+                    <option>כל רמות התפקיד</option>
+                    <option>זוטר</option>
+                    <option>בינוני</option>
+                    <option>בכיר</option>
+                    <option>ניהולי</option>
+                </select>
+                <button class="bg-white border border-gray-300 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-filter"></i>
+                    <span>סינון מתקדם</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="jobs-by-category" class="space-y-6">
+            <div id="category-tech" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-l from-primary to-primaryLight text-white p-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="bg-white/20 p-3 rounded-lg">
+                                <i class="fa-solid fa-microchip text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">טכנולוגיה</h3>
+                                <p class="text-sm opacity-90">18 תפקידים | 12 מאוישים | 6 פתוחים</p>
+                            </div>
+                        </div>
+                        <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מפתח Full Stack Senior</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>אמיר שמואלי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בכיר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>18 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">ארכיטקט תוכנה</h4>
+                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-slash text-gray-400"></i>
+                                    <span>לא מאויש</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בכיר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>12 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-search ml-1"></i>חפש מועמדים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מפתח DevOps</h4>
+                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-slash text-gray-400"></i>
+                                    <span>לא מאויש</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בינוני</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>8 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-search ml-1"></i>חפש מועמדים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מהנדס QA</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>שרה גולדברג</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בינוני</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>15 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מפתח Frontend</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>רון ברקוביץ</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בינוני</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>10 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מנהל פרויקטים טכנולוגיים</h4>
+                                <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">בתהליך</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-slash text-gray-400"></i>
+                                    <span>3 מועמדים בסבב אחרון</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: ניהולי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>7 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="category-intelligence" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-l from-primaryLight to-accentDark text-white p-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="bg-white/20 p-3 rounded-lg">
+                                <i class="fa-solid fa-brain text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">מודיעין</h3>
+                                <p class="text-sm opacity-90">15 תפקידים | 11 מאוישים | 4 פתוחים</p>
+                            </div>
+                        </div>
+                        <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">אנליסט מודיעין</h4>
+                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-slash text-gray-400"></i>
+                                    <span>לא מאויש</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בכיר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>22 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-search ml-1"></i>חפש מועמדים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">חוקר סייבר</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>משה דהן</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בכיר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>6 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מנהל צוות מודיעין</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>עומר פרץ</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: ניהולי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>4 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="category-marketing" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-l from-secondary to-orange-400 text-white p-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="bg-white/20 p-3 rounded-lg">
+                                <i class="fa-solid fa-chart-line text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">שיווק</h3>
+                                <p class="text-sm opacity-90">12 תפקידים | 9 מאוישים | 3 פתוחים</p>
+                            </div>
+                        </div>
+                        <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מנהל שיווק דיגיטלי</h4>
+                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-slash text-gray-400"></i>
+                                    <span>לא מאויש</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בכיר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>14 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-search ml-1"></i>חפש מועמדים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">כותב תוכן</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>דנה לוי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בינוני</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>19 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מנהל רשתות חברתיות</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>נועה כהן</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: זוטר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>11 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="category-logistics" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-l from-accent to-teal-400 text-white p-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="bg-white/20 p-3 rounded-lg">
+                                <i class="fa-solid fa-truck text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">לוגיסטיקה</h3>
+                                <p class="text-sm opacity-90">10 תפקידים | 8 מאוישים | 2 פתוחים</p>
+                            </div>
+                        </div>
+                        <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מנהל שרשרת אספקה</h4>
+                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-slash text-gray-400"></i>
+                                    <span>לא מאויש</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: ניהולי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>9 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-search ml-1"></i>חפש מועמדים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">רכז לוגיסטיקה</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>יוסי אברהם</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בינוני</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>13 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">אחראי מחסן</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>מיכאל שלום</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: זוטר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>16 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="category-admin" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-l from-purple-600 to-purple-700 text-white p-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="bg-white/20 p-3 rounded-lg">
+                                <i class="fa-solid fa-file-contract text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">אדמיניסטרציה</h3>
+                                <p class="text-sm opacity-90">14 תפקידים | 12 מאוישים | 2 פתוחים</p>
+                            </div>
+                        </div>
+                        <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מנהל משאבי אנוש</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>רחל כהן</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: ניהולי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>5 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">רכז גיוס</h4>
+                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-slash text-gray-400"></i>
+                                    <span>לא מאויש</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בינוני</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>17 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-search ml-1"></i>חפש מועמדים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מזכירה ראשית</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>תמר לוי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בכיר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>8 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="category-operations" class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="bg-gradient-to-l from-red-600 to-red-700 text-white p-6">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <div class="bg-white/20 p-3 rounded-lg">
+                                <i class="fa-solid fa-shield-halved text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">מבצעי</h3>
+                                <p class="text-sm opacity-90">22 תפקידים | 19 מאוישים | 3 פתוחים</p>
+                            </div>
+                        </div>
+                        <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-all">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מפקד צוות</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>אבי מזרחי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בכיר</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>11 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">קצין תורן</h4>
+                                <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-slash text-gray-400"></i>
+                                    <span>לא מאויש</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: בינוני</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>24 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-search ml-1"></i>חפש מועמדים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="font-semibold text-gray-800">מפקד מבצעים</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">מאויש</span>
+                            </div>
+                            <div class="space-y-2 text-sm text-gray-600 mb-3">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-user-tie text-primary"></i>
+                                    <span>דוד שפירא</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <span>רמה: ניהולי</span>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <i class="fa-solid fa-users text-primary"></i>
+                                    <span>7 מועמדים מתאימים</span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button class="flex-1 bg-primary text-white text-sm px-3 py-2 rounded hover:bg-primaryLight transition-colors">
+                                    <i class="fa-solid fa-eye ml-1"></i>פרטים
+                                </button>
+                                <button class="flex-1 border border-primary text-primary text-sm px-3 py-2 rounded hover:bg-bgSoft transition-colors">
+                                    <i class="fa-solid fa-edit ml-1"></i>עריכה
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pagination" class="flex justify-center mt-8">
+            <div class="flex space-x-2 space-x-reverse items-center">
+                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <button class="px-4 py-2 bg-gradient-to-l from-primary to-primaryLight text-white rounded-lg font-medium">1</button>
+                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">2</button>
+                <button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

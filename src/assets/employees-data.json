@@ -1,0 +1,935 @@
+{
+    "metadata": {
+        "pageTitle": "Go Pro",
+        "totalEmployees": 145,
+        "activeEmployees": 142,
+        "atRiskEmployees": 23,
+        "lastUpdated": "2025-12-09"
+    },
+    "employees": [
+        {
+            "id": 1,
+            "name": "אמיר שמואלי",
+            "role": "מפתח Full Stack Senior",
+            "department": "טכנולוגיה",
+            "tenure": 7,
+            "turnoverRisk": 18,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Backend",
+            "education": {
+                "degree": "B.Sc מדעי המחשב",
+                "institution": "אוניברסיטת תל אביב",
+                "years": "2015-2018"
+            },
+            "location": {
+                "city": "תל אביב",
+                "workMode": "היברידי"
+            },
+            "metrics": {
+                "skillMatch": 98,
+                "attendance": 96,
+                "satisfaction": "5/6",
+                "performanceRating": "6/6",
+                "lastRaise": {
+                    "timeAgo": "לפני שנה",
+                    "percentage": 8
+                },
+                "roleMatch": 95,
+                "age": 32,
+                "daysInRole": 2555,
+                "absenceRate": 4
+            },
+            "roleApplications": [
+                {
+                    "title": "ארכיטקט תוכנה - אגף פיתוח",
+                    "matchPercentage": 92
+                },
+                {
+                    "title": "Team Leader - מחלקת Backend",
+                    "matchPercentage": 88
+                }
+            ],
+            "skills": {
+                "chartData": {
+                    "type": "scatterpolar",
+                    "r": [
+                        95,
+                        92,
+                        88,
+                        90,
+                        85,
+                        80,
+                        75,
+                        70
+                    ],
+                    "theta": [
+                        "React",
+                        "Node.js",
+                        "AWS",
+                        "TypeScript",
+                        "MongoDB",
+                        "Docker",
+                        "Kubernetes",
+                        "Python"
+                    ]
+                }
+            }
+        },
+        {
+            "id": 2,
+            "name": "שרה גולדברג",
+            "role": "מפתחת Frontend",
+            "department": "טכנולוגיה",
+            "tenure": 5,
+            "turnoverRisk": 45,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Backend",
+            "education": {
+                "degree": "B.Sc מדעי המחשב",
+                "institution": "אוניברסיטת תל אביב",
+                "years": "2015-2018"
+            },
+            "location": {
+                "city": "תל אביב",
+                "workMode": "היברידי"
+            },
+            "metrics": {
+                "skillMatch": 98,
+                "attendance": 88,
+                "satisfaction": "4/6",
+                "performanceRating": "6/6",
+                "lastRaise": {
+                    "timeAgo": "לפני שנה",
+                    "percentage": 8
+                },
+                "roleMatch": 95,
+                "age": 32,
+                "daysInRole": 1825,
+                "absenceRate": 12
+            },
+            "roleApplications": [
+                {
+                    "title": "ארכיטקט תוכנה - אגף פיתוח",
+                    "matchPercentage": 92
+                },
+                {
+                    "title": "Team Leader - מחלקת Backend",
+                    "matchPercentage": 88
+                }
+            ],
+            "skills": {
+                "chartData": {
+                    "type": "scatterpolar",
+                    "r": [
+                        88,
+                        85,
+                        90,
+                        92,
+                        75,
+                        95,
+                        80,
+                        85
+                    ],
+                    "theta": [
+                        "React",
+                        "Vue.js",
+                        "JavaScript",
+                        "CSS/SCSS",
+                        "Webpack",
+                        "HTML5",
+                        "Figma",
+                        "Git"
+                    ]
+                }
+            }
+        },
+        {
+            "id": 3,
+            "name": "רון ברקוביץ",
+            "role": "מפתח Backend Senior",
+            "department": "טכנולוגיה",
+            "tenure": 6,
+            "turnoverRisk": 22,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Backend",
+            "education": {
+                "degree": "B.Sc מדעי המחשב",
+                "institution": "אוניברסיטת תל אביב",
+                "years": "2015-2018"
+            },
+            "location": {
+                "city": "תל אביב",
+                "workMode": "היברידי"
+            },
+            "metrics": {
+                "skillMatch": 98,
+                "attendance": 96,
+                "satisfaction": "5/6",
+                "performanceRating": "6/6",
+                "lastRaise": {
+                    "timeAgo": "לפני שנה",
+                    "percentage": 8
+                },
+                "roleMatch": 95,
+                "age": 32,
+                "daysInRole": 2190,
+                "absenceRate": 4
+            },
+            "roleApplications": [
+                {
+                    "title": "ארכיטקט תוכנה - אגף פיתוח",
+                    "matchPercentage": 92
+                },
+                {
+                    "title": "Team Leader - מחלקת Backend",
+                    "matchPercentage": 88
+                }
+            ],
+            "skills": {
+                "chartData": {
+                    "type": "scatterpolar",
+                    "r": [
+                        90,
+                        92,
+                        85,
+                        88,
+                        80,
+                        85,
+                        82,
+                        78
+                    ],
+                    "theta": [
+                        "Node.js",
+                        "AWS",
+                        "Python",
+                        "PostgreSQL",
+                        "Redis",
+                        "Microservices",
+                        "Docker",
+                        "Kubernetes"
+                    ]
+                }
+            }
+        },
+        {
+            "id": 4,
+            "name": "דני כהן",
+            "role": "מפתח Backend",
+            "department": "טכנולוגיה",
+            "tenure": 3,
+            "turnoverRisk": 35,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Backend",
+            "education": {
+                "degree": "B.Sc מדעי המחשב",
+                "institution": "אוניברסיטת תל אביב",
+                "years": "2015-2018"
+            },
+            "location": {
+                "city": "תל אביב",
+                "workMode": "היברידי"
+            },
+            "metrics": {
+                "skillMatch": 98,
+                "attendance": 96,
+                "satisfaction": "5/6",
+                "performanceRating": "6/6",
+                "lastRaise": {
+                    "timeAgo": "לפני שנה",
+                    "percentage": 8
+                },
+                "roleMatch": 95,
+                "age": 32,
+                "daysInRole": 1095,
+                "absenceRate": 4
+            },
+            "roleApplications": [
+                {
+                    "title": "ארכיטקט תוכנה - אגף פיתוח",
+                    "matchPercentage": 92
+                },
+                {
+                    "title": "Team Leader - מחלקת Backend",
+                    "matchPercentage": 88
+                }
+            ],
+            "skills": {
+                "chartData": {
+                    "type": "scatterpolar",
+                    "r": [
+                        90,
+                        92,
+                        85,
+                        88,
+                        80,
+                        85,
+                        82,
+                        78
+                    ],
+                    "theta": [
+                        "Node.js",
+                        "AWS",
+                        "Python",
+                        "PostgreSQL",
+                        "Redis",
+                        "Microservices",
+                        "Docker",
+                        "Kubernetes"
+                    ]
+                }
+            }
+        },
+        {
+            "id": 5,
+            "name": "מיכל לוי",
+            "role": "מנהלת פרוייקטים",
+            "department": "ניהול",
+            "tenure": 8,
+            "turnoverRisk": 12,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Backend",
+            "education": {
+                "degree": "B.Sc מדעי המחשב",
+                "institution": "אוניברסיטת תל אביב",
+                "years": "2015-2018"
+            },
+            "location": {
+                "city": "תל אביב",
+                "workMode": "היברידי"
+            },
+            "metrics": {
+                "skillMatch": 98,
+                "attendance": 96,
+                "satisfaction": "5/6",
+                "performanceRating": "6/6",
+                "lastRaise": {
+                    "timeAgo": "לפני שנה",
+                    "percentage": 8
+                },
+                "roleMatch": 95,
+                "age": 32,
+                "daysInRole": 2920,
+                "absenceRate": 4
+            },
+            "roleApplications": [
+                {
+                    "title": "ארכיטקט תוכנה - אגף פיתוח",
+                    "matchPercentage": 92
+                },
+                {
+                    "title": "Team Leader - מחלקת Backend",
+                    "matchPercentage": 88
+                }
+            ],
+            "skills": {
+                "chartData": {
+                    "type": "scatterpolar",
+                    "r": [
+                        90,
+                        92,
+                        85,
+                        88,
+                        80,
+                        85,
+                        82,
+                        78
+                    ],
+                    "theta": [
+                        "Node.js",
+                        "AWS",
+                        "Python",
+                        "PostgreSQL",
+                        "Redis",
+                        "Microservices",
+                        "Docker",
+                        "Kubernetes"
+                    ]
+                }
+            }
+        },
+        {
+            "id": 6,
+            "name": "יוסי כהן",
+            "role": "מנהל פרויקטים",
+            "department": "ניהול",
+            "tenure": 4,
+            "turnoverRisk": 28,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף תפעול",
+            "subUnit": "מחלקת ניהול"
+        },
+        {
+            "id": 7,
+            "name": "רחל לוי",
+            "role": "מעצבת UX/UI",
+            "department": "טכנולוגיה",
+            "tenure": 3,
+            "turnoverRisk": 35,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת עיצוב"
+        },
+        {
+            "id": 8,
+            "name": "דוד מזרחי",
+            "role": "מנתח נתונים",
+            "department": "מודיעין",
+            "tenure": 6,
+            "turnoverRisk": 15,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף מודיעין",
+            "subUnit": "מחלקת אנליטיקה"
+        },
+        {
+            "id": 9,
+            "name": "נועה ברק",
+            "role": "מנהלת שיווק",
+            "department": "שיווק",
+            "tenure": 5,
+            "turnoverRisk": 22,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף שיווק",
+            "subUnit": "מחלקת תוכן"
+        },
+        {
+            "id": 10,
+            "name": "אבי שטרן",
+            "role": "DevOps Engineer",
+            "department": "טכנולוגיה",
+            "tenure": 4,
+            "turnoverRisk": 38,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת תשתיות"
+        },
+        {
+            "id": 11,
+            "name": "תמר גרין",
+            "role": "רכזת משאבי אנוש",
+            "department": "אדמיניסטרציה",
+            "tenure": 8,
+            "turnoverRisk": 12,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף משאבי אנוש",
+            "subUnit": "מחלקת גיוס"
+        },
+        {
+            "id": 12,
+            "name": "משה אבוטבול",
+            "role": "מפתח Mobile",
+            "department": "טכנולוגיה",
+            "tenure": 2,
+            "turnoverRisk": 42,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Mobile"
+        },
+        {
+            "id": 13,
+            "name": "שירה כץ",
+            "role": "מנהלת מוצר",
+            "department": "ניהול",
+            "tenure": 6,
+            "turnoverRisk": 19,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף מוצר",
+            "subUnit": "מחלקת אסטרטגיה"
+        },
+        {
+            "id": 14,
+            "name": "אלון דהן",
+            "role": "מהנדס QA",
+            "department": "טכנולוגיה",
+            "tenure": 3,
+            "turnoverRisk": 31,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת איכות"
+        },
+        {
+            "id": 15,
+            "name": "ליאת רוזן",
+            "role": "מנהלת מכירות",
+            "department": "מכירות",
+            "tenure": 7,
+            "turnoverRisk": 16,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף מכירות",
+            "subUnit": "מחלקת ארגוני"
+        },
+        {
+            "id": 16,
+            "name": "עומר פרץ",
+            "role": "מפתח Backend",
+            "department": "טכנולוגיה",
+            "tenure": 4,
+            "turnoverRisk": 27,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Backend"
+        },
+        {
+            "id": 17,
+            "name": "מיכל אשכנזי",
+            "role": "מנהלת תוכן",
+            "department": "שיווק",
+            "tenure": 5,
+            "turnoverRisk": 24,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף שיווק",
+            "subUnit": "מחלקת דיגיטל"
+        },
+        {
+            "id": 18,
+            "name": "גיא ביטון",
+            "role": "ארכיטקט מערכות",
+            "department": "טכנולוגיה",
+            "tenure": 9,
+            "turnoverRisk": 14,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת ארכיטקטורה"
+        },
+        {
+            "id": 19,
+            "name": "ענת סלומון",
+            "role": "רכזת לוגיסטיקה",
+            "department": "לוגיסטיקה",
+            "tenure": 6,
+            "turnoverRisk": 21,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף תפעול",
+            "subUnit": "מחלקת אספקה"
+        },
+        {
+            "id": 20,
+            "name": "רועי חדד",
+            "role": "מפתח Frontend Senior",
+            "department": "טכנולוגיה",
+            "tenure": 5,
+            "turnoverRisk": 33,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Frontend"
+        },
+        {
+            "id": 21,
+            "name": "הדר לוין",
+            "role": "מנהלת פיננסים",
+            "department": "מטה",
+            "tenure": 10,
+            "turnoverRisk": 8,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף כספים",
+            "subUnit": "מחלקת חשבונאות"
+        },
+        {
+            "id": 22,
+            "name": "אסף גולן",
+            "role": "מנתח אבטחת מידע",
+            "department": "טכנולוגיה",
+            "tenure": 4,
+            "turnoverRisk": 29,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת אבטחה"
+        },
+        {
+            "id": 23,
+            "name": "דנה ורד",
+            "role": "מעצבת גרפית",
+            "department": "שיווק",
+            "tenure": 3,
+            "turnoverRisk": 36,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף שיווק",
+            "subUnit": "מחלקת עיצוב"
+        },
+        {
+            "id": 24,
+            "name": "יניב אלמוג",
+            "role": "מנהל תפעול",
+            "department": "תפעול",
+            "tenure": 8,
+            "turnoverRisk": 17,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף תפעול",
+            "subUnit": "מחלקת ניהול"
+        },
+        {
+            "id": 25,
+            "name": "שני בן דוד",
+            "role": "מפתחת Python",
+            "department": "טכנולוגיה",
+            "tenure": 2,
+            "turnoverRisk": 44,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Backend"
+        },
+        {
+            "id": 26,
+            "name": "איתי נחמני",
+            "role": "מנהל חשבונות לקוח",
+            "department": "מכירות",
+            "tenure": 6,
+            "turnoverRisk": 20,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף מכירות",
+            "subUnit": "מחלקת שימור"
+        },
+        {
+            "id": 27,
+            "name": "מור שפירא",
+            "role": "מנהלת קהילה",
+            "department": "שיווק",
+            "tenure": 4,
+            "turnoverRisk": 26,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף שיווק",
+            "subUnit": "מחלקת רשתות"
+        },
+        {
+            "id": 28,
+            "name": "עידו כהן",
+            "role": "מפתח Full Stack",
+            "department": "טכנולוגיה",
+            "tenure": 3,
+            "turnoverRisk": 39,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Backend"
+        },
+        {
+            "id": 29,
+            "name": "ליהי אברהם",
+            "role": "מנהלת גיוס",
+            "department": "אדמיניסטרציה",
+            "tenure": 7,
+            "turnoverRisk": 13,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף משאבי אנוש",
+            "subUnit": "מחלקת גיוס"
+        },
+        {
+            "id": 30,
+            "name": "נדב מלכה",
+            "role": "מנהל מוצר דיגיטלי",
+            "department": "ניהול",
+            "tenure": 5,
+            "turnoverRisk": 25,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף מוצר",
+            "subUnit": "מחלקת דיגיטל"
+        },
+        {
+            "id": 31,
+            "name": "רונית זהבי",
+            "role": "מנהלת שירות לקוחות",
+            "department": "מכירות",
+            "tenure": 9,
+            "turnoverRisk": 11,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף מכירות",
+            "subUnit": "מחלקת שירות"
+        },
+        {
+            "id": 32,
+            "name": "אורי בנימין",
+            "role": "מהנדס מערכות",
+            "department": "טכנולוגיה",
+            "tenure": 4,
+            "turnoverRisk": 32,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת תשתיות"
+        },
+        {
+            "id": 33,
+            "name": "טלי גבאי",
+            "role": "מנהלת תקציבים",
+            "department": "מטה",
+            "tenure": 6,
+            "turnoverRisk": 18,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף כספים",
+            "subUnit": "מחלקת תקציב"
+        },
+        {
+            "id": 34,
+            "name": "בועז שלום",
+            "role": "מפתח iOS",
+            "department": "טכנולוגיה",
+            "tenure": 3,
+            "turnoverRisk": 41,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Mobile"
+        },
+        {
+            "id": 35,
+            "name": "סיגל ברוך",
+            "role": "מנהלת תוכן דיגיטלי",
+            "department": "שיווק",
+            "tenure": 5,
+            "turnoverRisk": 23,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף שיווק",
+            "subUnit": "מחלקת תוכן"
+        },
+        {
+            "id": 36,
+            "name": "אייל דורון",
+            "role": "מנהל פיתוח עסקי",
+            "department": "מכירות",
+            "tenure": 7,
+            "turnoverRisk": 19,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף מכירות",
+            "subUnit": "מחלקת עסקי"
+        },
+        {
+            "id": 37,
+            "name": "קרן אוחנה",
+            "role": "מנהלת אירועים",
+            "department": "שיווק",
+            "tenure": 4,
+            "turnoverRisk": 30,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף שיווק",
+            "subUnit": "מחלקת אירועים"
+        },
+        {
+            "id": 38,
+            "name": "רן פלד",
+            "role": "מפתח Android",
+            "department": "טכנולוגיה",
+            "tenure": 2,
+            "turnoverRisk": 43,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף פיתוח",
+            "subUnit": "מחלקת Mobile"
+        },
+        {
+            "id": 39,
+            "name": "מאיה רביב",
+            "role": "מנהלת פרויקטים דיגיטליים",
+            "department": "ניהול",
+            "tenure": 6,
+            "turnoverRisk": 21,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף תפעול",
+            "subUnit": "מחלקת דיגיטל"
+        },
+        {
+            "id": 40,
+            "name": "גל אריאלי",
+            "role": "מנתח מערכות",
+            "department": "מודיעין",
+            "tenure": 5,
+            "turnoverRisk": 24,
+            "avatar": "https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg",
+            "status": "פעיל",
+            "organizationalUnit": "אגף מודיעין",
+            "subUnit": "מחלקת מערכות"
+        }
+    ],
+    "filterCategories": [
+        {
+            "name": "הכל",
+            "icon": null,
+            "count": 145,
+            "checked": true
+        },
+        {
+            "name": "טכנולוגיה",
+            "icon": "fa-solid fa-microchip",
+            "count": 42,
+            "checked": false
+        },
+        {
+            "name": "מודיעין",
+            "icon": "fa-solid fa-brain",
+            "count": 28,
+            "checked": false
+        },
+        {
+            "name": "שיווק",
+            "icon": "fa-solid fa-chart-line",
+            "count": 18,
+            "checked": false
+        },
+        {
+            "name": "מטה",
+            "icon": "fa-solid fa-building",
+            "count": 15,
+            "checked": false
+        },
+        {
+            "name": "לוגיסטיקה",
+            "icon": "fa-solid fa-truck",
+            "count": 22,
+            "checked": false
+        },
+        {
+            "name": "אדמיניסטרציה",
+            "icon": "fa-solid fa-user-tie",
+            "count": 20,
+            "checked": false
+        }
+    ],
+    "organizationalUnits": [
+        {
+            "name": "אגף פיתוח",
+            "count": 35,
+            "checked": false
+        },
+        {
+            "name": "אגף תפעול",
+            "count": 28,
+            "checked": false
+        },
+        {
+            "name": "אגף מכירות",
+            "count": 22,
+            "checked": false
+        },
+        {
+            "name": "אגף שיווק",
+            "count": 18,
+            "checked": false
+        },
+        {
+            "name": "אגף משאבי אנוש",
+            "count": 12,
+            "checked": false
+        }
+    ],
+    "turnoverRiskLevels": [
+        {
+            "level": "סיכון גבוה",
+            "color": "bg-red-500",
+            "count": 8,
+            "checked": false
+        },
+        {
+            "level": "סיכון בינוני",
+            "color": "bg-orange-400",
+            "count": 15,
+            "checked": false
+        },
+        {
+            "level": "סיכון נמוך",
+            "color": "bg-green-500",
+            "count": 122,
+            "checked": false
+        }
+    ],
+    "statistics": {
+        "totalEmployees": 145,
+        "activeEmployees": 142,
+        "atRiskEmployees": 23
+    },
+    "sortOptions": [
+        {
+            "value": "name-asc",
+            "label": "מיון: שם (א-ת)"
+        },
+        {
+            "value": "name-desc",
+            "label": "מיון: שם (ת-א)"
+        },
+        {
+            "value": "role",
+            "label": "מיון: תפקיד"
+        },
+        {
+            "value": "tenure",
+            "label": "מיון: ותק"
+        },
+        {
+            "value": "risk",
+            "label": "מיון: סיכון עזיבה"
+        }
+    ],
+    "chartConfiguration": {
+        "responsive": true,
+        "displayModeBar": false,
+        "displaylogo": false,
+        "layout": {
+            "title": {
+                "text": "רמת כישורים",
+                "font": {
+                    "size": 16
+                }
+            },
+            "polar": {
+                "radialaxis": {
+                    "visible": true,
+                    "range": [
+                        0,
+                        100
+                    ]
+                }
+            },
+            "margin": {
+                "t": 60,
+                "r": 20,
+                "b": 80,
+                "l": 60
+            },
+            "plot_bgcolor": "#ffffff",
+            "paper_bgcolor": "#ffffff",
+            "showlegend": false
+        },
+        "markerColor": "#650F54"
+    },
+    "pagination": {
+        "currentPage": 1,
+        "totalPages": 5
+    }
+}

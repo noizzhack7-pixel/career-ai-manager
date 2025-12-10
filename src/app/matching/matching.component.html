@@ -1,0 +1,564 @@
+<div class="flex">
+    <!-- Sidebar with open positions -->
+    <div id="jobs-sidebar"
+        class="w-80 bg-white sticky top-[73px] h-[calc(100vh-73px)] shadow-sm border-l border-gray-200 overflow-y-auto">
+        <div class="p-6">
+            <div class="mb-6">
+                <h2 class="text-lg font-bold text-gray-800 mb-4">תפקידים פתוחים</h2>
+                <div class="relative">
+                    <input type="text" placeholder="חיפוש תפקיד..."
+                        class="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm">
+                    <i class="fa-solid fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Group positions by category -->
+            <div class="mb-4">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                    <i class="fa-solid fa-microchip ml-2 text-primary"></i>
+                    טכנולוגיה
+                </h3>
+                <div class="space-y-2">
+                    <div *ngFor="let position of positions.slice(0, 4)"
+                        [class]="position.isActive ? 'bg-gradient-to-r from-primary to-primaryLight text-white p-3 rounded-lg cursor-pointer shadow-md' : 'bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100'">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 [class]="position.isActive ? 'font-semibold' : 'font-semibold text-gray-800'">{{
+                                position.title }}</h4>
+                            <span
+                                [class]="position.isActive ? 'bg-white/20 text-xs px-2 py-1 rounded-full' : 'bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full'">{{
+                                position.status }}</span>
+                        </div>
+                        <p [class]="position.isActive ? 'text-xs opacity-90' : 'text-xs text-gray-600'">{{
+                            position.candidateCount }} מועמדים מתאימים</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                    <i class="fa-solid fa-brain ml-2 text-primary"></i>
+                    מודיעין
+                </h3>
+                <div class="space-y-2">
+                    <div *ngFor="let position of positions.slice(4, 6)"
+                        class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-gray-800">{{ position.title }}</h4>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">{{ position.status
+                                }}</span>
+                        </div>
+                        <p class="text-xs text-gray-600">{{ position.candidateCount }} מועמדים מתאימים</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                    <i class="fa-solid fa-chart-line ml-2 text-primary"></i>
+                    שיווק
+                </h3>
+                <div class="space-y-2">
+                    <div *ngFor="let position of positions.slice(6, 8)"
+                        class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-gray-800">{{ position.title }}</h4>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">{{ position.status
+                                }}</span>
+                        </div>
+                        <p class="text-xs text-gray-600">{{ position.candidateCount }} מועמדים מתאימים</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                    <i class="fa-solid fa-truck ml-2 text-primary"></i>
+                    לוגיסטיקה
+                </h3>
+                <div class="space-y-2">
+                    <div *ngFor="let position of positions.slice(8, 9)"
+                        class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-semibold text-gray-800">{{ position.title }}</h4>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">{{ position.status
+                                }}</span>
+                        </div>
+                        <p class="text-xs text-gray-600">{{ position.candidateCount }} מועמדים מתאימים</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-gray-200">
+                <div class="bg-gradient-to-br from-bgSoft to-accent/20 rounded-lg p-4">
+                    <h3 class="font-semibold text-primary mb-2">סטטיסטיקות</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">תפקידים פתוחים</span>
+                            <span class="font-bold text-primary">12</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">התאמות היום</span>
+                            <span class="font-bold text-green-600">8</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600">בתהליך</span>
+                            <span class="font-bold text-secondary">15</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div id="main-content" class="flex-1 p-8">
+        <!-- Position details card -->
+        <div id="job-details-card" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="flex justify-between items-start mb-6">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-3 space-x-reverse mb-3">
+                        <h2 class="text-2xl font-bold text-gray-800">{{ currentPosition.title }}</h2>
+                        <span class="bg-green-100 text-green-700 text-sm font-medium px-3 py-2 rounded-full">תפקיד
+                            פעיל</span>
+                    </div>
+                    <div class="grid grid-cols-4 gap-6 mb-4">
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500 mb-1">קטגוריה</h4>
+                            <p class="text-base text-gray-800 font-medium">{{ currentPosition.category }}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500 mb-1">רמת התפקיד</h4>
+                            <p class="text-base text-gray-800 font-medium">{{ currentPosition.level }}</p>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500 mb-1">מאייש נוכחי</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <img [src]="currentPosition.currentEmployeeAvatar" alt="עובד"
+                                    class="w-6 h-6 rounded-full">
+                                <span class="text-base text-gray-800 font-medium">{{ currentPosition.currentEmployee
+                                    }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500 mb-1">תאריך פתיחה</h4>
+                            <p class="text-base text-gray-800 font-medium">{{ currentPosition.openDate }}</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">תיאור התפקיד</h4>
+                        <p class="text-sm text-gray-600">{{ currentPosition.description }}</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span *ngFor="let skill of currentPosition.requiredSkills"
+                            class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full font-medium">{{ skill
+                            }}</span>
+                    </div>
+                </div>
+                <div class="flex flex-col space-y-2 mr-6">
+                    <button
+                        class="bg-gradient-to-r from-primary to-primaryLight text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all flex items-center space-x-2 space-x-reverse">
+                        <i class="fa-solid fa-edit"></i>
+                        <span>ערוך תפקיד</span>
+                    </button>
+                    <button
+                        class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2 space-x-reverse">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>ייצא דוח</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search controls -->
+        <div id="search-controls" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <h3 class="text-xl font-semibold text-gray-800">מועמדים מתאימים</h3>
+                    <span class="bg-accent text-white text-sm font-medium px-3 py-1 rounded-full">נמצאו {{
+                        candidates.length }} מועמדים</span>
+                </div>
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <button (click)="toggleComparison()"
+                        class="bg-gradient-to-r from-primary to-primaryLight text-white px-5 py-2 rounded-lg hover:shadow-lg transition-all flex items-center space-x-2 space-x-reverse">
+                        <i class="fa-solid fa-code-compare"></i>
+                        <span>השוואה בין מועמדים מסומנים</span>
+                    </button>
+                    <button
+                        class="bg-gradient-to-r from-secondary to-pink-400 text-white px-5 py-2 rounded-lg hover:shadow-lg transition-all flex items-center space-x-2 space-x-reverse">
+                        <i class="fa-solid fa-star"></i>
+                        <span>סמן כל ההתאמות</span>
+                    </button>
+                    <button
+                        class="border border-primary text-primary px-5 py-2 rounded-lg hover:bg-bgSoft transition-colors flex items-center space-x-2 space-x-reverse">
+                        <i class="fa-solid fa-bookmark"></i>
+                        <span>שמור חיפוש</span>
+                    </button>
+                </div>
+            </div>
+            <div class="flex space-x-4 space-x-reverse">
+                <div class="relative flex-1">
+                    <input type="text" placeholder="חיפוש מועמד לפי שם..."
+                        class="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    <i class="fa-solid fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <select
+                    class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary">
+                    <option>מיון: אחוז התאמה (גבוה לנמוך)</option>
+                    <option>מיון: אחוז התאמה (נמוך לגבוה)</option>
+                    <option>מיון: שנות ניסיון</option>
+                    <option>מיון: השכלה</option>
+                    <option>מיון: מיקום</option>
+                </select>
+                <select
+                    class="border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary">
+                    <option>כל רמות ההתאמה</option>
+                    <option>התאמה מעולה (90%+)</option>
+                    <option>התאמה גבוהה (80-89%)</option>
+                    <option>התאמה בינונית (70-79%)</option>
+                    <option>התאמה נמוכה (60-69%)</option>
+                </select>
+                <button
+                    class="bg-white border border-gray-300 text-gray-700 px-5 py-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2 space-x-reverse">
+                    <i class="fa-solid fa-filter"></i>
+                    <span>סינון מתקדם</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Comparison Section (shown when showComparison is true) -->
+        <div *ngIf="showComparison" class="space-y-6 mb-6">
+            <!-- Selected Candidates Cards -->
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fa-solid fa-star text-secondary ml-2"></i>
+                    מועמדים מסומנים להשוואה
+                </h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <div *ngFor="let candidate of selectedCandidates; let i = index"
+                        [class]="'rounded-lg p-4 border-2 ' + (i === 0 ? 'bg-gradient-to-br from-bgSoft to-accent/10 border-primary' : i === 1 ? 'bg-gradient-to-br from-blue-50 to-blue-100/50 border-blue-300' : 'bg-gradient-to-br from-purple-50 to-purple-100/50 border-purple-300')">
+                        <div class="flex items-center space-x-3 space-x-reverse mb-3">
+                            <img [src]="candidate.avatar" [alt]="candidate.name"
+                                class="w-12 h-12 rounded-full border-2 border-white shadow">
+                            <div>
+                                <h4 class="font-bold text-gray-800">{{ candidate.name }}</h4>
+                                <p class="text-xs text-gray-600">התאמה: {{ candidate.matchPercentage }}%</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-600">{{ candidate.experience }} שנות ניסיון</span>
+                            <span *ngIf="getStatusText(candidate)"
+                                [class]="'text-xs px-2 py-1 rounded-full font-medium ' + getStatusBadgeClass(candidate)">
+                                {{ getStatusText(candidate) }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Recommendation -->
+            <div class="bg-gradient-to-br from-primary via-purpleGradient to-primaryLight rounded-lg shadow-lg p-6">
+                <div class="flex items-start space-x-4 space-x-reverse">
+                    <div class="bg-white/20 rounded-full p-3">
+                        <i class="fa-solid fa-robot text-white text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-white mb-3 flex items-center">
+                            המלצת AI
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full mr-3 font-medium">מבוסס
+                                על ניתוח מתקדם</span>
+                        </h3>
+                        <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                            <p class="text-white text-base leading-relaxed mb-4">
+                                לאחר ניתוח מקיף של כל המועמדים, <strong>{{ selectedCandidates[0]?.name }}</strong> מתאים
+                                ביותר לתפקיד זה. {{ selectedCandidates[0]?.name }} מציג שילוב יוצא דופן של ניסיון טכני
+                                מעמיק ({{ selectedCandidates[0]?.experience }} שנים), מיומנויות טכניות מצוינות ({{
+                                selectedCandidates[0]?.skillsMatch }}% התאמה), והשכלה אקדמית רלוונטית מאוניברסיטה
+                                מובילה.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-white/10 rounded-lg p-3">
+                                    <h4 class="text-white font-semibold mb-2 text-sm">יתרונות מרכזיים:</h4>
+                                    <ul class="text-white text-sm space-y-1">
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-check-circle text-accent mt-0.5"></i>
+                                            <span>ניסיון בחברות מובילות (Google, Microsoft)</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-check-circle text-accent mt-0.5"></i>
+                                            <span>ניהול צוותים והובלת פרויקטים מורכבים</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-check-circle text-accent mt-0.5"></i>
+                                            <span>שליטה מלאה בכל הטכנולוגיות הנדרשות</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-check-circle text-accent mt-0.5"></i>
+                                            <span>זמינות מיידית למעבר לתפקיד</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white/10 rounded-lg p-3">
+                                    <h4 class="text-white font-semibold mb-2 text-sm">השוואה למועמדים אחרים:</h4>
+                                    <ul class="text-white text-sm space-y-1">
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-arrow-up text-secondary mt-0.5"></i>
+                                            <span>ניסיון רחב יותר ב-Full Stack</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-arrow-up text-secondary mt-0.5"></i>
+                                            <span>ניסיון בניהול צוותים</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-arrow-up text-secondary mt-0.5"></i>
+                                            <span>התאמה גבוהה יותר בכישורים רכים</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-arrow-up text-secondary mt-0.5"></i>
+                                            <span>מכיר את התרבות הארגונית</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="bg-white/10 rounded-lg p-3">
+                                <h4 class="text-white font-semibold mb-2 text-sm">המלצה לפעולה:</h4>
+                                <p class="text-white text-sm">
+                                    מומלץ להתחיל בשיחה עם {{ selectedCandidates[0]?.name }} על האפשרות למעבר לתפקיד זה,
+                                    תוך שמירה על {{ selectedCandidates[1]?.name }} כמועמד גיבוי איכותי. {{
+                                    selectedCandidates[2]?.name }} מתאים פחות לתפקיד Senior בשלב זה.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Heatmap -->
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                        <i class="fa-solid fa-fire text-secondary ml-2"></i>
+                        מפת חום השוואתית
+                    </h3>
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="text-xs text-gray-500">נמוך</span>
+                        <div class="flex space-x-1 space-x-reverse">
+                            <div class="w-4 h-4 bg-red-200 rounded"></div>
+                            <div class="w-4 h-4 bg-yellow-200 rounded"></div>
+                            <div class="w-4 h-4 bg-green-200 rounded"></div>
+                            <div class="w-4 h-4 bg-green-400 rounded"></div>
+                            <div class="w-4 h-4 bg-green-600 rounded"></div>
+                        </div>
+                        <span class="text-xs text-gray-500">גבוה</span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="text-right p-4 font-bold text-gray-700">קריטריון</th>
+                                <th *ngFor="let candidate of selectedCandidates"
+                                    class="text-center p-4 font-bold text-gray-700">
+                                    <div class="flex flex-col items-center">
+                                        <img [src]="candidate.avatar" [alt]="candidate.name"
+                                            class="w-10 h-10 rounded-full mb-2">
+                                        <span>{{ candidate.name }}</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">ניסיון מקצועי</td>
+                                <td *ngFor="let candidate of selectedCandidates" class="p-4 text-center">
+                                    <div
+                                        [class]="'text-white rounded-lg py-2 px-3 font-bold ' + (candidate.experienceMatch >= 90 ? 'bg-green-600' : candidate.experienceMatch >= 80 ? 'bg-green-400' : candidate.experienceMatch >= 70 ? 'bg-yellow-300 text-gray-800' : 'bg-red-200 text-gray-800')">
+                                        {{ candidate.experienceMatch }}%
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">מיומנויות טכניות</td>
+                                <td *ngFor="let candidate of selectedCandidates" class="p-4 text-center">
+                                    <div
+                                        [class]="'text-white rounded-lg py-2 px-3 font-bold ' + (candidate.skillsMatch >= 90 ? 'bg-green-600' : candidate.skillsMatch >= 80 ? 'bg-green-400' : candidate.skillsMatch >= 70 ? 'bg-yellow-200 text-gray-800' : 'bg-red-200 text-gray-800')">
+                                        {{ candidate.skillsMatch }}%
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">השכלה אקדמית</td>
+                                <td *ngFor="let candidate of selectedCandidates" class="p-4 text-center">
+                                    <div
+                                        [class]="'text-white rounded-lg py-2 px-3 font-bold ' + (candidate.educationMatch >= 95 ? 'bg-green-600' : 'bg-green-500')">
+                                        {{ candidate.educationMatch }}%
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">התאמה תרבותית</td>
+                                <td *ngFor="let candidate of selectedCandidates" class="p-4 text-center">
+                                    <div
+                                        [class]="'text-white rounded-lg py-2 px-3 font-bold ' + (candidate.cultureMatch >= 85 ? 'bg-green-400' : 'bg-green-300')">
+                                        {{ candidate.cultureMatch }}%
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="bg-gradient-to-l from-bgSoft to-accent/10 font-bold">
+                                <td class="p-4 text-gray-800">ממוצע כללי</td>
+                                <td *ngFor="let candidate of selectedCandidates" class="p-4 text-center">
+                                    <div
+                                        [class]="'text-white rounded-lg py-3 px-4 text-lg font-bold shadow-lg ' + (candidate.matchPercentage >= 90 ? 'bg-gradient-to-l from-primary to-primaryLight' : candidate.matchPercentage >= 80 ? 'bg-gradient-to-l from-green-500 to-green-600' : 'bg-gradient-to-l from-yellow-400 to-yellow-500')">
+                                        {{ candidate.matchPercentage }}%
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Candidates list -->
+        <div id="candidates-list" class="space-y-5">
+            <div *ngFor="let candidate of candidates"
+                class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-100">
+                <div class="p-6">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-4 space-x-reverse flex-1">
+                            <img [src]="candidate.avatar" [alt]="candidate.name"
+                                class="w-20 h-20 rounded-full border-2 border-accent">
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center space-x-3 space-x-reverse">
+                                        <h3 class="text-xl font-bold text-gray-800">{{ candidate.name }}</h3>
+                                        <span *ngIf="getStatusText(candidate)"
+                                            [class]="'text-xs font-medium px-2 py-1 rounded-full ' + getStatusBadgeClass(candidate)">{{
+                                            getStatusText(candidate) }}</span>
+                                    </div>
+                                    <div class="flex items-center space-x-3 space-x-reverse">
+                                        <div class="text-left">
+                                            <div class="text-xs text-gray-500 mb-1">אחוז התאמה</div>
+                                            <div class="flex items-center space-x-2 space-x-reverse">
+                                                <div class="w-32 bg-gray-200 rounded-full h-3">
+                                                    <div [class]="'bg-gradient-to-l h-3 rounded-full ' + getMatchColor(candidate.matchPercentage)"
+                                                        [style.width.%]="candidate.matchPercentage"></div>
+                                                </div>
+                                                <span
+                                                    [class]="'text-2xl font-bold ' + getMatchTextColor(candidate.matchPercentage)">{{
+                                                    candidate.matchPercentage }}%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-4 gap-4 mb-4">
+                                    <div>
+                                        <h4 class="text-xs font-medium text-gray-500 mb-1">השכלה</h4>
+                                        <p class="text-sm text-gray-800 font-medium">{{ candidate.education }}</p>
+                                        <p class="text-xs text-gray-600">{{ candidate.university }}</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xs font-medium text-gray-500 mb-1">ניסיון</h4>
+                                        <p class="text-sm text-gray-800 font-medium">{{ candidate.experience }} שנים</p>
+                                        <p class="text-xs text-gray-600">{{ candidate.experienceArea }}</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xs font-medium text-gray-500 mb-1">מיקום</h4>
+                                        <p class="text-sm text-gray-800 font-medium">{{ candidate.location }}</p>
+                                        <p class="text-xs text-gray-600">{{ candidate.locationDetail }}</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xs font-medium text-gray-500 mb-1">סטטוס</h4>
+                                        <p class="text-sm text-gray-800 font-medium">{{ candidate.status }}</p>
+                                        <p class="text-xs text-gray-600">{{ candidate.statusDetail }}</p>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-4 leading-relaxed">{{ candidate.description }}</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span *ngFor="let skill of candidate.skills"
+                                        class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">{{
+                                        skill }}</span>
+                                </div>
+                                <div class="bg-bgSoft rounded-lg p-3">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-4 space-x-reverse">
+                                            <div class="text-center">
+                                                <div class="text-xs text-gray-600 mb-1">התאמת מיומנויות</div>
+                                                <div class="text-lg font-bold text-primary">{{ candidate.skillsMatch }}%
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="text-xs text-gray-600 mb-1">התאמת ניסיון</div>
+                                                <div class="text-lg font-bold text-primary">{{ candidate.experienceMatch
+                                                    }}%</div>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="text-xs text-gray-600 mb-1">התאמת השכלה</div>
+                                                <div class="text-lg font-bold text-primary">{{ candidate.educationMatch
+                                                    }}%</div>
+                                            </div>
+                                            <div class="text-center">
+                                                <div class="text-xs text-gray-600 mb-1">התאמה תרבותית</div>
+                                                <div class="text-lg font-bold text-primary">{{ candidate.cultureMatch
+                                                    }}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col space-y-2 mr-6">
+                            <button
+                                class="bg-gradient-to-r from-accent to-green-600 text-white px-5 py-2 rounded-lg hover:shadow-lg transition-all text-sm font-medium flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-star"></i>
+                                <span>סמן כהתאמה</span>
+                            </button>
+                            <button
+                                class="bg-gradient-to-r from-secondary to-pink-400 text-white px-5 py-2 rounded-lg hover:shadow-lg transition-all text-sm font-medium flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-heart"></i>
+                                <span>מועמד מועדף</span>
+                            </button>
+                            <button
+                                class="bg-white border border-primary text-primary px-5 py-2 rounded-lg hover:bg-bgSoft transition-colors text-sm font-medium flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-eye"></i>
+                                <span>צפה בפרופיל</span>
+                            </button>
+                            <button
+                                class="bg-white border border-gray-300 text-gray-700 px-5 py-2 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-note-sticky"></i>
+                                <span>הוסף הערה</span>
+                            </button>
+                            <button
+                                class="bg-red-50 border border-red-200 text-red-600 px-5 py-2 rounded-lg hover:bg-red-100 transition-colors text-sm font-medium flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-times"></i>
+                                <span>לא מתאים</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="flex justify-center mt-8">
+            <div class="flex space-x-2 space-x-reverse items-center">
+                <button
+                    class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <button
+                    class="px-4 py-2 bg-gradient-to-r from-primary to-primaryLight text-white rounded-lg font-medium shadow-md">1</button>
+                <button
+                    class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">2</button>
+                <button
+                    class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">3</button>
+                <button
+                    class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">4</button>
+                <button
+                    class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

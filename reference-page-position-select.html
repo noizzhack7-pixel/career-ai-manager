@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>השוואת מועמדים</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Heebo', sans-serif; }
+        ::-webkit-scrollbar { display: none; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#650F54',
+                        primaryLight: '#541388',
+                        secondary: '#FB8F67',
+                        accent: '#9DD9D2',
+                        bgSoft: '#EAD8FD',
+                        accentDark: '#541388'
+                    },
+                    fontFamily: {
+                        'heebo': ['Heebo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-heebo">
+    <div id="header" class="bg-white shadow-sm border-b border-gray-200 px-8 py-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-8 space-x-reverse">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="bg-gradient-to-br from-primary to-primaryLight text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-user-check text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">השוואת מועמדים</h1>
+                </div>
+                
+                <nav class="flex items-center space-x-6 space-x-reverse">
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors font-medium">
+                        <i class="fa-solid fa-briefcase ml-2"></i>
+                        תפקידים בארגון
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors font-medium">
+                        <i class="fa-solid fa-users ml-2"></i>
+                        מועמדים
+                    </a>
+                    <a href="#" class="text-primary font-semibold border-b-2 border-primary pb-1">
+                        <i class="fa-solid fa-user-check ml-2"></i>
+                        התאמת תפקידים
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors font-medium">
+                        <i class="fa-solid fa-chart-line ml-2"></i>
+                        לוח בקרה
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors font-medium">
+                        <i class="fa-solid fa-cog ml-2"></i>
+                        הגדרות
+                    </a>
+                </nav>
+            </div>
+            
+            <div class="flex items-center space-x-6 space-x-reverse">
+                <button class="text-gray-600 hover:text-primary transition-colors">
+                    <i class="fa-solid fa-bell text-xl"></i>
+                </button>
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="text-left">
+                        <p class="text-sm font-semibold text-gray-800">רחל כהן</p>
+                        <p class="text-xs text-gray-500">מנהלת משאבי אנוש</p>
+                    </div>
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="פרופיל" class="w-10 h-10 rounded-full">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex">
+        <div id="jobs-sidebar" class="w-80 bg-white h-screen shadow-sm border-l border-gray-200 overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-lg font-bold text-gray-800 mb-4">תפקידים פתוחים</h2>
+                    <div class="relative">
+                        <input type="text" placeholder="חיפוש תפקיד..." class="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm">
+                        <i class="fa-solid fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <i class="fa-solid fa-microchip ml-2 text-primary"></i>
+                        טכנולוגיה
+                    </h3>
+                    <div class="space-y-2">
+                        <div class="bg-gradient-to-l from-primary to-primaryLight text-white p-3 rounded-lg cursor-pointer">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold">מפתח Full Stack Senior</h4>
+                                <span class="bg-white/20 text-xs px-2 py-1 rounded-full">פעיל</span>
+                            </div>
+                            <p class="text-xs opacity-90">18 מועמדים מתאימים</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-gray-800">ארכיטקט תוכנה</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <p class="text-xs text-gray-600">12 מועמדים מתאימים</p>
+                        </div>
+
+                        <div class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-gray-800">מפתח DevOps</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <p class="text-xs text-gray-600">8 מועמדים מתאימים</p>
+                        </div>
+
+                        <div class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-gray-800">מהנדס QA</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <p class="text-xs text-gray-600">15 מועמדים מתאימים</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <i class="fa-solid fa-brain ml-2 text-primary"></i>
+                        מודיעין
+                    </h3>
+                    <div class="space-y-2">
+                        <div class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-gray-800">אנליסט מודיעין</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <p class="text-xs text-gray-600">22 מועמדים מתאימים</p>
+                        </div>
+
+                        <div class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-gray-800">חוקר סייבר</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <p class="text-xs text-gray-600">6 מועמדים מתאימים</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <i class="fa-solid fa-chart-line ml-2 text-primary"></i>
+                        שיווק
+                    </h3>
+                    <div class="space-y-2">
+                        <div class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-gray-800">מנהל שיווק דיגיטלי</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <p class="text-xs text-gray-600">14 מועמדים מתאימים</p>
+                        </div>
+
+                        <div class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-gray-800">כותב תוכן</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <p class="text-xs text-gray-600">19 מועמדים מתאימים</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                        <i class="fa-solid fa-truck ml-2 text-primary"></i>
+                        לוגיסטיקה
+                    </h3>
+                    <div class="space-y-2">
+                        <div class="bg-gray-50 hover:bg-bgSoft p-3 rounded-lg cursor-pointer transition-colors border border-gray-100">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-semibold text-gray-800">מנהל שרשרת אספקה</h4>
+                                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">פתוח</span>
+                            </div>
+                            <p class="text-xs text-gray-600">9 מועמדים מתאימים</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <div class="bg-gradient-to-br from-bgSoft to-accent/20 rounded-lg p-4">
+                        <h3 class="font-semibold text-primary mb-2">סטטיסטיקות</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">תפקידים פתוחים</span>
+                                <span class="font-bold text-primary">12</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">התאמות היום</span>
+                                <span class="font-bold text-green-600">8</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-600">בתהליך</span>
+                                <span class="font-bold text-secondary">15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-content" class="flex-1 p-8">
+            <div id="job-details-card" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="flex-1">
+                        <div class="flex items-center space-x-3 space-x-reverse mb-3">
+                            <h2 class="text-2xl font-bold text-gray-800">מפתח Full Stack Senior</h2>
+                            <span class="bg-green-100 text-green-700 text-sm font-medium px-3 py-2 rounded-full">תפקיד פעיל</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-6 mb-4">
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500 mb-1">קטגוריה</h4>
+                                <p class="text-base text-gray-800 font-medium">טכנולוגיה</p>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500 mb-1">רמת התפקיד</h4>
+                                <p class="text-base text-gray-800 font-medium">בכיר</p>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500 mb-1">מאייש נוכחי</h4>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="עובד" class="w-6 h-6 rounded-full">
+                                    <span class="text-base text-gray-800 font-medium">אמיר שמואלי</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-medium text-gray-500 mb-1">מועמדים מסומנים</h4>
+                                <p class="text-base text-gray-800 font-medium">3 מועמדים</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-2 mr-6">
+                        <button class="bg-gradient-to-l from-primary to-primaryLight text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all flex items-center space-x-2 space-x-reverse">
+                            <i class="fa-solid fa-arrow-right"></i>
+                            <span>חזרה לרשימה</span>
+                        </button>
+                        <button class="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors flex items-center space-x-2 space-x-reverse">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <span>ייצא דוח</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selected-candidates" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fa-solid fa-star text-secondary ml-2"></i>
+                    מועמדים מסומנים להשוואה
+                </h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-gradient-to-br from-bgSoft to-accent/10 rounded-lg p-4 border-2 border-primary">
+                        <div class="flex items-center space-x-3 space-x-reverse mb-3">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="מועמד" class="w-12 h-12 rounded-full border-2 border-white shadow">
+                            <div>
+                                <h4 class="font-bold text-gray-800">אמיר שמואלי</h4>
+                                <p class="text-xs text-gray-600">התאמה: 95%</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-600">7 שנות ניסיון</span>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">מאויש כרגע</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-lg p-4 border-2 border-blue-300">
+                        <div class="flex items-center space-x-3 space-x-reverse mb-3">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="מועמד" class="w-12 h-12 rounded-full border-2 border-white shadow">
+                            <div>
+                                <h4 class="font-bold text-gray-800">רון ברקוביץ</h4>
+                                <p class="text-xs text-gray-600">התאמה: 88%</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-600">6 שנות ניסיון</span>
+                            <span class="bg-yellow-100 text-yellow-700 text-xs px-2 py-1 rounded-full font-medium">זמין בחודש</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-lg p-4 border-2 border-purple-300">
+                        <div class="flex items-center space-x-3 space-x-reverse mb-3">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="מועמדת" class="w-12 h-12 rounded-full border-2 border-white shadow">
+                            <div>
+                                <h4 class="font-bold text-gray-800">שרה גולדברג</h4>
+                                <p class="text-xs text-gray-600">התאמה: 78%</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-600">5 שנות ניסיון</span>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">זמינה בשבועיים</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ai-recommendation" class="bg-gradient-to-br from-primary to-primaryLight rounded-lg shadow-lg p-6 mb-6">
+                <div class="flex items-start space-x-4 space-x-reverse">
+                    <div class="bg-white/20 rounded-full p-3">
+                        <i class="fa-solid fa-robot text-white text-2xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-white mb-3 flex items-center">
+                            המלצת AI
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full mr-3 font-medium">מבוסס על ניתוח מתקדם</span>
+                        </h3>
+                        <div class="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                            <p class="text-white text-base leading-relaxed mb-4">
+                                לאחר ניתוח מקיף של כל המועמדים, <strong>אמיר שמואלי</strong> מתאים ביותר לתפקיד זה. אמיר מציג שילוב יוצא דופן של ניסיון טכני מעמיק (7 שנים), מיומנויות טכניות מצוינות (98% התאמה), והשכלה אקדמית רלוונטית מאוניברסיטה מובילה.
+                            </p>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-white/10 rounded-lg p-3">
+                                    <h4 class="text-white font-semibold mb-2 text-sm">יתרונות מרכזיים:</h4>
+                                    <ul class="text-white text-sm space-y-1">
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-check-circle text-accent mt-0.5"></i>
+                                            <span>ניסיון בחברות מובילות (Google, Microsoft)</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-check-circle text-accent mt-0.5"></i>
+                                            <span>ניהול צוותים והובלת פרויקטים מורכבים</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-check-circle text-accent mt-0.5"></i>
+                                            <span>שליטה מלאה בכל הטכנולוגיות הנדרשות</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-check-circle text-accent mt-0.5"></i>
+                                            <span>זמינות מיידית למעבר לתפקיד</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white/10 rounded-lg p-3">
+                                    <h4 class="text-white font-semibold mb-2 text-sm">השוואה למועמדים אחרים:</h4>
+                                    <ul class="text-white text-sm space-y-1">
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-arrow-up text-secondary mt-0.5"></i>
+                                            <span>ניסיון רחב יותר ב-Full Stack (לעומת רון)</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-arrow-up text-secondary mt-0.5"></i>
+                                            <span>ניסיון בניהול צוותים (לעומת שרה)</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-arrow-up text-secondary mt-0.5"></i>
+                                            <span>התאמה גבוהה יותר בכישורים רכים</span>
+                                        </li>
+                                        <li class="flex items-start space-x-2 space-x-reverse">
+                                            <i class="fa-solid fa-arrow-up text-secondary mt-0.5"></i>
+                                            <span>מכיר את התרבות הארגונית (מאייש כרגע)</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="bg-white/10 rounded-lg p-3">
+                                <h4 class="text-white font-semibold mb-2 text-sm">המלצה לפעולה:</h4>
+                                <p class="text-white text-sm">
+                                    מומלץ להתחיל בשיחה עם אמיר על האפשרות למעבר לתפקיד זה, תוך שמירה על רון כמועמד גיבוי איכותי. שרה מתאימה פחות לתפקיד Senior בשלב זה, אך יכולה להיות מתאימה למשרה Junior/Mid-level.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="comparison-heatmap" class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                        <i class="fa-solid fa-fire text-secondary ml-2"></i>
+                        מפת חום השוואתית
+                    </h3>
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="text-xs text-gray-500">נמוך</span>
+                        <div class="flex space-x-1 space-x-reverse">
+                            <div class="w-4 h-4 bg-red-200 rounded"></div>
+                            <div class="w-4 h-4 bg-yellow-200 rounded"></div>
+                            <div class="w-4 h-4 bg-green-200 rounded"></div>
+                            <div class="w-4 h-4 bg-green-400 rounded"></div>
+                            <div class="w-4 h-4 bg-green-600 rounded"></div>
+                        </div>
+                        <span class="text-xs text-gray-500">גבוה</span>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-gray-200">
+                                <th class="text-right p-4 font-bold text-gray-700">קריטריון</th>
+                                <th class="text-center p-4 font-bold text-gray-700">
+                                    <div class="flex flex-col items-center">
+                                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="אמיר" class="w-10 h-10 rounded-full mb-2">
+                                        <span>אמיר שמואלי</span>
+                                    </div>
+                                </th>
+                                <th class="text-center p-4 font-bold text-gray-700">
+                                    <div class="flex flex-col items-center">
+                                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="רון" class="w-10 h-10 rounded-full mb-2">
+                                        <span>רון ברקוביץ</span>
+                                    </div>
+                                </th>
+                                <th class="text-center p-4 font-bold text-gray-700">
+                                    <div class="flex flex-col items-center">
+                                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="שרה" class="w-10 h-10 rounded-full mb-2">
+                                        <span>שרה גולדברג</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">ניסיון מקצועי</td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-600 text-white rounded-lg py-2 px-3 font-bold">95%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-400 text-white rounded-lg py-2 px-3 font-bold">90%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-yellow-300 text-gray-800 rounded-lg py-2 px-3 font-bold">70%</div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">מיומנויות טכניות</td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-600 text-white rounded-lg py-2 px-3 font-bold">98%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-400 text-white rounded-lg py-2 px-3 font-bold">85%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-yellow-200 text-gray-800 rounded-lg py-2 px-3 font-bold">75%</div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">השכלה אקדמית</td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-600 text-white rounded-lg py-2 px-3 font-bold">100%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-500 text-white rounded-lg py-2 px-3 font-bold">95%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-600 text-white rounded-lg py-2 px-3 font-bold">100%</div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">כישורים רכים</td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-400 text-white rounded-lg py-2 px-3 font-bold">90%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-400 text-white rounded-lg py-2 px-3 font-bold">85%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-300 text-white rounded-lg py-2 px-3 font-bold">80%</div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">ניהול צוותים</td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-600 text-white rounded-lg py-2 px-3 font-bold">95%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-yellow-200 text-gray-800 rounded-lg py-2 px-3 font-bold">65%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-red-200 text-gray-800 rounded-lg py-2 px-3 font-bold">40%</div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">התאמה תרבותית</td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-400 text-white rounded-lg py-2 px-3 font-bold">90%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-400 text-white rounded-lg py-2 px-3 font-bold">85%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-300 text-white rounded-lg py-2 px-3 font-bold">80%</div>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                <td class="p-4 font-medium text-gray-800">רצון וזמינות</td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-600 text-white rounded-lg py-2 px-3 font-bold">95%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-300 text-white rounded-lg py-2 px-3 font-bold">80%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-green-500 text-white rounded-lg py-2 px-3 font-bold">92%</div>
+                                </td>
+                            </tr>
+                            <tr class="bg-gradient-to-l from-bgSoft to-accent/10 font-bold">
+                                <td class="p-4 text-gray-800">ממוצע כללי</td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-gradient-to-l from-primary to-primaryLight text-white rounded-lg py-3 px-4 text-lg font-bold shadow-lg">95%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-gradient-to-l from-green-500 to-green-600 text-white rounded-lg py-3 px-4 text-lg font-bold shadow-lg">88%</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <div class="bg-gradient-to-l from-yellow-400 to-yellow-500 text-white rounded-lg py-3 px-4 text-lg font-bold shadow-lg">78%</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="detailed-comparison-charts" class="grid grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-chart-radar text-primary ml-2"></i>
+                        השוואת מיומנויות טכניות
+                    </h3>
+                    <div id="skills-radar-chart" style="height: 400px"></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-chart-bar text-primary ml-2"></i>
+                        ניסיון לפי קטגוריה
+                    </h3>
+                    <div id="experience-bar-chart" style="height: 400px"></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-people-group text-primary ml-2"></i>
+                        כישורים רכים
+                    </h3>
+                    <div id="soft-skills-chart" style="height: 400px"></div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fa-solid fa-bullseye text-primary ml-2"></i>
+                        רצון ומוטיבציה
+                    </h3>
+                    <div id="motivation-chart" style="height: 400px"></div>
+                </div>
+            </div>
+
+            <div id="detailed-profiles" class="space-y-6">
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-start space-x-4 space-x-reverse mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="אמיר" class="w-16 h-16 rounded-full border-2 border-primary">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">אמיר שמואלי</h3>
+                                    <p class="text-sm text-gray-600">B.Sc מדעי המחשב, אוניברסיטת תל אביב • 7 שנות ניסיון</p>
+                                </div>
+                                <div class="flex flex-col items-end space-y-2">
+                                    <span class="bg-green-100 text-green-700 text-sm font-medium px-3 py-1 rounded-full">המועמד המומלץ</span>
+                                    <span class="text-3xl font-bold text-primary">95%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-4 mb-4">
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">ניסיון טכני</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-600 h-2 rounded-full" style="width: 98%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-600">98%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">ניהול צוותים</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-600 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-600">95%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">כישורים רכים</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-500">90%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">רצון לתפקיד</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-600 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-600">95%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-bgSoft to-accent/10 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">נקודות חזקה מרכזיות:</h4>
+                        <ul class="grid grid-cols-2 gap-2 text-sm text-gray-700">
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-green-600"></i>
+                                <span>ניסיון בחברות מובילות (Google, Microsoft)</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-green-600"></i>
+                                <span>הובלת פרויקטים מורכבים במיליוני משתמשים</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-green-600"></i>
+                                <span>שליטה מלאה בכל הטכנולוגיות הנדרשות</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-green-600"></i>
+                                <span>ניסיון בניהול צוותי פיתוח של עד 8 מפתחים</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-start space-x-4 space-x-reverse mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="רון" class="w-16 h-16 rounded-full border-2 border-blue-400">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">רון ברקוביץ</h3>
+                                    <p class="text-sm text-gray-600">B.Sc הנדסת תוכנה, המכללה האקדמית תל אביב • 6 שנות ניסיון</p>
+                                </div>
+                                <div class="flex flex-col items-end space-y-2">
+                                    <span class="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-full">מועמד גיבוי חזק</span>
+                                    <span class="text-3xl font-bold text-blue-600">88%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-4 mb-4">
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">ניסיון טכני</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-500">85%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">ניהול צוותים</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-yellow-600">65%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">כישורים רכים</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-500">85%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">רצון לתפקיד</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-400 h-2 rounded-full" style="width: 80%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-400">80%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">נקודות חזקה מרכזיות:</h4>
+                        <ul class="grid grid-cols-2 gap-2 text-sm text-gray-700">
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-blue-600"></i>
+                                <span>מומחה בתשתיות ענן ו-Backend</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-blue-600"></i>
+                                <span>ניסיון בפינטק ובנקאות דיגיטלית</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-blue-600"></i>
+                                <span>התמחות במערכות מבוזרות וסקיילביליות</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-exclamation-circle text-yellow-600"></i>
+                                <span>פחות ניסיון בניהול צוותים</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <div class="flex items-start space-x-4 space-x-reverse mb-4">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="שרה" class="w-16 h-16 rounded-full border-2 border-purple-400">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">שרה גולדברג</h3>
+                                    <p class="text-sm text-gray-600">B.Sc הנדסת תוכנה, טכניון • 5 שנות ניסיון</p>
+                                </div>
+                                <div class="flex flex-col items-end space-y-2">
+                                    <span class="bg-purple-100 text-purple-700 text-sm font-medium px-3 py-1 rounded-full">פוטנציאל גבוה</span>
+                                    <span class="text-3xl font-bold text-purple-600">78%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-4 gap-4 mb-4">
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">ניסיון טכני</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 75%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-yellow-600">75%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">ניהול צוותים</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-red-400 h-2 rounded-full" style="width: 40%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-red-600">40%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">כישורים רכים</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-400 h-2 rounded-full" style="width: 80%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-400">80%</span>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <h4 class="text-xs font-medium text-gray-500 mb-1">רצון לתפקיד</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                                <span class="text-sm font-bold text-green-500">92%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 rounded-lg p-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">נקודות חזקה מרכזיות:</h4>
+                        <ul class="grid grid-cols-2 gap-2 text-sm text-gray-700">
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-purple-600"></i>
+                                <span>מומחית Frontend עם התמחות ב-React</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-check-circle text-purple-600"></i>
+                                <span>מתמחה ב-UX ונגישות</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-exclamation-circle text-yellow-600"></i>
+                                <span>פחות ניסיון ב-Backend ותשתיות</span>
+                            </li>
+                            <li class="flex items-center space-x-2 space-x-reverse">
+                                <i class="fa-solid fa-exclamation-circle text-yellow-600"></i>
+                                <span>חסר ניסיון בניהול צוותים</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            try {
+                var radarData = [{
+                    type: 'scatterpolar',
+                    r: [98, 95, 100, 90, 95, 98],
+                    theta: ['React', 'Node.js', 'AWS', 'TypeScript', 'MongoDB', 'Docker'],
+                    fill: 'toself',
+                    name: 'אמיר שמואלי',
+                    marker: { color: '#650F54' },
+                    line: { color: '#650F54', width: 2 }
+                }, {
+                    type: 'scatterpolar',
+                    r: [70, 90, 95, 75, 80, 85],
+                    theta: ['React', 'Node.js', 'AWS', 'TypeScript', 'MongoDB', 'Docker'],
+                    fill: 'toself',
+                    name: 'רון ברקוביץ',
+                    marker: { color: '#3B82F6' },
+                    line: { color: '#3B82F6', width: 2 }
+                }, {
+                    type: 'scatterpolar',
+                    r: [95, 60, 50, 85, 65, 40],
+                    theta: ['React', 'Node.js', 'AWS', 'TypeScript', 'MongoDB', 'Docker'],
+                    fill: 'toself',
+                    name: 'שרה גולדברג',
+                    marker: { color: '#A855F7' },
+                    line: { color: '#A855F7', width: 2 }
+                }];
+
+                var radarLayout = {
+                    polar: {
+                        radialaxis: {
+                            visible: true,
+                            range: [0, 100]
+                        }
+                    },
+                    showlegend: true,
+                    legend: { orientation: 'h', y: -0.2 },
+                    margin: { t: 40, r: 40, b: 80, l: 40 },
+                    paper_bgcolor: '#ffffff',
+                    plot_bgcolor: '#ffffff'
+                };
+
+                Plotly.newPlot('skills-radar-chart', radarData, radarLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+
+                var experienceData = [{
+                    x: [95, 90, 70],
+                    y: ['אמיר שמואלי', 'רון ברקוביץ', 'שרה גולדברג'],
+                    name: 'ניסיון מקצועי',
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: { color: '#650F54' }
+                }, {
+                    x: [98, 85, 75],
+                    y: ['אמיר שמואלי', 'רון ברקוביץ', 'שרה גולדברג'],
+                    name: 'מיומנויות טכניות',
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: { color: '#FB8F67' }
+                }, {
+                    x: [95, 65, 40],
+                    y: ['אמיר שמואלי', 'רון ברקוביץ', 'שרה גולדברג'],
+                    name: 'ניהול צוותים',
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: { color: '#9DD9D2' }
+                }];
+
+                var experienceLayout = {
+                    barmode: 'group',
+                    xaxis: { title: 'אחוז התאמה', range: [0, 100] },
+                    showlegend: true,
+                    legend: { orientation: 'h', y: -0.2 },
+                    margin: { t: 40, r: 40, b: 80, l: 120 },
+                    paper_bgcolor: '#ffffff',
+                    plot_bgcolor: '#ffffff'
+                };
+
+                Plotly.newPlot('experience-bar-chart', experienceData, experienceLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+
+                var softSkillsData = [{
+                    x: ['תקשורת', 'עבודת צוות', 'פתרון בעיות', 'יצירתיות', 'מנהיגות'],
+                    y: [92, 88, 95, 85, 90],
+                    name: 'אמיר שמואלי',
+                    type: 'bar',
+                    marker: { color: '#650F54' }
+                }, {
+                    x: ['תקשורת', 'עבודת צוות', 'פתרון בעיות', 'יצירתיות', 'מנהיגות'],
+                    y: [85, 90, 88, 80, 70],
+                    name: 'רון ברקוביץ',
+                    type: 'bar',
+                    marker: { color: '#3B82F6' }
+                }, {
+                    x: ['תקשורת', 'עבודת צוות', 'פתרון בעיות', 'יצירתיות', 'מנהיגות'],
+                    y: [88, 82, 75, 90, 65],
+                    name: 'שרה גולדברג',
+                    type: 'bar',
+                    marker: { color: '#A855F7' }
+                }];
+
+                var softSkillsLayout = {
+                    barmode: 'group',
+                    yaxis: { title: 'ציון', range: [0, 100] },
+                    showlegend: true,
+                    legend: { orientation: 'h', y: -0.2 },
+                    margin: { t: 40, r: 40, b: 80, l: 60 },
+                    paper_bgcolor: '#ffffff',
+                    plot_bgcolor: '#ffffff'
+                };
+
+                Plotly.newPlot('soft-skills-chart', softSkillsData, softSkillsLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+
+                var motivationData = [{
+                    values: [95, 80, 92],
+                    labels: ['אמיר שמואלי', 'רון ברקוביץ', 'שרה גולדברג'],
+                    type: 'pie',
+                    marker: {
+                        colors: ['#650F54', '#3B82F6', '#A855F7']
+                    },
+                    textinfo: 'label+percent',
+                    textposition: 'inside'
+                }];
+
+                var motivationLayout = {
+                    showlegend: false,
+                    margin: { t: 40, r: 40, b: 40, l: 40 },
+                    paper_bgcolor: '#ffffff'
+                };
+
+                Plotly.newPlot('motivation-chart', motivationData, motivationLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+
+            } catch(e) {
+                console.error('Error creating charts:', e);
+            }
+        });
+    </script>
+</body>
+</html>

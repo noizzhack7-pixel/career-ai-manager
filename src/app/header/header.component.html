@@ -1,0 +1,141 @@
+<div id="header" class="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200 px-8 py-3">
+    <div class="flex justify-between items-center w-full">
+        <!-- Logo -->
+        <div class="flex items-center space-x-2 space-x-reverse">
+            <div
+                class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center">
+                <i class="fa-solid fa-rocket text-white"></i>
+            </div>
+            <span class="font-bold text-lg text-primaryDark">GO-PRO</span>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex items-center space-x-6 space-x-reverse">
+            <a routerLink="/roles" routerLinkActive="text-primary font-semibold border-b-2 border-primary pb-2"
+                [routerLinkActiveOptions]="{exact: false}"
+                class="text-gray-500 hover:text-primary transition-colors font-medium">
+                תפקידים בארגון
+            </a>
+            <a routerLink="/employees" routerLinkActive="text-primary font-semibold border-b-2 border-primary pb-2"
+                [routerLinkActiveOptions]="{exact: false}"
+                class="text-gray-500 hover:text-primary transition-colors font-medium">
+                עובדים
+            </a>
+            <a routerLink="/matching" routerLinkActive="text-primary font-semibold border-b-2 border-primary pb-2"
+                [routerLinkActiveOptions]="{exact: false}"
+                class="text-gray-500 hover:text-primary transition-colors font-medium">
+                התאמת תפקידים
+            </a>
+            <a routerLink="/dashboard" routerLinkActive="text-primary font-semibold border-b-2 border-primary pb-2"
+                [routerLinkActiveOptions]="{exact: false}"
+                class="text-gray-500 hover:text-primary transition-colors font-medium">
+                לוח בקרה
+            </a>
+            <a routerLink="/settings" routerLinkActive="text-primary font-semibold border-b-2 border-primary pb-2"
+                [routerLinkActiveOptions]="{exact: false}"
+                class="text-gray-500 hover:text-primary transition-colors font-medium">
+                הגדרות
+            </a>
+        </nav>
+
+        <!-- Global Search -->
+        <div class="flex-1 max-w-lg mx-8">
+            <div class="relative">
+                <input type="text" placeholder="חיפוש בשפה חופשית..."
+                    class="w-full bg-gray-100 border border-gray-200 rounded-full py-2.5 pl-12 pr-4 focus:ring-2 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all text-sm">
+                <i class="fa-solid fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-6 space-x-reverse relative">
+            <!-- Notifications Bell -->
+            <div class="relative">
+                <button (click)="toggleNotifications()"
+                    class="text-gray-500 hover:text-primary transition-colors relative">
+                    <i class="fa-regular fa-bell text-xl"></i>
+                    <span *ngIf="unreadCount > 0"
+                        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">{{
+                        unreadCount }}</span>
+                </button>
+
+                <!-- Notifications Popover -->
+                <div *ngIf="showNotifications"
+                    class="absolute left-0 mt-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+                    <div class="p-4 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-800">התראות</h3>
+                            <span class="text-sm text-gray-500">{{ unreadCount }} חדשות</span>
+                        </div>
+                    </div>
+                    <div class="max-h-96 overflow-y-auto">
+                        <div *ngFor="let notification of notifications"
+                            class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors">
+                            <div class="flex items-start space-x-3 space-x-reverse">
+                                <div
+                                    [class]="'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ' + (notification.type === 'success' ? 'bg-green-100' : notification.type === 'warning' ? 'bg-orange-100' : 'bg-blue-100')">
+                                    <i
+                                        [class]="'fa-solid ' + notification.icon + ' ' + getNotificationIcon(notification.type)"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-gray-800 text-sm mb-1">{{ notification.title }}</h4>
+                                    <p class="text-sm text-gray-600 mb-1">{{ notification.message }}</p>
+                                    <span class="text-xs text-gray-500">{{ notification.time }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 border-t border-gray-200">
+                        <button class="w-full text-center text-sm text-primary hover:text-primaryDark font-medium">צפה
+                            בכל ההתראות</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Profile -->
+            <div class="relative">
+                <div (click)="toggleUserPopover()" class="flex items-center space-x-3 space-x-reverse cursor-pointer">
+                    <div class="text-left">
+                        <p class="text-sm font-semibold text-gray-800">תמר כהן</p>
+                        <p class="text-xs text-gray-500">מפתחת בכירה</p>
+                    </div>
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="פרופיל"
+                        class="w-10 h-10 rounded-full">
+                </div>
+
+                <!-- User Popover -->
+                <div *ngIf="showUserPopover"
+                    class="absolute left-0 mt-2 w-72 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+                    <div class="p-4 border-b border-gray-200">
+                        <div class="flex items-center space-x-3 space-x-reverse">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg"
+                                alt="פרופיל" class="w-16 h-16 rounded-full ring-2 ring-primary">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">רחל כהן</h3>
+                                <p class="text-sm text-gray-600">מנהלת משאבי אנוש</p>
+                                <p class="text-xs text-gray-500 mt-1">rachel.cohen@company.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <a routerLink="/settings" (click)="closePopovers()"
+                            class="flex items-center space-x-3 space-x-reverse px-4 py-3 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer">
+                            <i class="fa-solid fa-user-circle text-gray-600"></i>
+                            <span class="text-gray-700">הפרופיל שלי</span>
+                        </a>
+                        <a routerLink="/settings" (click)="closePopovers()"
+                            class="flex items-center space-x-3 space-x-reverse px-4 py-3 hover:bg-gray-50 rounded-lg transition-colors cursor-pointer">
+                            <i class="fa-solid fa-cog text-gray-600"></i>
+                            <span class="text-gray-700">הגדרות</span>
+                        </a>
+                        <div class="border-t border-gray-200 my-2"></div>
+                        <button (click)="logout()"
+                            class="w-full flex items-center space-x-3 space-x-reverse px-4 py-3 hover:bg-red-50 rounded-lg transition-colors text-red-600">
+                            <i class="fa-solid fa-sign-out-alt"></i>
+                            <span>התנתק</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
