@@ -376,9 +376,10 @@
 </div>
 
 <!-- Role Match Explanation Popup -->
-<div *ngIf="showRoleMatchPopup()" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+<div *ngIf="showRoleMatchPopup()"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fade-in"
   (click)="closeRoleMatchPopup()">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+  <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto animate-scale-in"
     (click)="$event.stopPropagation()">
 
     <!-- Header -->
@@ -548,9 +549,10 @@
 </div>
 
 <!-- Attrition Rate Explanation Popup -->
-<div *ngIf="showAttritionPopup()" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+<div *ngIf="showAttritionPopup()"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fade-in"
   (click)="closeAttritionPopup()">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto"
+  <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto animate-scale-in"
     (click)="$event.stopPropagation()">
 
     <!-- Header -->

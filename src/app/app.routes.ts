@@ -8,10 +8,10 @@ import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/employees', pathMatch: 'full' },
-    { path: 'employees', component: EmployeesComponent },
-    { path: 'roles', component: RolesComponent },
-    { path: 'matching', component: MatchingComponent },
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'settings', component: SettingsComponent },
-    { path: 'profile', component: ProfileComponent }
+    { path: 'employees', component: EmployeesComponent, data: { animation: 'EmployeesPage' } },
+    { path: 'roles', component: RolesComponent, data: { animation: 'RolesPage' } },
+    { path: 'matching', component: MatchingComponent, data: { animation: 'MatchingPage' } },
+    { path: 'dashboard', component: DashboardComponent, data: { animation: 'DashboardPage' } },
+    { path: 'settings', component: SettingsComponent, data: { animation: 'SettingsPage' } },
+    { path: 'profile', component: ProfileComponent, data: { animation: 'ProfilePage' } }
 ];
