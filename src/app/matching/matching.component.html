@@ -164,156 +164,149 @@
                         <p class="text-softGray mt-1">תובנות AI למציאת התאמות פנימיות בארגון</p>
                     </div>
                 </div>
-
-                <!-- DEBUG: Test button to open comparison view directly -->
-                <button (click)="debugForceComparisonView()"
-                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-3 rounded-lg transition-all flex items-center space-x-2 space-x-reverse font-medium text-sm shadow-lg">
-                    <i class="fa-solid fa-bug"></i>
-                    <span>DEBUG: פתח השוואה (TEST)</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-4 gap-6 mb-8">
-            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-softGray mb-1">התאמות מצוינות</p>
-                        <h3 class="text-3xl font-semibold text-gray-800">{{ excellentMatchCount }}</h3>
-                        <p class="text-xs text-green-600 font-semibold mt-1">80%+ התאמה</p>
-                    </div>
-                    <div class="bg-green-100 text-green-600 p-4 rounded-lg">
-                        <i class="fa-solid fa-star text-2xl"></i>
-                    </div>
-                </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-amber-500">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-softGray mb-1">התאמות טובות</p>
-                        <h3 class="text-3xl font-semibold text-gray-800">{{ goodMatchCount }}</h3>
-                        <p class="text-xs text-amber-600 font-semibold mt-1">60-79% התאמה</p>
-                    </div>
-                    <div class="bg-amber-100 text-amber-600 p-4 rounded-lg">
-                        <i class="fa-solid fa-thumbs-up text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-primary">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-softGray mb-1">סה"כ מועמדים</p>
-                        <h3 class="text-3xl font-semibold text-gray-800">{{ totalCandidates }}</h3>
-                        <p class="text-xs text-primary font-semibold mt-1">עובדים פנימיים</p>
-                    </div>
-                    <div class="bg-lightPurple text-primary p-4 rounded-lg">
-                        <i class="fa-solid fa-users text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-softGray mb-1">ללא התאמה</p>
-                        <h3 class="text-3xl font-semibold text-gray-800">{{ noMatchCount }}</h3>
-                        <p class="text-xs text-orange-600 font-semibold mt-1">דורשים גיוס חיצוני</p>
-                    </div>
-                    <div class="bg-orange-100 text-orange-600 p-4 rounded-lg">
-                        <i class="fa-solid fa-exclamation-triangle text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Jobs Content -->
-        <div class="mt-6">
-            <div class="flex items-center justify-between mb-5">
-                <div class="text-sm text-softGray flex items-center space-x-2 space-x-reverse">
-                    <i class="fa-solid fa-filter text-primary"></i>
-                    <span><span class="font-semibold text-gray-800">{{ filteredJobs.length }}</span> תפקידים עם
-                        התאמות</span>
-                </div>
-                <div class="flex items-center space-x-3 space-x-reverse">
-                    <span class="text-sm text-gray-800 font-normal">מיון:</span>
-                    <select [(ngModel)]="sortBy" (change)="applyFilters()"
-                        class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
-                        <option value="matchPercentage">לפי איכות התאמה</option>
-                        <option value="candidateCount">לפי מספר מועמדים</option>
-                        <option value="category">לפי קטגוריה</option>
-                        <option value="title">לפי שם התפקיד</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Jobs Grid - Dynamic -->
-            <div class="space-y-3">
-                <div *ngFor="let job of filteredJobs"
-                    class="job-card bg-white rounded-lg p-4 border border-gray-200 hover:border-primary hover:shadow-lg transition-all">
-                    <div class="flex items-center gap-4">
-                        <div class="flex-shrink-0 w-52">
-                            <h4 class="font-semibold text-gray-800 text-base mb-1">{{ job.title }}</h4>
-                            <p class="text-xs mb-2">
-                                <span [class]="getMatchPercentageColor(job.matchPercentage)"
-                                    class="font-bold text-sm">{{ job.matchPercentage }}%</span>
-                                <span class="text-primary"> {{ job.matchDescription }}</span>
-                            </p>
-                            <div class="flex items-center space-x-2 space-x-reverse text-sm text-softGray">
-                                <span>{{ job.category }}</span>
-                                <span *ngIf="job.level">·</span>
-                                <span *ngIf="job.level">{{ job.level }}</span>
-                            </div>
-                            <div class="mt-1 text-xs text-softGray">
-                                <span>אגף: {{ job.division }} | מחלקה: {{ job.department }}</span>
-                            </div>
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-softGray mb-1">התאמות מצוינות</p>
+                            <h3 class="text-3xl font-semibold text-gray-800">{{ excellentMatchCount }}</h3>
+                            <p class="text-xs text-green-600 font-semibold mt-1">80%+ התאמה</p>
                         </div>
-
-                        <div class="flex items-center space-x-3 space-x-reverse flex-1 justify-center">
-                            <span
-                                class="bg-lightPurple text-primaryDark px-2.5 py-1.5 rounded-full text-xs font-medium">{{
-                                job.candidateCount }} מועמדים</span>
-
-                            <div class="flex -space-x-2 space-x-reverse">
-                                <img *ngFor="let candidate of job.candidates" [src]="candidate.avatar" alt="מועמד"
-                                    class="w-11 h-11 rounded-full border-2 border-white">
-                            </div>
+                        <div class="bg-green-100 text-green-600 p-4 rounded-lg">
+                            <i class="fa-solid fa-star text-2xl"></i>
                         </div>
+                    </div>
+                </div>
 
-                        <button (click)="viewJobDetails(job)"
-                            class="border border-primary text-primary text-sm px-5 py-2 rounded-lg hover:bg-lightPurple/30 transition-all font-normal whitespace-nowrap flex-shrink-0">
-                            צפה בהתאמות
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-amber-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-softGray mb-1">התאמות טובות</p>
+                            <h3 class="text-3xl font-semibold text-gray-800">{{ goodMatchCount }}</h3>
+                            <p class="text-xs text-amber-600 font-semibold mt-1">60-79% התאמה</p>
+                        </div>
+                        <div class="bg-amber-100 text-amber-600 p-4 rounded-lg">
+                            <i class="fa-solid fa-thumbs-up text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-primary">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-softGray mb-1">סה"כ מועמדים</p>
+                            <h3 class="text-3xl font-semibold text-gray-800">{{ totalCandidates }}</h3>
+                            <p class="text-xs text-primary font-semibold mt-1">עובדים פנימיים</p>
+                        </div>
+                        <div class="bg-lightPurple text-primary p-4 rounded-lg">
+                            <i class="fa-solid fa-users text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm p-6 border-l-4 border-orange-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-softGray mb-1">ללא התאמה</p>
+                            <h3 class="text-3xl font-semibold text-gray-800">{{ noMatchCount }}</h3>
+                            <p class="text-xs text-orange-600 font-semibold mt-1">דורשים גיוס חיצוני</p>
+                        </div>
+                        <div class="bg-orange-100 text-orange-600 p-4 rounded-lg">
+                            <i class="fa-solid fa-exclamation-triangle text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jobs Content -->
+            <div class="mt-6">
+                <div class="flex items-center justify-between mb-5">
+                    <div class="text-sm text-softGray flex items-center space-x-2 space-x-reverse">
+                        <i class="fa-solid fa-filter text-primary"></i>
+                        <span><span class="font-semibold text-gray-800">{{ filteredJobs.length }}</span> תפקידים עם
+                            התאמות</span>
+                    </div>
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="text-sm text-gray-800 font-normal">מיון:</span>
+                        <select [(ngModel)]="sortBy" (change)="applyFilters()"
+                            class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
+                            <option value="matchPercentage">לפי איכות התאמה</option>
+                            <option value="candidateCount">לפי מספר מועמדים</option>
+                            <option value="category">לפי קטגוריה</option>
+                            <option value="title">לפי שם התפקיד</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Jobs Grid - Dynamic -->
+                <div class="space-y-3">
+                    <div *ngFor="let job of filteredJobs"
+                        class="job-card bg-white rounded-lg p-4 border border-gray-200 hover:border-primary hover:shadow-lg transition-all">
+                        <div class="flex items-center gap-4">
+                            <div class="flex-shrink-0 w-52">
+                                <h4 class="font-semibold text-gray-800 text-base mb-1">{{ job.title }}</h4>
+                                <p class="text-xs mb-2">
+                                    <span [class]="getMatchPercentageColor(job.matchPercentage)"
+                                        class="font-bold text-sm">{{ job.matchPercentage }}%</span>
+                                    <span class="text-primary"> {{ job.matchDescription }}</span>
+                                </p>
+                                <div class="flex items-center space-x-2 space-x-reverse text-sm text-softGray">
+                                    <span>{{ job.category }}</span>
+                                    <span *ngIf="job.level">·</span>
+                                    <span *ngIf="job.level">{{ job.level }}</span>
+                                </div>
+                                <div class="mt-1 text-xs text-softGray">
+                                    <span>אגף: {{ job.division }} | מחלקה: {{ job.department }}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-3 space-x-reverse flex-1 justify-center">
+                                <span
+                                    class="bg-lightPurple text-primaryDark px-2.5 py-1.5 rounded-full text-xs font-medium">{{
+                                    job.candidateCount }} מועמדים</span>
+
+                                <div class="flex -space-x-2 space-x-reverse">
+                                    <img *ngFor="let candidate of job.candidates" [src]="candidate.avatar" alt="מועמד"
+                                        class="w-11 h-11 rounded-full border-2 border-white">
+                                </div>
+                            </div>
+
+                            <button (click)="viewJobDetails(job)"
+                                class="border border-primary text-primary text-sm px-5 py-2 rounded-lg hover:bg-lightPurple/30 transition-all font-normal whitespace-nowrap flex-shrink-0">
+                                צפה בהתאמות
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Results Message -->
+                <div *ngIf="filteredJobs.length === 0" class="text-center py-12">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-search text-gray-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">לא נמצאו תפקידים</h3>
+                    <p class="text-softGray">נסה לשנות את הסינון או להרחיב את החיפוש</p>
+                </div>
+
+                <!-- Pagination -->
+                <div *ngIf="filteredJobs.length > 0" class="flex justify-center mt-10">
+                    <div class="flex space-x-2 space-x-reverse items-center">
+                        <button
+                            class="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition-colors text-softGray">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                        <button
+                            class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-semibold">1</button>
+                        <button
+                            class="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition-colors text-softGray">2</button>
+                        <button
+                            class="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition-colors text-softGray">
+                            <i class="fa-solid fa-chevron-left text-xs"></i>
                         </button>
                     </div>
-                </div>
-            </div>
-
-            <!-- No Results Message -->
-            <div *ngIf="filteredJobs.length === 0" class="text-center py-12">
-                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-search text-gray-400 text-2xl"></i>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">לא נמצאו תפקידים</h3>
-                <p class="text-softGray">נסה לשנות את הסינון או להרחיב את החיפוש</p>
-            </div>
-
-            <!-- Pagination -->
-            <div *ngIf="filteredJobs.length > 0" class="flex justify-center mt-10">
-                <div class="flex space-x-2 space-x-reverse items-center">
-                    <button
-                        class="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition-colors text-softGray">
-                        <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </button>
-                    <button
-                        class="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-semibold">1</button>
-                    <button
-                        class="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition-colors text-softGray">2</button>
-                    <button
-                        class="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full hover:bg-gray-50 transition-colors text-softGray">
-                        <i class="fa-solid fa-chevron-left text-xs"></i>
-                    </button>
                 </div>
             </div>
         </div>
@@ -334,12 +327,13 @@
                 </button>
                 <div class="h-6 w-px bg-gray-200"></div>
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800 mb-1">{{ selectedJob.title }}</h1>
+                    <h1 class="text-2xl font-bold text-gray-800 mb-1">{{ $any(selectedJob).title }}</h1>
                     <div class="flex items-center space-x-3 space-x-reverse">
                         <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-lg">תפקיד
                             פעיל</span>
                         <span class="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-lg">דחוף</span>
-                        <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-lg">ניוד פנימי
+                        <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-lg">ניוד
+                            פנימי
                             מועדף</span>
                     </div>
                 </div>
@@ -347,7 +341,7 @@
             <div class="flex items-center space-x-6 space-x-reverse text-sm">
                 <div>
                     <span class="text-softGray">מחלקה:</span>
-                    <span class="font-semibold text-gray-800 mr-2">{{ selectedJob.department }}</span>
+                    <span class="font-semibold text-gray-800 mr-2">{{ $any(selectedJob).department }}</span>
                 </div>
                 <div>
                     <span class="text-softGray">מנהל גיוס:</span>
@@ -485,8 +479,9 @@
                                 <i class="fa-solid fa-code text-white text-3xl"></i>
                             </div>
                             <div>
-                                <h2 class="text-3xl font-bold text-gray-800 mb-2">{{ selectedJob.title }}</h2>
-                                <p class="text-sm text-softGray">{{ selectedJob.division }} • {{ selectedJob.department
+                                <h2 class="text-3xl font-bold text-gray-800 mb-2">{{ $any(selectedJob).title }}</h2>
+                                <p class="text-sm text-softGray">{{ $any(selectedJob).division }} • {{
+                                    $any(selectedJob).department
                                     }}</p>
                             </div>
                         </div>
@@ -495,7 +490,7 @@
                             class="grid grid-cols-4 gap-4 text-sm mb-6 bg-white/70 rounded-xl p-5 border border-gray-200/50">
                             <div>
                                 <p class="text-softGray mb-1">רמת התפקיד</p>
-                                <p class="font-bold text-gray-800">{{ selectedJob.level }}</p>
+                                <p class="font-bold text-gray-800">{{ $any(selectedJob).level }}</p>
                             </div>
                             <div>
                                 <p class="text-softGray mb-1">היקף משרה</p>
@@ -524,9 +519,12 @@
                             <span>תיאור התפקיד</span>
                         </h4>
                         <p class="text-softGray text-sm leading-relaxed">
-                            פיתוח ותחזוקה של מערכות web מורכבות בסביבת עבודה דינמית ומאתגרת. העבודה כוללת עיצוב וביצוע
-                            של ארכיטקטורות מערכת מורכבות, עבודה עם טכנולוגיות מתקדמות כולל React, Node.js, TypeScript
-                            ו-AWS. הובלת פרויקטים טכנולוגיים מקצה לקצה, ליווי והדרכת מפתחים זוטרים, וביצוע code reviews.
+                            פיתוח ותחזוקה של מערכות web מורכבות בסביבת עבודה דינמית ומאתגרת. העבודה כוללת עיצוב
+                            וביצוע
+                            של ארכיטקטורות מערכת מורכבות, עבודה עם טכנולוגיות מתקדמות כולל React, Node.js,
+                            TypeScript
+                            ו-AWS. הובלת פרויקטים טכנולוגיים מקצה לקצה, ליווי והדרכת מפתחים זוטרים, וביצוע code
+                            reviews.
                         </p>
                     </div>
 
@@ -597,13 +595,6 @@
                         </div>
                     </div>
                     <div class="flex items-center space-x-3 space-x-reverse">
-                        <!-- DEBUG: Test button to force open comparison view -->
-                        <button (click)="debugForceComparisonView()"
-                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg transition-all flex items-center space-x-2 space-x-reverse font-medium text-xs">
-                            <i class="fa-solid fa-bug text-xs"></i>
-                            <span>TEST</span>
-                        </button>
-
                         <button (click)="openComparisonView()" [disabled]="selectedCandidateCount < 2"
                             [class]="selectedCandidateCount >= 2 ? 'bg-primary hover:bg-primaryDark text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'"
                             class="px-4 py-2 rounded-lg transition-all flex items-center space-x-2 space-x-reverse font-medium text-sm shadow-lg">
@@ -648,7 +639,8 @@
                                 <div class="flex items-start justify-between mb-3">
                                     <div class="flex-1">
                                         <div class="flex items-center space-x-3 space-x-reverse mb-1">
-                                            <h3 class="text-lg font-semibold text-gray-800">{{ candidate.name }}</h3>
+                                            <h3 class="text-lg font-semibold text-gray-800">{{ candidate.name }}
+                                            </h3>
                                             <span class="text-gray-300">|</span>
                                             <label
                                                 class="flex items-center space-x-2 space-x-reverse cursor-pointer group">
@@ -682,7 +674,8 @@
                                             <span>•</span>
                                             <span>{{ candidate.department }}</span>
                                         </div>
-                                        <p class="text-sm text-softGray">תפקיד נוכחי: {{ candidate.currentRole }} • ותק:
+                                        <p class="text-sm text-softGray">תפקיד נוכחי: {{ candidate.currentRole }} •
+                                            ותק:
                                             {{ candidate.tenure }}</p>
                                     </div>
                                     <div class="flex items-center space-x-3 space-x-reverse mr-4">
@@ -804,8 +797,10 @@
                         <i class="fa-solid fa-code text-primary text-xl"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-lg font-semibold text-gray-800">{{ selectedJob.title }}</h2>
-                        <p class="text-sm text-softGray">{{ selectedJob.division }} • {{ selectedJob.department }}</p>
+                        <h2 class="text-lg font-semibold text-gray-800">{{ $any(selectedJob).title }}</h2>
+                        <p class="text-sm text-softGray">{{ $any(selectedJob).division }} • {{
+                            $any(selectedJob).department }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -820,8 +815,10 @@
                     <div class="flex-1">
                         <h3 class="font-semibold text-gray-800 text-lg mb-2">סיכום AI - מועמד מוביל</h3>
                         <p class="text-sm text-gray-800 leading-relaxed">
-                            <strong class="text-primary text-base">{{ getLeadCandidate()?.name }}</strong> בולט כמועמד
-                            המתאים ביותר עם התאמה של <strong class="text-primary">{{ getLeadCandidate()?.matchPercentage
+                            <strong class="text-primary text-base">{{ getLeadCandidate()?.name }}</strong> בולט
+                            כמועמד
+                            המתאים ביותר עם התאמה של <strong class="text-primary">{{
+                                getLeadCandidate()?.matchPercentage
                                 }}%</strong>.
                             עם {{ getLeadCandidate()?.experience }} שנות ניסיון רלוונטי ויכולות הובלת צוותים מוכחות,
                             המועמד מציג שילוב אידיאלי של מומחיות טכנית והתאמה תרבותית גבוהה.
@@ -1126,7 +1123,8 @@
                                 class="p-4 text-right font-medium text-gray-800 sticky right-0 z-10 bg-white border-l border-gray-200">
                                 מיקום</td>
                             <td *ngFor="let candidate of selectedCandidatesForComparison"
-                                class="p-4 text-center border-r border-gray-200 text-gray-800">{{ candidate.location }}
+                                class="p-4 text-center border-r border-gray-200 text-gray-800">{{ candidate.location
+                                }}
                             </td>
                         </tr>
                         <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
@@ -1179,7 +1177,8 @@
                         <span class="text-softGray">יתרונות:</span>
                         <span class="font-semibold"
                             [class]="(candidate.matchPercentage || 0) >= 90 ? 'text-green-700' : 'text-primary'">
-                            {{ (candidate.matchPercentage || 0) >= 90 ? 'התאמה גבוהה מאוד' : ((candidate.matchPercentage
+                            {{ (candidate.matchPercentage || 0) >= 90 ? 'התאמה גבוהה מאוד' :
+                            ((candidate.matchPercentage
                             || 0) >= 80 ?
                             'התאמה טובה' : 'ניסיון טוב') }}
                         </span>
@@ -1202,7 +1201,8 @@
                 <div class="flex-1">
                     <h3 class="font-bold text-gray-800 text-lg mb-2">המלצת המערכת</h3>
                     <p class="text-gray-800 mb-3">
-                        על פי ניתוח מקיף של כל הקריטריונים, <strong>{{ getLeadCandidate()?.name }}</strong> הוא המועמד
+                        על פי ניתוח מקיף של כל הקריטריונים, <strong>{{ getLeadCandidate()?.name }}</strong> הוא
+                        המועמד
                         המומלץ ביותר לתפקיד זה עם התאמה של {{ getLeadCandidate()?.matchPercentage }}%.
                         הוא עומד בכל הדרישות הקריטיות, בעל ניסיון רלוונטי וזמין באופן מיידי.
                     </p>

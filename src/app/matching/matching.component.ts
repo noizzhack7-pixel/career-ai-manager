@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import matchingData from './matching-data.json';
@@ -55,6 +55,8 @@ interface JobMatch {
     styleUrl: './matching.component.css'
 })
 export class MatchingComponent implements OnInit, AfterViewInit {
+    constructor(private cdr: ChangeDetectorRef) { }
+
     jobs: JobMatch[] = [];
     filteredJobs: JobMatch[] = [];
     selectedJob: JobMatch | null = null;
@@ -289,6 +291,7 @@ export class MatchingComponent implements OnInit, AfterViewInit {
     // Job Details View
     viewJobDetails(job: JobMatch): void {
         this.selectedJob = job;
+        this.cdr.detectChanges();
     }
 
     closeJobDetails(): void {
@@ -345,6 +348,7 @@ export class MatchingComponent implements OnInit, AfterViewInit {
                 textIndex++;
                 if (textIndex < this.loadingTexts.length) {
                     this.loadingText = this.loadingTexts[textIndex];
+                    this.cdr.detectChanges();
                 }
             }, 1000);
 
@@ -353,6 +357,7 @@ export class MatchingComponent implements OnInit, AfterViewInit {
                 clearInterval(textInterval);
                 this.isLoadingComparison = false;
                 this.showComparisonView = true;
+                this.cdr.detectChanges();
                 console.log('✅ showComparisonView set to TRUE');
                 console.log('📊 selectedJob:', this.selectedJob?.title);
                 // Render charts after a short delay to ensure DOM is ready
@@ -366,34 +371,6 @@ export class MatchingComponent implements OnInit, AfterViewInit {
     closeComparisonView(): void {
         console.log('❌ closeComparisonView called');
         this.showComparisonView = false;
-    }
-
-    // DEBUG: Force comparison view to open with first 2 candidates
-    debugForceComparisonView(): void {
-        console.log('🐛 DEBUG: debugForceComparisonView called');
-
-        // Force select first 2 candidates
-        this.mockCandidates.forEach((c, i) => {
-            c.selected = i < 2;
-        });
-
-        // Update selected candidates array
-        this.selectedCandidatesForComparison = this.mockCandidates.filter(c => c.selected);
-
-        console.log('🐛 DEBUG: Forced selection of:', this.selectedCandidatesForComparison.map(c => c.name));
-        console.log('🐛 DEBUG: selectedJob:', this.selectedJob);
-        console.log('🐛 DEBUG: Setting showComparisonView to true');
-
-        // Force show comparison view
-        this.showComparisonView = true;
-
-        console.log('🐛 DEBUG: showComparisonView is now:', this.showComparisonView);
-
-        // Render charts
-        setTimeout(() => {
-            console.log('🐛 DEBUG: Rendering charts...');
-            this.renderComparisonCharts();
-        }, 200);
     }
 
     getLeadCandidate(): JobCandidate | null {
