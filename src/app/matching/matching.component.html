@@ -371,13 +371,13 @@
                             <div class="flex items-center justify-between mb-2">
                                 <label class="text-sm font-medium text-gray-800">איכות התאמה</label>
                                 <div class="flex items-center space-x-2 space-x-reverse">
-                                    <span class="text-sm font-semibold text-primary">60%+</span>
+                                    <span class="text-sm font-semibold text-primary">{{ minMatchPercentage }}%+</span>
                                     <span class="text-xs text-softGray">|</span>
-                                    <span class="text-sm font-semibold text-primary">{{ mockCandidates.length }}
+                                    <span class="text-sm font-semibold text-primary">{{ filteredCandidates.length }}
                                         עובדים</span>
                                 </div>
                             </div>
-                            <input type="range" min="0" max="100" value="60"
+                            <input type="range" min="0" max="100" [(ngModel)]="minMatchPercentage"
                                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary">
                             <div class="flex justify-between text-xs text-softGray mt-1">
                                 <span>0%</span>
@@ -621,9 +621,8 @@
                 </div>
             </div>
 
-            <!-- Candidates Grid -->
             <div class="space-y-4">
-                <div *ngFor="let candidate of mockCandidates"
+                <div *ngFor="let candidate of filteredCandidates"
                     class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-gray-200 overflow-hidden cursor-pointer">
                     <div class="p-5">
                         <div class="flex items-start space-x-4 space-x-reverse">

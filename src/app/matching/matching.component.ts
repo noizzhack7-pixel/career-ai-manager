@@ -88,6 +88,11 @@ export class MatchingComponent implements OnInit, AfterViewInit {
     showAttritionPopupState: boolean = false;
     selectedCandidateForModal: JobCandidate | null = null;
 
+    // Filter getter
+    get filteredCandidates(): JobCandidate[] {
+        return this.mockCandidates.filter(c => (c.matchPercentage || 0) >= this.minMatchPercentage);
+    }
+
     // Mock candidates for job details view
     mockCandidates: JobCandidate[] = [
         {
