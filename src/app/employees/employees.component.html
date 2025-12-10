@@ -170,7 +170,7 @@
                     </button>
                   </div>
                   <p class="text-base text-gray-600 mb-1">{{ employee.role }}</p>
-                  <p class="text-sm text-softGray">{{ employee.department }}</p>
+                  <p class="text-sm text-softGray">{{ employee.organizationalUnit }} / {{ employee.subUnit }}</p>
                 </div>
 
                 <!-- Right side: Metrics and Button -->
@@ -381,7 +381,7 @@
     (click)="$event.stopPropagation()">
 
     <!-- Header -->
-    <div class="sticky top-0 bg-gradient-to-r from-primary to-primaryLight text-white p-6 rounded-t-2xl">
+    <div class="sticky top-0 bg-[#650f54] text-white p-6 rounded-t-2xl">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-3 space-x-reverse">
           <div class="bg-white bg-opacity-20 rounded-full p-3">
@@ -534,7 +534,7 @@
       <!-- Action Buttons -->
       <div class="flex space-x-3 space-x-reverse pt-4 border-t border-gray-200">
         <button (click)="closeRoleMatchPopup()"
-          class="flex-1 bg-gradient-to-r from-primary to-primaryLight text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all font-medium">
+          class="flex-1 bg-[#650f54] text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium">
           סגור
         </button>
         <button
@@ -606,18 +606,15 @@
       </div>
 
       <!-- AI Insight -->
-      <div
-        [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-5 border border-orange-200' : 'bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl p-5 border border-blue-200'">
+      <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-200">
         <div class="flex items-start space-x-3 space-x-reverse">
-          <div
-            [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-br from-orange-500 to-red-500 rounded-full p-2 mt-1' : 'bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full p-2 mt-1'">
+          <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-full p-2 mt-1">
             <i class="fa-solid fa-brain text-white text-lg"></i>
           </div>
           <div class="flex-1">
             <h4 class="font-semibold text-gray-800 mb-2 flex items-center space-x-2 space-x-reverse">
               <span>תובנת AI</span>
-              <span
-                [class]="selectedEmployee()?.turnoverRisk! > 40 ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs px-2 py-1 rounded-full' : 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs px-2 py-1 rounded-full'">
+              <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full">
                 מבוסס בינה מלאכותית
               </span>
             </h4>
@@ -738,7 +735,7 @@
       <!-- Action Buttons -->
       <div class="flex space-x-3 space-x-reverse pt-4 border-t border-gray-200">
         <button (click)="closeAttritionPopup()"
-          class="flex-1 bg-gradient-to-r from-primary to-primaryLight text-white px-6 py-3 rounded-lg hover:shadow-lg transition-all font-medium">
+          class="flex-1 bg-[#650f54] text-white px-6 py-3 rounded-lg hover:opacity-90 transition-all font-medium">
           סגור
         </button>
         <button

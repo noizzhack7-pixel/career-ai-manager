@@ -25,6 +25,7 @@ interface JobCandidate {
     educationMatch?: number;
     cultureMatch?: number;
     selected?: boolean;
+    turnoverRisk?: number;
 }
 
 interface JobMatch {
@@ -82,6 +83,11 @@ export class MatchingComponent implements OnInit, AfterViewInit {
     aiRecommendationsOnly: boolean = true;
     sortBy: string = 'matchPercentage';
 
+    // Modal state
+    showRoleMatchPopupState: boolean = false;
+    showAttritionPopupState: boolean = false;
+    selectedCandidateForModal: JobCandidate | null = null;
+
     // Mock candidates for job details view
     mockCandidates: JobCandidate[] = [
         {
@@ -108,7 +114,8 @@ export class MatchingComponent implements OnInit, AfterViewInit {
             experienceMatch: 95,
             educationMatch: 100,
             cultureMatch: 90,
-            selected: false
+            selected: false,
+            turnoverRisk: 15
         },
         {
             avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg',
@@ -134,7 +141,8 @@ export class MatchingComponent implements OnInit, AfterViewInit {
             experienceMatch: 92,
             educationMatch: 100,
             cultureMatch: 75,
-            selected: false
+            selected: false,
+            turnoverRisk: 39
         },
         {
             avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg',
@@ -160,7 +168,8 @@ export class MatchingComponent implements OnInit, AfterViewInit {
             experienceMatch: 85,
             educationMatch: 90,
             cultureMatch: 65,
-            selected: false
+            selected: false,
+            turnoverRisk: 28
         },
         {
             avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-9.jpg',
@@ -186,7 +195,8 @@ export class MatchingComponent implements OnInit, AfterViewInit {
             experienceMatch: 75,
             educationMatch: 95,
             cultureMatch: 60,
-            selected: false
+            selected: false,
+            turnoverRisk: 52
         },
         {
             avatar: 'https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg',
@@ -212,7 +222,8 @@ export class MatchingComponent implements OnInit, AfterViewInit {
             experienceMatch: 90,
             educationMatch: 100,
             cultureMatch: 70,
-            selected: false
+            selected: false,
+            turnoverRisk: 22
         }
     ];
 
@@ -406,56 +417,112 @@ export class MatchingComponent implements OnInit, AfterViewInit {
 
             const data = [{
                 type: 'bar',
-                x: ['מיומנויות', 'ניסיון', 'השכלה', 'תרבות'],
+                x: ['חזון', 'סוציו', 'פסיכו'],
                 y: [
                     candidate.skillsMatch || 0,
                     candidate.experienceMatch || 0,
-                    candidate.educationMatch || 0,
-                    candidate.cultureMatch || 0
+                    candidate.educationMatch || 0
                 ],
                 marker: {
-                    color: ['#650f54', '#51E2C2', '#FB8F67', '#4F00BC'],
-                    opacity: 0.8
+                    color: ['#7C3AED', '#51E2C2', '#FB8F67'],
+                    opacity: 1
                 },
                 text: [
                     `${candidate.skillsMatch || 0}%`,
                     `${candidate.experienceMatch || 0}%`,
-                    `${candidate.educationMatch || 0}%`,
-                    `${candidate.cultureMatch || 0}%`
+                    `${candidate.educationMatch || 0}%`
                 ],
                 textposition: 'outside',
                 textfont: {
-                    size: 12,
-                    color: '#2E2A32',
-                    family: 'Noto Sans Hebrew'
-                }
+                    size: 14,
+                    color: '#1F2937',
+                    family: 'Noto Sans Hebrew',
+                    weight: 600
+                },
+                width: [0.6, 0.6, 0.6]
             }];
 
             const layout = {
-                margin: { t: 50, r: 20, b: 60, l: 50 },
+                margin: { t: 60, r: 40, b: 60, l: 60 },
                 paper_bgcolor: '#FFFFFF',
                 plot_bgcolor: '#FFFFFF',
                 title: {
                     text: `${candidate.name} - ${candidate.matchPercentage}%`,
-                    font: { size: 14, family: 'Noto Sans Hebrew', color: '#2E2A32' }
+                    font: {
+                        size: 16,
+                        family: 'Noto Sans Hebrew',
+                        color: '#1F2937',
+                        weight: 600
+                    },
+                    xanchor: 'center',
+                    x: 0.5
                 },
                 xaxis: {
-                    tickfont: { size: 11, family: 'Noto Sans Hebrew' },
-                    gridcolor: '#E0E0E0'
+                    tickfont: {
+                        size: 13,
+                        family: 'Noto Sans Hebrew',
+                        color: '#1F2937'
+                    },
+                    showgrid: false,
+                    showline: false,
+                    zeroline: false
                 },
                 yaxis: {
-                    range: [0, 100],
-                    tickfont: { size: 10 },
-                    gridcolor: '#E0E0E0',
-                    title: { text: 'אחוז התאמה', font: { size: 11, family: 'Noto Sans Hebrew' } }
-                }
+                    range: [0, 105],
+                    tickfont: {
+                        size: 11,
+                        color: '#6B7280'
+                    },
+                    gridcolor: '#E5E7EB',
+                    gridwidth: 1,
+                    showline: false,
+                    zeroline: true,
+                    zerolinecolor: '#E5E7EB',
+                    zerolinewidth: 2,
+                    title: {
+                        text: 'אחוז התאמה',
+                        font: {
+                            size: 12,
+                            family: 'Noto Sans Hebrew',
+                            color: '#6B7280'
+                        },
+                        standoff: 15
+                    }
+                },
+                bargap: 0.4,
+                bargroupgap: 0.1
             };
 
-            Plotly.newPlot(chartId, data, layout, { responsive: true, displayModeBar: false, displaylogo: false });
+            Plotly.newPlot(chartId, data, layout, {
+                responsive: true,
+                displayModeBar: false,
+                displaylogo: false
+            });
         });
     }
 
     hasSkill(candidate: JobCandidate, skillName: string): boolean {
         return candidate.skills?.some(s => s.name === skillName && s.matched) || false;
+    }
+
+    // Modal functions
+    openRoleMatchPopup(candidate: JobCandidate): void {
+        this.selectedCandidateForModal = candidate;
+        this.showRoleMatchPopupState = true;
+    }
+
+    closeRoleMatchPopup(): void {
+        this.showRoleMatchPopupState = false;
+        this.selectedCandidateForModal = null;
+    }
+
+    openAttritionPopup(candidate: JobCandidate): void {
+        this.selectedCandidateForModal = candidate;
+        this.showAttritionPopupState = true;
+    }
+
+    closeAttritionPopup(): void {
+        this.showAttritionPopupState = false;
+        this.selectedCandidateForModal = null;
     }
 }
