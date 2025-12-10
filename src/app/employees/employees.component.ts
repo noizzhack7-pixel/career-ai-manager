@@ -15,6 +15,14 @@ interface Employee {
     status?: string;
     organizationalUnit?: string;
     subUnit?: string;
+    metrics?: {
+        satisfaction?: string;
+        roleMatch?: number;
+        attendance?: number;
+        performanceRating?: string;
+        skillMatch?: number;
+        age?: number;
+    };
 }
 
 type SortOption = 'name-asc' | 'name-desc' | 'role' | 'tenure' | 'risk';
